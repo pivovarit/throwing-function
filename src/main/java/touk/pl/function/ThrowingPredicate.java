@@ -2,6 +2,7 @@ package touk.pl.function;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @FunctionalInterface
 public interface ThrowingPredicate<T, E extends Exception> {
@@ -31,5 +32,15 @@ public interface ThrowingPredicate<T, E extends Exception> {
 
     default ThrowingFunction<T, Optional<T>, E> toOptionalPredicate() {
         return arg -> test(arg) ? Optional.of(arg) : Optional.empty();
+    }
+
+    default Predicate<T> wrappedWithRuntimeException() {
+        return t -> {
+            try {
+                return test(t);
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 }

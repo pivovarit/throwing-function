@@ -33,5 +33,13 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         };
     }
 
-
+    default Function<T, R> wrappedWithRuntimeException() {
+        return t -> {
+            try {
+                return apply(t);
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
+    }
 }
