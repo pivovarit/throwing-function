@@ -3,22 +3,23 @@ package touk.pl.function;
 import java.util.Objects;
 import java.util.Optional;
 
+@FunctionalInterface
 public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
 
-    default ThrowingPredicate<T, E> and(ThrowingPredicate<? super T, E> other) {
+    default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, E> other) {
         Objects.requireNonNull(other);
 
         return t -> test(t) && other.test(t);
     }
 
-    default ThrowingPredicate<T, E> or(ThrowingPredicate<? super T, E> other) {
+    default ThrowingPredicate<T, E> or(final ThrowingPredicate<? super T, E> other) {
         Objects.requireNonNull(other);
 
         return t -> test(t) || other.test(t);
     }
 
-    default ThrowingPredicate<T, E> xor(ThrowingPredicate<? super T, E> other) {
+    default ThrowingPredicate<T, E> xor(final ThrowingPredicate<? super T, E> other) {
         Objects.requireNonNull(other);
 
         return t -> test(t) ^ other.test(t);
