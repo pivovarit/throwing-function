@@ -73,7 +73,7 @@ public class ThrowingPredicateTest {
     public void shouldReturnOptionalFunction() throws Exception {
         // given
         final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
+        final ThrowingPredicate<Integer, Exception> pFalse = i -> { throw new Exception(); };
 
         // then
         assertThat(pTrue.returningOptional().apply(42).isPresent()).isTrue();
