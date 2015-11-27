@@ -76,7 +76,7 @@ public class ThrowingPredicateTest {
         final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
 
         // then
-        assertThat(pTrue.toOptionalPredicate().apply(42).isPresent()).isTrue();
-        assertThat(pFalse.toOptionalPredicate().apply(42).isPresent()).isFalse();
+        assertThat(pTrue.returningOptional().apply(42).isPresent()).isTrue();
+        assertThat(pFalse.returningOptional().apply(42).isPresent()).isFalse();
     }
 }

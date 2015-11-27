@@ -4,6 +4,14 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+/**
+ * Represents a function that accepts one argument and returns a boolean value
+ * Function might throw a checked exception instance.
+ *
+ * @param <T> the type of the input to the function
+ * @param <E> the type of the thrown checked exception
+ *
+ */
 @FunctionalInterface
 public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
@@ -30,14 +38,26 @@ public interface ThrowingPredicate<T, E extends Exception> {
         return t -> !test(t);
     }
 
-    default ThrowingFunction<T, Optional<T>, E> toOptionalPredicate() {
-        return arg -> test(arg) ? Optional.of(arg) : Optional.empty();
+    default ThrowingFunction<T, Optional<Boolean>, E> returningOptional() {
+        return t -> {
+            try {
+                return Optional.of(test(t));
+            } catch (Exception e) {
+                return Optional.empty();
+            }
+        };
     }
 
+    /**
+     * Returns this Predicate instance as a Function instance
+     */
     default ThrowingFunction<T, Boolean, E> asFunction() {
         return this::test;
     }
 
+    /**
+     * Returns a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
+     */
     default Predicate<T> wrappedWithRuntimeException() {
         return t -> {
             try {

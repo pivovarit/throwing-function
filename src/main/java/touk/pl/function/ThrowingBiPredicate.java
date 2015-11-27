@@ -3,6 +3,15 @@ package touk.pl.function;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
+/**
+ * Represents a predicate (boolean-valued function) of two arguments.  This is
+ * the two-arity specialization of {@link ThrowingPredicate}.
+ * Function may throw a checked exception.
+ *
+ * @param <T> the type of the first argument to the predicate
+ * @param <U> the type of the second argument to the predicate
+ * @param <E> the type of the thrown checked exception
+ */
 @FunctionalInterface
 public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
@@ -29,10 +38,17 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
         return (arg1, arg2) -> !test(arg1, arg2);
     }
 
+    /**
+     * Returns this ThrowingBiFunction instance as a ThrowingBiFunction
+     * @return this action as a ThrowingBiFunction
+     */
     default ThrowingBiFunction<T, U, Boolean, E> asFunction() {
         return this::test;
     }
 
+    /**
+     * Returns a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
+     */
     default BiPredicate<T, U> wrappedWithRuntimeException() {
         return (arg1, arg2) -> {
             try {

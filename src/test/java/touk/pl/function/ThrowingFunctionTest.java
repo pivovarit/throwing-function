@@ -41,7 +41,7 @@ public class ThrowingFunctionTest {
         final ThrowingFunction<Integer, Integer, Exception> f1 = ThrowingFunction.identity();
 
         // when
-        final Optional<Integer> result = f1.toOptionalFunction().apply(42);
+        final Optional<Integer> result = f1.returningOptional().apply(42);
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -55,7 +55,7 @@ public class ThrowingFunctionTest {
         };
 
         // when
-        final Optional<Integer> result = f1.toOptionalFunction().apply(42);
+        final Optional<Integer> result = f1.returningOptional().apply(42);
 
         // then
         assertThat(result.isPresent()).isFalse();

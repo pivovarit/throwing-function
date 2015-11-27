@@ -22,10 +22,16 @@ Java 8 functional types supporting checked exceptions
     default Function<T, R> wrappedWithRuntimeException() {...}
 Transforms ThrowingFunction into regular Function. Checked exception is wrapped in a RuntimeException. Available for 
 all functional types.
-
     
-    default Function<T, Optional<R>> toOptionalFunction() {...}
+    default Function<T, Optional<R>> returningOptional() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
 is thrown, result will contain an empty Optional instance.
+
+    default ThrowingFunction<T, Void, E> asFunction() {...}
+Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance. Can be 
+easily chained like:
+
+    predicate.asFunction().wrappedWithRuntimeException();
+
     
 
