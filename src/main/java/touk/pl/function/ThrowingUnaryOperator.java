@@ -9,14 +9,6 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
         return t -> t;
     }
 
-    default ThrowingUnaryOperator<T, E> applyBefore(final ThrowingUnaryOperator<T, E> operator) {
-        return t -> operator.apply(apply(t));
-    }
-
-    default ThrowingUnaryOperator<T, E> applyAfter(final ThrowingUnaryOperator<T, E> operator) {
-        return t -> apply(operator.apply(t));
-    }
-
     default UnaryOperator<T> wrappedWithRuntimeException() {
         return t -> {
             try {
