@@ -14,4 +14,4 @@ Java 8 functional types supporting checked exceptions
     };
 
 ### To this:
-    private ThrowingFunction<Path, Directory> createDirectory =  path -> FSDirectory.open(path);
+    private ThrowingFunction<Path, Directory, Exception> createDirectory =  path -> FSDirectory.open(path);
