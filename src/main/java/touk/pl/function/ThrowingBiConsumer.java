@@ -28,7 +28,6 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
         };
     }
 
-
     /**
      * Returns this ThrowingBiConsumer instance as a ThrowingBiFunction
      * @return this action as a ThrowingBiFunction

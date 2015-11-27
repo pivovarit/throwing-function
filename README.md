@@ -28,10 +28,6 @@ Transforms ThrowingFunction into a regular Function returning result wrapped int
 is thrown, result will contain an empty Optional instance.
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
-Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance. Can be 
-easily chained like:
-
-    predicate.asFunction().wrappedWithRuntimeException();
-
+Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
     
 
