@@ -10,6 +10,10 @@ public interface ThrowingSupplier<T, E extends Exception> {
         return () -> null;
     }
 
+    default ThrowingFunction<Void, T, E> asFunction() {
+        return arg -> get();
+    }
+
     default Supplier<T> wrappedWithRuntimeException() {
         return () -> {
             try {

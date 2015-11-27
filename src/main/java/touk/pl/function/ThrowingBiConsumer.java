@@ -16,6 +16,13 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
         };
     }
 
+    default ThrowingBiFunction<T, U, Void, E> asFunction() {
+        return (arg1, arg2) -> {
+            accept(arg1, arg2);
+            return null;
+        };
+    }
+
     default BiConsumer<T, U> wrappedWithRuntimeException() {
         return (arg1, arg2) -> {
             try {

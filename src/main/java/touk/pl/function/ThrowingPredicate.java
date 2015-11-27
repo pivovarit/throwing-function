@@ -34,6 +34,10 @@ public interface ThrowingPredicate<T, E extends Exception> {
         return arg -> test(arg) ? Optional.of(arg) : Optional.empty();
     }
 
+    default ThrowingFunction<T, Boolean, E> asFunction() {
+        return this::test;
+    }
+
     default Predicate<T> wrappedWithRuntimeException() {
         return t -> {
             try {

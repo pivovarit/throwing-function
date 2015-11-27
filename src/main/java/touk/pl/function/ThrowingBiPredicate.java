@@ -29,6 +29,10 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
         return (arg1, arg2) -> !test(arg1, arg2);
     }
 
+    default ThrowingBiFunction<T, U, Boolean, E> asFunction() {
+        return this::test;
+    }
+
     default BiPredicate<T, U> wrappedWithRuntimeException() {
         return (arg1, arg2) -> {
             try {

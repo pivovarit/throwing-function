@@ -16,6 +16,13 @@ public interface ThrowingConsumer<T, E extends Exception> {
         };
     }
 
+    default ThrowingFunction<T, Void, E> asFunction() {
+        return arg -> {
+            this.accept(arg);
+            return null;
+        };
+    }
+
     default Consumer<T> wrappedWithRuntimeException() {
         return t -> {
             try {
