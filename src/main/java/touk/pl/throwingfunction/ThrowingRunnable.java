@@ -1,4 +1,4 @@
-package touk.pl.function;
+package touk.pl.throwingfunction;
 
 /**
  * Represents an action that can be performed.
