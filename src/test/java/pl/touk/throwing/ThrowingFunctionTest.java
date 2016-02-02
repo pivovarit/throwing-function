@@ -1,4 +1,4 @@
-package touk.pl.throwingfunction;
+package pl.touk.throwing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

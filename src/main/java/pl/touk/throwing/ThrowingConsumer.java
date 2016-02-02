@@ -1,4 +1,4 @@
-package touk.pl.throwingfunction;
+package pl.touk.throwing;
 
 import java.util.Objects;
 import java.util.function.Consumer;
