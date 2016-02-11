@@ -69,7 +69,7 @@ public class ThrowingFunctionTest {
         };
 
         // when
-        f1.wrappedWithRuntimeException().apply(42);
+        f1.unchecked().apply(42);
 
         // then RuntimeException is thrown
     }

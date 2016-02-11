@@ -1,6 +1,7 @@
 package pl.touk.throwing;
 
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 
 /**
@@ -26,5 +27,15 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
         Objects.requireNonNull(after);
 
         return (arg1, arg2) -> after.apply(apply(arg1, arg2));
+    }
+
+    default BiFunction<T1, T2, R> unchecked() {
+        return (arg1, arg2) -> {
+            try {
+                return apply(arg1, arg2);
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 }

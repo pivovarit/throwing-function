@@ -14,7 +14,7 @@ public interface ThrowingRunnable<E extends Exception> {
     /**
      * Returns a new Runnable instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Runnable wrappedWithRuntimeException() {
+    default Runnable unchecked() {
         return () -> {
             try {
                 run();

@@ -58,7 +58,7 @@ public interface ThrowingPredicate<T, E extends Exception> {
     /**
      * Returns a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Predicate<T> wrappedWithRuntimeException() {
+    default Predicate<T> unchecked() {
         return t -> {
             try {
                 return test(t);

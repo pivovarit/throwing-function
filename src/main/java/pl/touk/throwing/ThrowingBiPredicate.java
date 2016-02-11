@@ -49,7 +49,7 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     /**
      * Returns a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default BiPredicate<T, U> wrappedWithRuntimeException() {
+    default BiPredicate<T, U> unchecked() {
         return (arg1, arg2) -> {
             try {
                 return test(arg1, arg2);

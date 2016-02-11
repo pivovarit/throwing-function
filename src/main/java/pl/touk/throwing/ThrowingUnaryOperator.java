@@ -19,7 +19,7 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
     /**
      * Returns a new UnaryOperator instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default UnaryOperator<T> wrappedWithRuntimeException() {
+    default UnaryOperator<T> unchecked() {
         return t -> {
             try {
                 return apply(t);

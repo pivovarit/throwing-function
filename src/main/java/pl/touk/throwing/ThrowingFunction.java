@@ -52,7 +52,7 @@ public interface ThrowingFunction<T,R,E extends Exception> {
     /**
      * Returns a new Function instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Function<T, R> wrappedWithRuntimeException() {
+    default Function<T, R> unchecked() {
         return t -> {
             try {
                 return apply(t);

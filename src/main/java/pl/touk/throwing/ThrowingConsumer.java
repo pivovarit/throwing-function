@@ -43,7 +43,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
     /**
      * Returns a Consumer instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Consumer<T> wrappedWithRuntimeException() {
+    default Consumer<T> unchecked() {
         return t -> {
             try {
                 accept(t);

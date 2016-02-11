@@ -42,7 +42,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
     /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default BiConsumer<T, U> wrappedWithRuntimeException() {
+    default BiConsumer<T, U> unchecked() {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);

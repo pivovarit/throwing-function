@@ -31,7 +31,7 @@ public interface ThrowingSupplier<T, E extends Exception> {
     /**
      * Returns a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Supplier<T> wrappedWithRuntimeException() {
+    default Supplier<T> unchecked() {
         return () -> {
             try {
                 return get();
