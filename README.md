@@ -19,7 +19,7 @@ Java 8 functional types supporting checked exceptions
     
 #### Additional features:
 
-    default Function<T, R> wrappedWithRuntimeException() {...}
+    default Function<T, R> unchecked() {...}
 Transforms ThrowingFunction into regular Function. Checked exception is wrapped in a RuntimeException. Available for 
 all functional types.
     
