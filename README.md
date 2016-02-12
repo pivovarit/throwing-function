@@ -1,6 +1,8 @@
 # ThrowingFunction
 Java 8 functional types supporting checked exceptions
 
+[![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
+
 ## Provides shortcut to solving checked exceptions lambda repackaging hell:
 
 ### From this:
