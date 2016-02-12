@@ -19,6 +19,7 @@ Java 8 functional types supporting checked exceptions
     private ThrowingFunction<Path, Directory, Exception> createDirectory =  path -> FSDirectory.open(path);
     
     
+Maven entry:
 
     <dependency>
       <groupId>pl.touk</groupId>
