@@ -1,8 +1,12 @@
 package pl.touk.throwing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
+
+import java.util.Collections;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static pl.touk.throwing.ThrowingPredicate.unchecked;
 
 public class ThrowingPredicateTest {
 
@@ -78,5 +82,19 @@ public class ThrowingPredicateTest {
         // then
         assertThat(pTrue.returningOptional().apply(42).isPresent()).isTrue();
         assertThat(pFalse.returningOptional().apply(42).isPresent()).isFalse();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+        // given
+        final ThrowingPredicate<Integer, Exception> predicate = i -> {
+            throw new Exception();
+        };
+        final List<Integer> integers = Collections.singletonList(42);
+
+        // when
+        integers.stream().anyMatch(i -> unchecked(predicate).test(i));
+
+        // then RuntimeException is thrown
     }
 }

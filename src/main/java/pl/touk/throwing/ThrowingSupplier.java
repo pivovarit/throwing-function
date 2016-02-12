@@ -31,6 +31,10 @@ public interface ThrowingSupplier<T, E extends Exception> {
         return arg -> get();
     }
 
+    static <T, E extends Exception> Supplier<T> unchecked(ThrowingSupplier<T, E> supplier) {
+        return supplier.unchecked();
+    }
+
     /**
      * @return a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
      */

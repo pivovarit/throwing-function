@@ -40,6 +40,10 @@ public interface ThrowingConsumer<T, E extends Exception> {
         };
     }
 
+    static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+        return consumer.unchecked();
+    }
+
     /**
      * @return a Consumer instance which wraps thrown checked exception instance into a RuntimeException
      */

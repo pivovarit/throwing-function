@@ -32,6 +32,10 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
         return (arg1, arg2) -> after.apply(apply(arg1, arg2));
     }
 
+    static <T1, T2, R, E extends Exception> BiFunction<T1, T2, R> unchecked(ThrowingBiFunction<T1, T2, R, E> function) {
+        return function.unchecked();
+    }
+
     default BiFunction<T1, T2, R> unchecked() {
         return (arg1, arg2) -> {
             try {

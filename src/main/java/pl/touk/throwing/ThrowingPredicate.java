@@ -55,6 +55,10 @@ public interface ThrowingPredicate<T, E extends Exception> {
         return this::test;
     }
 
+    static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
+        return predicate.unchecked();
+    }
+
     /**
      * @return a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
      */

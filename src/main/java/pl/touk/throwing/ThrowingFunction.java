@@ -52,6 +52,10 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         };
     }
 
+    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> function) {
+        return function.unchecked();
+    }
+
     /**
      * @return a new Function instance which wraps thrown checked exception instance into a RuntimeException
      */
