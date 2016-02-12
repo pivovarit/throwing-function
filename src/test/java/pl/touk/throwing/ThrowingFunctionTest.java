@@ -1,13 +1,14 @@
 package pl.touk.throwing;
 
-import org.junit.Test;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.touk.throwing.TestCommons.givenThrowingFunction;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
+
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import org.junit.Test;
 
 public class ThrowingFunctionTest {
 
@@ -75,19 +76,11 @@ public class ThrowingFunctionTest {
 
     @Test(expected = RuntimeException.class)
     public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
-        // given
-        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
-        final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        integers.stream().forEach(i -> unchecked(f1).apply(i));
+        Stream.of(42).map(unchecked(i -> { throw new Exception();})).collect(toList());
 
         // then RuntimeException is thrown
     }
 
-    private ThrowingFunction<Integer, Integer, Exception> givenThrowingFunction() throws Exception {
-        return i -> {
-            throw new Exception();
-        };
-    }
 }
