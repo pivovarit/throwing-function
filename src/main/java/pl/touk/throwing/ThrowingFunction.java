@@ -27,6 +27,10 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         return t -> t;
     }
 
+    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> function) {
+        return function.unchecked();
+    }
+
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, E> before) {
         Objects.requireNonNull(before);
 

@@ -1,10 +1,12 @@
 package pl.touk.throwing;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.Test;
 
+import java.util.Collections;
 import java.util.Optional;
 
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+import static pl.touk.throwing.ThrowingFunction.unchecked;
 
 public class ThrowingFunctionTest {
 
@@ -50,9 +52,7 @@ public class ThrowingFunctionTest {
     @Test
     public void shouldReturnEmptyOptional() throws Exception {
         // given
-        final ThrowingFunction<Integer, Integer, Exception> f1 = i -> {
-            throw new Exception();
-        };
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
         // when
         final Optional<Integer> result = f1.returningOptional().apply(42);
@@ -64,13 +64,28 @@ public class ThrowingFunctionTest {
     @Test(expected = RuntimeException.class)
     public void shouldWrapInRuntimeEx() throws Exception {
         // given
-        final ThrowingFunction<Integer, Integer, Exception> f1 = i -> {
-            throw new Exception();
-        };
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
         // when
         f1.unchecked().apply(42);
 
         // then RuntimeException is thrown
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+        // given
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
+
+        // when
+        Collections.singletonList(null).stream().forEach(arg -> unchecked(f1).apply(42));
+
+        // then RuntimeException is thrown
+    }
+
+    private ThrowingFunction<Integer, Integer, Exception> givenThrowingFunction() throws Exception {
+        return i -> {
+            throw new Exception();
+        };
     }
 }

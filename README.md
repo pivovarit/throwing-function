@@ -34,6 +34,9 @@ Maven entry:
     default Function<T, R> unchecked() {...}
 Transforms ThrowingFunction into regular Function. Checked exception is wrapped in a RuntimeException. Available for 
 all functional types.
+
+    static <...> Function<T, R> unchecked(ThrowingFunction<T, R, E> function) {...}
+Static unchecked() function, which can be used with functional types from java.util.function.
     
     default Function<T, Optional<R>> returningOptional() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
