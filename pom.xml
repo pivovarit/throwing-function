@@ -31,7 +31,7 @@
         <url>https://github.com/TouK/ThrowingFunction</url>
         <connection>scm:git:git://github.com/TouK/ThrowingFunction.git</connection>
         <developerConnection>scm:git:git@github.com:TouK/ThrowingFunction.git</developerConnection>
-      <tag>throwing-function-1.0</tag>
+      <tag>v.1.0</tag>
   </scm>
 
     <issueManagement>
