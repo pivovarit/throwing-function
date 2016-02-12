@@ -33,15 +33,12 @@ For Maven users:
       <version>1.1</version>
     </dependency>
 
-For Gradle users:
-    'pl.touk:throwing-function:1.1'
-    
-    
+
 #### Additional features:
 
     default Function<T, R> unchecked() {...}
 Transforms ThrowingFunction into regular Function. Checked exception gets wrapped in a RuntimeException. Available for
-all functional types.
+all functional types. Comes both as a static and an instance method.
 
     default Function<T, Optional<R>> returningOptional() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
