@@ -3,7 +3,7 @@
 
     <groupId>pl.touk</groupId>
     <artifactId>throwing-function</artifactId>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
 
     <name>ThrowingFunction</name>
     <packaging>jar</packaging>
@@ -31,7 +31,6 @@
         <url>https://github.com/TouK/ThrowingFunction</url>
         <connection>scm:git:git://github.com/TouK/ThrowingFunction.git</connection>
         <developerConnection>scm:git:git@github.com:TouK/ThrowingFunction.git</developerConnection>
-      <tag>v.1.0</tag>
   </scm>
 
     <issueManagement>
