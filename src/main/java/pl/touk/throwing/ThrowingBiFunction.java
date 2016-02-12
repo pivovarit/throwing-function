@@ -22,6 +22,9 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
 
     /**
      * Performs provided action on the result of this ThrowingBiFunction instance
+     * @param after action that is supposed to be made on the result of apply()
+     * @param <V> after function's result type
+     * @return combined function
      */
     default <V> ThrowingBiFunction<T1, T2, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
         Objects.requireNonNull(after);

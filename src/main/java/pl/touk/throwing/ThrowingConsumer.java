@@ -31,7 +31,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
     }
 
     /**
-     * Returns this consumer instance as a Function instance
+     * @return this consumer instance as a Function instance
      */
     default ThrowingFunction<T, Void, E> asFunction() {
         return arg -> {
@@ -41,7 +41,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
     }
 
     /**
-     * Returns a Consumer instance which wraps thrown checked exception instance into a RuntimeException
+     * @return a Consumer instance which wraps thrown checked exception instance into a RuntimeException
      */
     default Consumer<T> unchecked() {
         return t -> {

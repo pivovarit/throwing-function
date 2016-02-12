@@ -39,15 +39,14 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     }
 
     /**
-     * Returns this ThrowingBiFunction instance as a ThrowingBiFunction
-     * @return this action as a ThrowingBiFunction
+     * @return this ThrowingBiFunction instance as a ThrowingBiFunction
      */
     default ThrowingBiFunction<T, U, Boolean, E> asFunction() {
         return this::test;
     }
 
     /**
-     * Returns a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
+     * @return a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
      */
     default BiPredicate<T, U> unchecked() {
         return (arg1, arg2) -> {

@@ -15,21 +15,24 @@ public interface ThrowingSupplier<T, E extends Exception> {
     T get() throws E;
 
     /**
-     * Returns a new Supplier instance returning null.
+     *
+     * @param <T> type
+     * @param <E> checked exception
+     * @return a new Supplier instance returning null
      */
-    static <T, E extends Exception> ThrowingSupplier<T, E> empty() {
+    static <T, E extends Exception> ThrowingSupplier<T, E> nullSupplier() {
         return () -> null;
     }
 
     /**
-     * Returns this Consumer instance as a new Function instance
+     * @return this Consumer instance as a new Function instance
      */
     default ThrowingFunction<Void, T, E> asFunction() {
         return arg -> get();
     }
 
     /**
-     * Returns a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
+     * @return a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
      */
     default Supplier<T> unchecked() {
         return () -> {

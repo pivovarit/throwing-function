@@ -49,14 +49,14 @@ public interface ThrowingPredicate<T, E extends Exception> {
     }
 
     /**
-     * Returns this Predicate instance as a Function instance
+     * @return this Predicate instance as a Function instance
      */
     default ThrowingFunction<T, Boolean, E> asFunction() {
         return this::test;
     }
 
     /**
-     * Returns a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
+     * @return a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
      */
     default Predicate<T> unchecked() {
         return t -> {
