@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static pl.touk.throwing.TestCommons.givenThrowingFunction;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
 
+import java.net.URI;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -63,6 +64,17 @@ public class ThrowingFunctionTest {
         assertThat(result.isPresent()).isFalse();
     }
 
+    @Test(expected = Exception.class)
+    public void shouldThrowEx() throws Exception {
+        // given
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
+
+        // when
+        f1.apply(42);
+
+        // then RuntimeException is thrown
+    }
+
     @Test(expected = RuntimeException.class)
     public void shouldWrapInRuntimeEx() throws Exception {
         // given
@@ -78,7 +90,7 @@ public class ThrowingFunctionTest {
     public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
 
         // when
-        Stream.of(42).map(unchecked(i -> { throw new Exception();})).collect(toList());
+        Stream.of(". .").map(unchecked(URI::new)).collect(toList());
 
         // then RuntimeException is thrown
     }
