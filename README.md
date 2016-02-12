@@ -3,23 +3,29 @@ Java 8 functional types supporting checked exceptions
 
 [![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
 
-## Provides shortcut to solving checked exceptions lambda repackaging hell:
+## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
 
-### From this:
+### You can now define functions that throw checked exceptions
+    ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-    private Function<Path, Directory> createDirectory =  path -> {
-        try{
-            return FSDirectory.open(path);
-        } catch (IOException e){
-            throw new RuntimeException(e);
-        }
-    };
+### And use those functions seamlessly with native Java 8 classes by using a custom adapter
 
-### To this:
-    private ThrowingFunction<Path, Directory, Exception> createDirectory =  path -> FSDirectory.open(path);
-    
-    
-Maven entry:
+    ...stream().map(ThrowingFunction.unchecked(URI::new)).forEach(System.out::println);
+
+    ...stream().map(unchecked(URI::new)).forEach(System.out::println); //with a static import
+
+### Instead of:
+
+     ...stream().map(path -> {
+                try {
+                    return new URI(path);
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+            }).forEach(System.out::println);
+
+
+For Maven users:
 
     <dependency>
       <groupId>pl.touk</groupId>
@@ -27,17 +33,16 @@ Maven entry:
       <version>1.1</version>
     </dependency>
 
+For Gradle users:
+    'pl.touk:throwing-function:1.1'
     
     
 #### Additional features:
 
     default Function<T, R> unchecked() {...}
-Transforms ThrowingFunction into regular Function. Checked exception is wrapped in a RuntimeException. Available for 
+Transforms ThrowingFunction into regular Function. Checked exception gets wrapped in a RuntimeException. Available for
 all functional types.
 
-    static <...> Function<T, R> unchecked(ThrowingFunction<T, R, E> function) {...}
-Static version of unchecked() functions, which can be used with functional types from java.util.function.
-    
     default Function<T, Optional<R>> returningOptional() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
 is thrown, result will contain an empty Optional instance.
