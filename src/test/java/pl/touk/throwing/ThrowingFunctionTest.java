@@ -3,6 +3,7 @@ package pl.touk.throwing;
 import org.junit.Test;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -76,9 +77,10 @@ public class ThrowingFunctionTest {
     public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
         // given
         final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
+        final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        Collections.singletonList(null).stream().forEach(arg -> unchecked(f1).apply(42));
+        integers.stream().forEach(i -> unchecked(f1).apply(i));
 
         // then RuntimeException is thrown
     }

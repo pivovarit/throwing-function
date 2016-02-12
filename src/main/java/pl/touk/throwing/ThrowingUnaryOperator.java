@@ -16,6 +16,10 @@ import java.util.function.UnaryOperator;
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {
 
+    static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
+        return operator.unchecked();
+    }
+
     /**
      * Returns a new UnaryOperator instance which wraps thrown checked exception instance into a RuntimeException
      */

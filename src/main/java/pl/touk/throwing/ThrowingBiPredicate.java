@@ -45,6 +45,10 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
         return this::test;
     }
 
+    static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
+        return predicate.unchecked();
+    }
+
     /**
      * @return a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
      */

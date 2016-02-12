@@ -10,6 +10,10 @@ package pl.touk.throwing;
 public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
+    static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
+        return runnable.unchecked();
+    }
+
     /**
      * @return a new Runnable instance which wraps thrown checked exception instance into a RuntimeException
      */

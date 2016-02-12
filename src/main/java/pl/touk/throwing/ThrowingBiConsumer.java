@@ -39,6 +39,10 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
         };
     }
 
+    static <T, U, E extends Exception> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, E> consumer) {
+        return consumer.unchecked();
+    }
+
     /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
