@@ -41,6 +41,8 @@ public interface ThrowingConsumer<T, E extends Exception> {
     }
 
     static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+        Objects.requireNonNull(consumer);
+
         return consumer.unchecked();
     }
 

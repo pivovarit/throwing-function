@@ -46,6 +46,8 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     }
 
     static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
+        Objects.requireNonNull(predicate);
+
         return predicate.unchecked();
     }
 

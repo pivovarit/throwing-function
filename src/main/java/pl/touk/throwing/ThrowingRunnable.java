@@ -1,5 +1,7 @@
 package pl.touk.throwing;
 
+import java.util.Objects;
+
 /**
  * Represents an action that can be performed.
  * Function might throw a checked exception instance.
@@ -11,6 +13,8 @@ public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
     static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
+        Objects.requireNonNull(runnable);
+
         return runnable.unchecked();
     }
 

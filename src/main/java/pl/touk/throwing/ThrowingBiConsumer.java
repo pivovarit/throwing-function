@@ -40,6 +40,8 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
     }
 
     static <T, U, E extends Exception> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, E> consumer) {
+        Objects.requireNonNull(consumer);
+
         return consumer.unchecked();
     }
 

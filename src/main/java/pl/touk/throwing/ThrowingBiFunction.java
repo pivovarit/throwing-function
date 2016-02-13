@@ -33,6 +33,8 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
     }
 
     static <T1, T2, R, E extends Exception> BiFunction<T1, T2, R> unchecked(ThrowingBiFunction<T1, T2, R, E> function) {
+        Objects.requireNonNull(function);
+
         return function.unchecked();
     }
 

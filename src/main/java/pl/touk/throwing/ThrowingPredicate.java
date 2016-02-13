@@ -56,6 +56,8 @@ public interface ThrowingPredicate<T, E extends Exception> {
     }
 
     static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
+        Objects.requireNonNull(predicate);
+
         return predicate.unchecked();
     }
 

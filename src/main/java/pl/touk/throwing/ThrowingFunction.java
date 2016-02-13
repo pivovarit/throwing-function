@@ -35,6 +35,7 @@ public interface ThrowingFunction<T,R,E extends Exception> {
 
     default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
         Objects.requireNonNull(after);
+
         return (T t) -> after.apply(apply(t));
     }
 
@@ -53,6 +54,8 @@ public interface ThrowingFunction<T,R,E extends Exception> {
     }
 
     static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> function) {
+        Objects.requireNonNull(function);
+
         return function.unchecked();
     }
 

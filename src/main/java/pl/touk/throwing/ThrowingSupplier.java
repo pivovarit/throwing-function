@@ -1,5 +1,6 @@
 package pl.touk.throwing;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -32,6 +33,8 @@ public interface ThrowingSupplier<T, E extends Exception> {
     }
 
     static <T, E extends Exception> Supplier<T> unchecked(ThrowingSupplier<T, E> supplier) {
+        Objects.requireNonNull(supplier);
+
         return supplier.unchecked();
     }
 
