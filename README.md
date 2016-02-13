@@ -30,7 +30,7 @@ For Maven users:
     <dependency>
       <groupId>pl.touk</groupId>
       <artifactId>throwing-function</artifactId>
-      <version>1.1</version>
+      <version>1.2</version>
     </dependency>
 
 
