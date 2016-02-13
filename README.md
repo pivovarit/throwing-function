@@ -1,5 +1,5 @@
 # ThrowingFunction
-Java 8 functional types supporting checked exceptions
+Java 8 functional types supporting checked exceptions and some additional flavours.
 
 [![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
 
@@ -8,7 +8,7 @@ Java 8 functional types supporting checked exceptions
 ### You can now define functions that throw checked exceptions
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-### And use those functions seamlessly with native Java 8 classes by using a custom adapter
+### And use those functions seamlessly with native Java 8 classes by using a custom unchecked() adapter
 
     ...stream().map(ThrowingFunction.unchecked(URI::new)).forEach(System.out::println);
 
@@ -37,8 +37,8 @@ For Maven users:
 #### Additional features:
 
     default Function<T, R> unchecked() {...}
-Transforms ThrowingFunction into regular Function. Checked exception gets wrapped in a RuntimeException. Available for
-all functional types. Comes both as a static and an instance method.
+Transforms ThrowingFunction into a regular Function. Checked exception gets wrapped in a RuntimeException. 
+Feature is available for all functional types. Comes both as a static and as an instance method.
 
     default Function<T, Optional<R>> returningOptional() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
