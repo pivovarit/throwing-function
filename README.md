@@ -14,7 +14,7 @@ Java 8 functional types supporting checked exceptions
 
     ...stream().map(unchecked(URI::new)).forEach(System.out::println); //with a static import
 
-### Instead of:
+### No more:
 
      ...stream().map(path -> {
                 try {
