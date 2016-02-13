@@ -1,6 +1,7 @@
 # ThrowingFunction
 Java 8 functional types supporting checked exceptions and some additional flavours.
 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function)
 [![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
