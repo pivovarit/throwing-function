@@ -3,6 +3,8 @@ Java 8 functional types supporting checked exceptions and some additional flavou
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function)
 [![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
+[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/pl.touk/throwing-function/badge.svg)](http://www.javadoc.io/doc/pl.touk/throwing-function)
+
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
 
