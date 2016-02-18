@@ -35,6 +35,19 @@ For Maven users:
       <artifactId>throwing-function</artifactId>
       <version>1.2</version>
     </dependency>
+    
+### Available types:
+
++ ThrowingBiConsumer
++ ThrowingBiFunction
++ ThrowingBiPredicate
++ ThrowingBinaryOperator
++ ThrowingConsumer
++ ThrowingFunction
++ ThrowingPredicate
++ ThrowingRunnable
++ ThrowingSupplier
++ ThrowingUnaryOperator
 
 
 #### Additional features:
