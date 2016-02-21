@@ -18,7 +18,7 @@ import java.util.Objects;
  * @see ThrowingBiFunction
  * @see ThrowingUnaryOperator
  */
-public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
+public interface ThrowingBinaryOperator<T, E extends Throwable> extends ThrowingBiFunction<T, T, T, E> {
 
     static <T, E extends Exception> ThrowingBinaryOperator<T, E> minBy(Comparator<? super T> comparator) {
         Objects.requireNonNull(comparator);

@@ -15,7 +15,7 @@ import java.util.function.Function;
  *
  */
 @FunctionalInterface
-public interface ThrowingFunction<T,R,E extends Exception> {
+public interface ThrowingFunction<T,R,E extends Throwable> {
     R apply(T arg) throws E;
 
     /**
@@ -47,7 +47,7 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         return t -> {
             try {
                 return Optional.of(apply(t));
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 return Optional.empty();
             }
         };
@@ -66,7 +66,7 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         return t -> {
             try {
                 return apply(t);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

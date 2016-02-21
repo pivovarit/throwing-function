@@ -13,7 +13,7 @@ import java.util.function.BiPredicate;
  * @param <E> the type of the thrown checked exception
  */
 @FunctionalInterface
-public interface ThrowingBiPredicate<T, U, E extends Exception> {
+public interface ThrowingBiPredicate<T, U, E extends Throwable> {
     boolean test(T t, U u) throws E;
 
     default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, E> other) {
@@ -58,7 +58,7 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
         return (arg1, arg2) -> {
             try {
                 return test(arg1, arg2);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

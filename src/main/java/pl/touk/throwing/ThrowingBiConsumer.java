@@ -16,7 +16,7 @@ import java.util.function.BiConsumer;
  * @see ThrowingConsumer
  */
 @FunctionalInterface
-public interface ThrowingBiConsumer<T, U, E extends Exception> {
+public interface ThrowingBiConsumer<T, U, E extends Throwable> {
     void accept(T t, U u) throws E;
 
     default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, E> after) {
@@ -53,7 +53,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

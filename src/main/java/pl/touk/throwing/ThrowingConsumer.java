@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  *
  */
 @FunctionalInterface
-public interface ThrowingConsumer<T, E extends Exception> {
+public interface ThrowingConsumer<T, E extends Throwable> {
 
     void accept(T t) throws E;
 
@@ -40,7 +40,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
         };
     }
 
-    static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
         Objects.requireNonNull(consumer);
 
         return consumer.unchecked();
@@ -53,7 +53,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
         return t -> {
             try {
                 accept(t);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

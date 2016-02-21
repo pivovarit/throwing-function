@@ -13,7 +13,7 @@ import java.util.function.Predicate;
  *
  */
 @FunctionalInterface
-public interface ThrowingPredicate<T, E extends Exception> {
+public interface ThrowingPredicate<T, E extends Throwable> {
     boolean test(T t) throws E;
 
     default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, E> other) {
@@ -68,7 +68,7 @@ public interface ThrowingPredicate<T, E extends Exception> {
         return t -> {
             try {
                 return test(t);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

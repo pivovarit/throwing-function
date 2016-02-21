@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  *
  */
 @FunctionalInterface
-public interface ThrowingSupplier<T, E extends Exception> {
+public interface ThrowingSupplier<T, E extends Throwable> {
     T get() throws E;
 
     /**
@@ -45,7 +45,7 @@ public interface ThrowingSupplier<T, E extends Exception> {
         return () -> {
             try {
                 return get();
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

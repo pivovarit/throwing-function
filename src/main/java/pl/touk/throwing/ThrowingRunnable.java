@@ -9,7 +9,7 @@ import java.util.Objects;
  * @param <E> the type of the thrown checked exception
  */
 @FunctionalInterface
-public interface ThrowingRunnable<E extends Exception> {
+public interface ThrowingRunnable<E extends Throwable> {
     void run() throws E;
 
     static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
@@ -25,7 +25,7 @@ public interface ThrowingRunnable<E extends Exception> {
         return () -> {
             try {
                 run();
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

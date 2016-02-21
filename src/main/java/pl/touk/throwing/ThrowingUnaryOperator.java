@@ -15,7 +15,7 @@ import java.util.function.UnaryOperator;
  * @see ThrowingFunction
  */
 @FunctionalInterface
-public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {
+public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingFunction<T, T, E> {
 
     static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
         Objects.requireNonNull(operator);
@@ -30,7 +30,7 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
         return t -> {
             try {
                 return apply(t);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };

@@ -17,7 +17,7 @@ import java.util.function.BiFunction;
  * @see ThrowingFunction
  */
 @FunctionalInterface
-public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
+public interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
     R apply(T1 arg1, T2 arg2) throws E;
 
     /**
@@ -32,7 +32,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
         return (arg1, arg2) -> after.apply(apply(arg1, arg2));
     }
 
-    static <T1, T2, R, E extends Exception> BiFunction<T1, T2, R> unchecked(ThrowingBiFunction<T1, T2, R, E> function) {
+    static <T1, T2, R, E extends Throwable> BiFunction<T1, T2, R> unchecked(ThrowingBiFunction<T1, T2, R, E> function) {
         Objects.requireNonNull(function);
 
         return function.unchecked();
@@ -42,7 +42,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
         return (arg1, arg2) -> {
             try {
                 return apply(arg1, arg2);
-            } catch (final Exception e) {
+            } catch (final Throwable e) {
                 throw new RuntimeException(e);
             }
         };
