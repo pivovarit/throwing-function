@@ -3,6 +3,7 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 /**
@@ -57,6 +58,24 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         Objects.requireNonNull(function);
 
         return function.unchecked();
+    }
+
+    static <T, R, E extends Exception> Function<T, R> unchecked(Class<E> exceptionType, ThrowingFunction<T, R, E> function) {
+        Objects.requireNonNull(function);
+
+        return function.unchecked();
+    }
+
+    static <T, E extends Exception> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
+        try {
+            return supplier.get();
+        } catch (RuntimeException ex) {
+            if (exceptionType.isInstance(ex.getCause())) {
+                throw (E) ex.getCause();
+            } else {
+                throw ex;
+            }
+        }
     }
 
     /**

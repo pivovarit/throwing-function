@@ -2,11 +2,18 @@ package pl.touk.throwing;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 import static pl.touk.throwing.TestCommons.givenThrowingFunction;
+import static pl.touk.throwing.ThrowingFunction.checked;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import org.junit.Test;
@@ -93,6 +100,21 @@ public class ThrowingFunctionTest {
         Stream.of(". .").map(unchecked(URI::new)).collect(toList());
 
         // then RuntimeException is thrown
+    }
+
+    @Test(expected = URISyntaxException.class)
+    public void shouldUnwrapOriginalExceptionWhenUsingStandardUtilsFunctions() throws URISyntaxException {
+
+        // when
+        checked(URISyntaxException.class,
+                () -> Stream.of(". .")
+                        .map(unchecked(URISyntaxException.class,
+                                URI::new)
+                        )
+                        .collect(toList())
+        );
+
+        // then a checked exception is thrown
     }
 
 }
