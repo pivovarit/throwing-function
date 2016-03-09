@@ -66,12 +66,6 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return f.returningOptional();
     }
 
-    static <T, R, E extends Exception> Function<T, R> unchecked(Class<E> exceptionType, ThrowingFunction<T, R, E> function) {
-        Objects.requireNonNull(function);
-
-        return function.unchecked();
-    }
-
     static <T, E extends Exception> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
         try {
             return supplier.get();
