@@ -117,4 +117,14 @@ public class ThrowingFunctionTest {
         // then a checked exception is thrown
     }
 
+    @Test
+    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
+
+        // when
+        final Optional<URI> result = Stream.of(". .").map(trying(URI::new)).findAny().get();
+
+        // then RuntimeException is thrown
+        assertThat(result.isPresent()).isFalse();
+    }
+
 }
