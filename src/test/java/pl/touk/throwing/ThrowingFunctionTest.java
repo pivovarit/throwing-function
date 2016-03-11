@@ -14,6 +14,8 @@ import java.util.stream.Stream;
 
 import org.junit.Test;
 
+import pl.touk.throwing.exception.WrappedException;
+
 public class ThrowingFunctionTest {
 
     @Test
@@ -107,6 +109,19 @@ public class ThrowingFunctionTest {
                 .map(unchecked(URI::new))
                         .collect(toList())
         );
+
+        // then a checked exception is thrown
+    }
+
+    @Test(expected = URISyntaxException.class)
+    public void shouldUnwrapOriginalExceptionWithTryCatch() throws Throwable {
+
+        // when
+        try {
+            Stream.of(". .").map(unchecked(URI::new)).collect(toList());
+        } catch (WrappedException e) {
+            throw e.getKlass().cast(e.getCause());
+        }
 
         // then a checked exception is thrown
     }

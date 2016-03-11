@@ -4,6 +4,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents a function that accepts one argument and returns a boolean value
  * Function might throw a checked exception instance.
@@ -69,7 +71,7 @@ public interface ThrowingPredicate<T, E extends Throwable> {
             try {
                 return test(t);
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

@@ -3,6 +3,8 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents an operation on a single operand that produces a result of the
  * same type as its operand.  This is a specialization of {@code Function} for
@@ -31,7 +33,7 @@ public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingF
             try {
                 return apply(t);
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

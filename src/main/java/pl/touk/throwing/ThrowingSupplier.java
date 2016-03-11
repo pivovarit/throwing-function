@@ -3,6 +3,8 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents a function that accepts zero arguments and returns some value.
  * Function might throw a checked exception instance.
@@ -46,7 +48,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
             try {
                 return get();
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

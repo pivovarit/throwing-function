@@ -2,6 +2,8 @@ package pl.touk.throwing;
 
 import java.util.Objects;
 
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents an action that can be performed.
  * Function might throw a checked exception instance.
@@ -26,7 +28,7 @@ public interface ThrowingRunnable<E extends Throwable> {
             try {
                 run();
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

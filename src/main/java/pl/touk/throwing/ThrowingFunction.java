@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import pl.touk.throwing.exception.WrappedException;
+
 
 /**
  * Represents a function that accepts one argument and returns a value;
@@ -69,7 +71,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
     static <T, E extends Exception> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
         try {
             return supplier.get();
-        } catch (RuntimeException ex) {
+        } catch (WrappedException ex) {
             if (exceptionType.isInstance(ex.getCause())) {
                 throw (E) ex.getCause();
             } else {
@@ -86,7 +88,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
             try {
                 return apply(t);
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

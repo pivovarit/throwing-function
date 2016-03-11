@@ -3,6 +3,8 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
+import pl.touk.throwing.exception.WrappedException;
+
 
 /**
  * Represents a function that accepts two arguments and produces a result.
@@ -43,7 +45,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
             try {
                 return apply(arg1, arg2);
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }

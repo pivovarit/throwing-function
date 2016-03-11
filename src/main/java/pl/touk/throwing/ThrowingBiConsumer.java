@@ -3,6 +3,8 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents an operation that accepts two input arguments and returns no
  * result.  This is the two-arity specialization of {@link ThrowingConsumer}.
@@ -54,7 +56,7 @@ public interface ThrowingBiConsumer<T, U, E extends Throwable> {
             try {
                 accept(arg1, arg2);
             } catch (final Throwable e) {
-                throw new RuntimeException(e);
+                throw new WrappedException(e, e.getClass());
             }
         };
     }
