@@ -56,9 +56,12 @@ For Maven users:
 Transforms ThrowingFunction into a regular Function. Checked exception gets wrapped in a RuntimeException. 
 Feature is available for all java.util.function types. Comes both as a static and as an instance method.
 
-    default Function<T, Optional<R>> returningOptional() {...}
+    static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {...}
+Additional static function allowing to catch wrapped checked exception, unwrap and rethrow. Comes in handy sometimes.
+
+    default Function<T, Optional<R>> trying() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
-is thrown, result will contain an empty Optional instance.
+is thrown, result will contain an empty Optional instance. Exception gets ignored. Comes as a static method. Equivalent instance method is called `returningOptional()`
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
