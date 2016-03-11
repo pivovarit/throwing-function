@@ -68,7 +68,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return f.returningOptional();
     }
 
-    static <T, E extends Exception> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
+    static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
         try {
             return supplier.get();
         } catch (WrappedException ex) {
@@ -77,6 +77,14 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
             } else {
                 throw ex;
             }
+        }
+    }
+
+    static <T> T checked(Supplier<T> supplier) throws Throwable {
+        try {
+            return checked(Throwable.class, supplier);
+        } catch (WrappedException ex) {
+            throw ex.getKlass().cast(ex.getCause());
         }
     }
 
