@@ -112,7 +112,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
-        <assertj.version>3.2.0</assertj.version>
+        <assertj.version>3.3.0</assertj.version>
     </properties>
 
     <dependencies>
