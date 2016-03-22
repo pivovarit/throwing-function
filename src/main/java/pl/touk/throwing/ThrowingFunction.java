@@ -36,7 +36,6 @@ import pl.touk.throwing.exception.WrappedException;
 @FunctionalInterface
 public interface ThrowingFunction<T,R,E extends Throwable> {
     R apply(T arg) throws E;
-
     /**
      * @param <T> type
      * @param <E> checked exception
