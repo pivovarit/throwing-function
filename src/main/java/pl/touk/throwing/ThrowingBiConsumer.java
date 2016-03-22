@@ -36,10 +36,11 @@ import pl.touk.throwing.exception.WrappedException;
 public interface ThrowingBiConsumer<T, U, E extends Throwable> {
     void accept(T t, U u) throws E;
 
-    default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, E> after) {
-        Objects.requireNonNull(after);
+    default ThrowingBiConsumer<T, U,E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, E> after) {
+bjects.requireNonNull(after);
 
-        return (arg1, arg2) -> {
+
+return (arg1,arg2) -> {
             accept(arg1, arg2);
             after.accept(arg1, arg2);
         };
