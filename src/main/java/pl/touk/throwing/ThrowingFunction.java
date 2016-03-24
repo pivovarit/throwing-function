@@ -18,6 +18,7 @@ package pl.touk.throwing;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import pl.touk.throwing.exception.WrappedException;
@@ -35,20 +36,19 @@ import pl.touk.throwing.exception.WrappedException;
 @FunctionalInterface
 public interface ThrowingFunction<T,R,E extends Throwable> {
     R apply(T arg) throws E;
-
     /**
      * @param <T> type
      * @param <E> checked exception
      * @return a function that accepts one argument and returns it as a value.
      */
     static <T, E extends Exception> ThrowingFunction<T, T, E> identity() {
-        return t -> t;
+        return t->t;
     }
 
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, E> before) {
         Objects.requireNonNull(before);
 
-        return (V v) -> apply(before.apply(v));
+        return (V v) ->apply(before.apply(v));
     }
 
     default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
@@ -71,7 +71,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         };
     }
 
-    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
+    public static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
         Objects.requireNonNull(f);
 
         return f.unchecked();
