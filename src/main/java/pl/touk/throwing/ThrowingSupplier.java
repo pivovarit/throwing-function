@@ -15,10 +15,11 @@
  */
 package pl.touk.throwing;
 
-import java.util.Objects;
-import java.util.function.Supplier;
-
 import pl.touk.throwing.exception.WrappedException;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * Represents a function that accepts zero arguments and returns some value.
@@ -55,6 +56,12 @@ public interface ThrowingSupplier<T, E extends Throwable> {
         return supplier.unchecked();
     }
 
+    static <T, E extends Exception> Supplier<Optional<T>> lifted(ThrowingSupplier<T, E> supplier) {
+        Objects.requireNonNull(supplier);
+
+        return supplier.lift();
+    }
+
     /**
      * @return a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
      */
@@ -64,6 +71,20 @@ public interface ThrowingSupplier<T, E extends Throwable> {
                 return get();
             } catch (final Throwable e) {
                 throw new WrappedException(e, e.getClass());
+            }
+        };
+    }
+
+    /**
+     * @return a new Supplier that returns the result as an Optional instance. In case of a failure, empty Optional is
+     * returned
+     */
+    default Supplier<Optional<T>> lift() {
+        return () -> {
+            try {
+                return Optional.of(get());
+            } catch (Throwable e) {
+                return Optional.empty();
             }
         };
     }

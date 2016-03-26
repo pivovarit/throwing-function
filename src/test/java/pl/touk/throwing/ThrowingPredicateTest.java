@@ -80,8 +80,8 @@ public class ThrowingPredicateTest {
         final ThrowingPredicate<Integer, Exception> pFalse = i -> { throw new Exception(); };
 
         // then
-        assertThat(pTrue.returningOptional().apply(42).isPresent()).isTrue();
-        assertThat(pFalse.returningOptional().apply(42).isPresent()).isFalse();
+        assertThat(pTrue.lift().apply(42).isPresent()).isTrue();
+        assertThat(pFalse.lift().apply(42).isPresent()).isFalse();
     }
 
     @Test(expected = RuntimeException.class)

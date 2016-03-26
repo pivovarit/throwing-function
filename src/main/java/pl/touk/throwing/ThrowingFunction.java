@@ -15,12 +15,12 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import pl.touk.throwing.exception.WrappedException;
 
 
 /**
@@ -61,7 +61,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
      * @return a Function that returns the result as an Optional instance. In case of a failure, empty Optional is
      * returned
      */
-    default Function<T, Optional<R>> returningOptional() {
+    default Function<T, Optional<R>> lift() {
         return t -> {
             try {
                 return Optional.of(apply(t));
@@ -71,16 +71,33 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         };
     }
 
+    /**
+     * @return a Function that returns the result of the given function as an Optional instance.
+     * In case of a failure, empty Optional is returned
+     */
+    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(ThrowingFunction<T, R, E> f) {
+        Objects.requireNonNull(f);
+
+        return f.lift();
+    }
+
+    /**
+     * @return a new Function instance which wraps thrown checked exception instance into a RuntimeException
+     */
+    default Function<T, R> unchecked() {
+        return t -> {
+            try {
+                return apply(t);
+            } catch (final Throwable e) {
+                throw new WrappedException(e, e.getClass());
+            }
+        };
+    }
+
     static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
         Objects.requireNonNull(f);
 
         return f.unchecked();
-    }
-
-    static <T, R, E extends Exception> Function<T, Optional<R>> trying(ThrowingFunction<T, R, E> f) {
-        Objects.requireNonNull(f);
-
-        return f.returningOptional();
     }
 
     static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
@@ -101,18 +118,5 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         } catch (WrappedException ex) {
             throw ex.getKlass().cast(ex.getCause());
         }
-    }
-
-    /**
-     * @return a new Function instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default Function<T, R> unchecked() {
-        return t -> {
-            try {
-                return apply(t);
-            } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
-            }
-        };
     }
 }

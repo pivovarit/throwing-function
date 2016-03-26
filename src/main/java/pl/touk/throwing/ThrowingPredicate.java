@@ -15,11 +15,11 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-
-import pl.touk.throwing.exception.WrappedException;
 
 /**
  * Represents a function that accepts one argument and returns a boolean value
@@ -55,7 +55,7 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         return t -> !test(t);
     }
 
-    default ThrowingFunction<T, Optional<Boolean>, E> returningOptional() {
+    default ThrowingFunction<T, Optional<Boolean>, E> lift() {
         return t -> {
             try {
                 return Optional.of(test(t));

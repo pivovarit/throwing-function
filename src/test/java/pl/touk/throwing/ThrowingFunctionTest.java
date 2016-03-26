@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.touk.throwing.TestCommons.givenThrowingFunction;
 import static pl.touk.throwing.ThrowingFunction.checked;
-import static pl.touk.throwing.ThrowingFunction.trying;
+import static pl.touk.throwing.ThrowingFunction.lifted;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
 
 import java.net.URI;
@@ -12,6 +12,7 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 public class ThrowingFunctionTest {
@@ -49,7 +50,7 @@ public class ThrowingFunctionTest {
         final ThrowingFunction<Integer, Integer, Exception> f1 = ThrowingFunction.identity();
 
         // when
-        final Optional<Integer> result = f1.returningOptional().apply(42);
+        final Optional<Integer> result = f1.lift().apply(42);
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -61,7 +62,7 @@ public class ThrowingFunctionTest {
         final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
         // when
-        final Optional<Integer> result = f1.returningOptional().apply(42);
+        final Optional<Integer> result = f1.lift().apply(42);
 
         // then
         assertThat(result.isPresent()).isFalse();
@@ -124,10 +125,25 @@ public class ThrowingFunctionTest {
     public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
 
         // when
-        final Optional<URI> result = Stream.of(". .").map(trying(URI::new)).findAny().get();
+        final Optional<URI> result = Stream.of(". .").map(lifted(URI::new)).findAny().get();
 
         // then RuntimeException is thrown
         assertThat(result.isPresent()).isFalse();
     }
 
+
+    @Test
+    public void testName() throws Exception {
+
+        Assertions.assertThat(Optional.of(new Bean("aaa"))).hasValue(new Bean("bbb"));
+
+    }
+
+    public static class Bean {
+        public Bean(String a) {
+            this.a = a;
+        }
+
+        private String a = "dupa";
+    }
 }
