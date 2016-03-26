@@ -72,10 +72,25 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         return this::test;
     }
 
-    static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
+    static <T, E extends Throwable> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
         Objects.requireNonNull(predicate);
 
         return predicate.unchecked();
+    }
+
+    /**
+     * @return a Predicate that returns false in case of an exception being thrown
+     */
+    static <T, E extends Throwable> Predicate<T> lifted(ThrowingPredicate<T, E> predicate) {
+        Objects.requireNonNull(predicate);
+
+        return t -> {
+            try {
+                return predicate.test(t);
+            } catch (Throwable e) {
+                return false;
+            }
+        };
     }
 
     /**

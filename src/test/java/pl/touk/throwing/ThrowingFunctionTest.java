@@ -1,19 +1,16 @@
 package pl.touk.throwing;
 
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static pl.touk.throwing.TestCommons.givenThrowingFunction;
-import static pl.touk.throwing.ThrowingFunction.checked;
-import static pl.touk.throwing.ThrowingFunction.lifted;
-import static pl.touk.throwing.ThrowingFunction.unchecked;
+import org.junit.Test;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static pl.touk.throwing.TestCommons.givenThrowingFunction;
+import static pl.touk.throwing.ThrowingFunction.*;
 
 public class ThrowingFunctionTest {
 
@@ -129,21 +126,5 @@ public class ThrowingFunctionTest {
 
         // then RuntimeException is thrown
         assertThat(result.isPresent()).isFalse();
-    }
-
-
-    @Test
-    public void testName() throws Exception {
-
-        Assertions.assertThat(Optional.of(new Bean("aaa"))).hasValue(new Bean("bbb"));
-
-    }
-
-    public static class Bean {
-        public Bean(String a) {
-            this.a = a;
-        }
-
-        private String a = "dupa";
     }
 }
