@@ -15,10 +15,11 @@
  */
 package pl.touk.throwing;
 
-import java.util.Objects;
-import java.util.function.BiFunction;
-
 import pl.touk.throwing.exception.WrappedException;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiFunction;
 
 
 /**
@@ -63,5 +64,21 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
                 throw new WrappedException(e, e.getClass());
             }
         };
+    }
+
+    default BiFunction<T1, T2, Optional<R>> lift() {
+        return (arg1, arg2) -> {
+            try {
+                return Optional.of(apply(arg1, arg2));
+            } catch (Throwable e) {
+                return Optional.empty();
+            }
+        };
+    }
+
+    static <T1, T2, R, E extends Exception> BiFunction<T1, T2, Optional<R>> lifted(ThrowingBiFunction<T1, T2, R, E> f) {
+        Objects.requireNonNull(f);
+
+        return f.lift();
     }
 }

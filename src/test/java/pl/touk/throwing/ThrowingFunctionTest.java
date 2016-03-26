@@ -113,7 +113,7 @@ public class ThrowingFunctionTest {
     public void shouldUnwrapOriginalExceptionWithTryCatch() throws Throwable {
 
         // when
-        ThrowingFunction.checked(() ->Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
+        ThrowingFunction.checked(() -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
 
         // then a checked exception is thrown
     }
