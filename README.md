@@ -60,9 +60,9 @@ Feature is available for all java.util.function types. Comes both as a static an
     static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {...}
 Additional static function allowing to catch wrapped checked exception, unwrap and rethrow. Comes in handy sometimes.
 
-    default Function<T, Optional<R>> trying() {...}
+    static Function<T, Optional<R>> lifted() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
-is thrown, result will contain an empty Optional instance. Exception gets ignored. Comes as a static method. Equivalent instance method is called `returningOptional()`
+is thrown, result will contain an empty Optional instance. Exception gets ignored. Comes as a static method. Equivalent instance method is called `lift()`
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
