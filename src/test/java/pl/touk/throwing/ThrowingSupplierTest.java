@@ -68,4 +68,27 @@ public class ThrowingSupplierTest {
 
         // then exception is thrown
     }
+
+    @Test(expected = WrappedException.class)
+    public void shouldGetUncheckedWithUtilsFunction() throws Exception {
+        // given
+        final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
+
+        // when
+        ThrowingSupplier.unchecked(supplier).get();
+
+        // then exception is thrown
+    }
+
+    @Test
+    public void shouldLiftAndGetWithUtilsFunction() throws Exception {
+        // given
+        final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
+
+        // when
+        final Optional<Integer> result = ThrowingSupplier.lifted(supplier).get();
+
+        // then
+        assertThat(result).isPresent();
+    }
 }
