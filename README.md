@@ -1,5 +1,5 @@
 # ThrowingFunction
-Java 8 functional types supporting checked exceptions + some additional flavours.
+Java 8+ functional types supporting checked exceptions + some handy utils. 
 
 [![Build Status](https://travis-ci.org/TouK/ThrowingFunction.svg?branch=master)](https://travis-ci.org/TouK/ThrowingFunction)
 [![Sputnik](https://sputnik.touk.pl/conf/badge)](https://sputnik.touk.pl/app#/builds/TouK/ThrowingFunction)
