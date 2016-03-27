@@ -122,9 +122,12 @@ public class ThrowingFunctionTest {
     public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
 
         // when
-        final Optional<URI> result = Stream.of(". .").map(lifted(URI::new)).findAny().get();
+        final Long result = Stream.of(". .")
+                .map(lifted(URI::new))
+                .filter(Optional::isPresent)
+                .count();
 
-        // then RuntimeException is thrown
-        assertThat(result.isPresent()).isFalse();
+        //then
+        assertThat(result).isZero();
     }
 }

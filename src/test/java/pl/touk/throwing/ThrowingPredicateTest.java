@@ -97,6 +97,18 @@ public class ThrowingPredicateTest {
         // then RuntimeException is thrown
     }
 
+    @Test
+    public void shouldTestWhenUsingUncheck() throws Exception {
+        // given
+        final ThrowingPredicate<Integer, Exception> predicate = i -> true;
+        final List<Integer> integers = Collections.singletonList(42);
+
+        // when
+        integers.stream().anyMatch(predicate.unchecked());
+
+        // then RuntimeException is thrown
+    }
+
     @Test(expected = RuntimeException.class)
     public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
         // given
@@ -110,6 +122,8 @@ public class ThrowingPredicateTest {
 
         // then RuntimeException is thrown
     }
+
+
 
 
 }
