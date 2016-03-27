@@ -18,7 +18,7 @@ public class ThrowingRunnableTest {
         // then exception thrown
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldRunUnchecked() throws Exception {
         // given
         ThrowingRunnable<Exception> runnable = () -> { };
