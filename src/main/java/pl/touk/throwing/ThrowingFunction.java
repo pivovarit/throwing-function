@@ -20,7 +20,6 @@ import pl.touk.throwing.exception.WrappedException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 
 /**
@@ -98,27 +97,5 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         Objects.requireNonNull(f);
 
         return f.unchecked();
-    }
-
-    @SuppressWarnings("unchecked")
-    static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
-        try {
-            return supplier.get();
-        } catch (WrappedException ex) {
-            if (exceptionType.isInstance(ex.getCause())) {
-                throw (E) ex.getCause();
-            } else {
-                throw ex;
-            }
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    static <T> T checked(Supplier<T> supplier) throws Throwable {
-        try {
-            return supplier.get();
-        } catch (WrappedException ex) {
-            throw ex.getCause();
-        }
     }
 }
