@@ -23,6 +23,21 @@ public class ThrowingConsumerTest {
     }
 
     @Test
+    public void shouldConsumeAfter() throws Exception {
+        // given
+        final Integer[] input = {0};
+
+        ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
+        ThrowingConsumer<Integer, Exception> after = i -> input[0] = 3;
+
+        // when
+        consumer.andThenConsume(after).accept(2);
+
+        // then
+        Assertions.assertThat(input[0]).isEqualTo(3);
+    }
+
+    @Test
     public void shouldConsumeAsFunction() throws Exception {
         // given
         final Integer[] input = {0};
@@ -45,5 +60,16 @@ public class ThrowingConsumerTest {
         ThrowingConsumer.unchecked(consumer).accept(3);
 
         // then WrappedException was thrown
+    }
+
+    @Test
+    public void shouldConsumeUnchecked() throws Exception {
+        // given
+        ThrowingConsumer<Integer, IOException> consumer = i -> {};
+
+        // when
+        ThrowingConsumer.unchecked(consumer).accept(3);
+
+        // then no exception thrown
     }
 }
