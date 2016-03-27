@@ -74,14 +74,13 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldReturnOptionalFunction() throws Exception {
+    public void shouldTestAsFunction() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> { throw new Exception(); };
+        final ThrowingPredicate<Integer, Exception> p = i -> true;
 
         // then
-        assertThat(pTrue.lift().apply(42).isPresent()).isTrue();
-        assertThat(pFalse.lift().apply(42).isPresent()).isFalse();
+        assertThat(p.asFunction())
+                .isInstanceOf(ThrowingFunction.class);
     }
 
     @Test(expected = RuntimeException.class)
@@ -97,4 +96,20 @@ public class ThrowingPredicateTest {
 
         // then RuntimeException is thrown
     }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
+        // given
+        final ThrowingPredicate<Integer, Exception> predicate = i -> {
+            throw new Exception();
+        };
+        final List<Integer> integers = Collections.singletonList(42);
+
+        // when
+        integers.stream().anyMatch(i -> predicate.unchecked().test(i));
+
+        // then RuntimeException is thrown
+    }
+
+
 }

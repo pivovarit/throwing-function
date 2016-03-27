@@ -18,7 +18,6 @@ package pl.touk.throwing;
 import pl.touk.throwing.exception.WrappedException;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -55,16 +54,6 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         return t -> !test(t);
     }
 
-    default ThrowingFunction<T, Optional<Boolean>, E> lift() {
-        return t -> {
-            try {
-                return Optional.of(test(t));
-            } catch (Exception e) {
-                return Optional.empty();
-            }
-        };
-    }
-
     /**
      * @return this Predicate instance as a Function instance
      */
@@ -76,21 +65,6 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         Objects.requireNonNull(predicate);
 
         return predicate.unchecked();
-    }
-
-    /**
-     * @return a Predicate that returns false in case of an exception being thrown
-     */
-    static <T, E extends Throwable> Predicate<T> lifted(ThrowingPredicate<T, E> predicate) {
-        Objects.requireNonNull(predicate);
-
-        return t -> {
-            try {
-                return predicate.test(t);
-            } catch (Throwable e) {
-                return false;
-            }
-        };
     }
 
     /**
