@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.touk.throwing.TestCommons.givenThrowingFunction;
@@ -88,10 +89,21 @@ public class ThrowingFunctionTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
 
         // when
         Stream.of(". .").map(unchecked(URI::new)).collect(toList());
+
+        // then RuntimeException is thrown
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
+        //given
+        ThrowingFunction<String, URI, Exception> f = URI::new;
+
+        // when
+        Stream.of(". .").map(f.unchecked()).collect(toList());
 
         // then RuntimeException is thrown
     }
@@ -116,6 +128,25 @@ public class ThrowingFunctionTest {
         ThrowingFunction.checked(() -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
 
         // then a checked exception is thrown
+    }
+
+    @Test(expected = URISyntaxException.class)
+    public void shouldUnwrapSpecifiedExceptionWithTryCatch() throws Throwable {
+
+        // when
+        ThrowingFunction.checked(URISyntaxException.class, () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
+
+        // then a checked exception is thrown
+    }
+
+    @Test
+    public void shouldApplyAfterUnwrapping() throws Throwable {
+
+        // when
+        final String result = ThrowingFunction.checked(() -> Stream.of("a").map(String::toUpperCase).collect(joining()));
+
+        // then
+        assertThat(result).isEqualTo("A");
     }
 
     @Test
