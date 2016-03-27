@@ -58,8 +58,20 @@ public class ThrowingSupplierTest {
         assertThat(result).isEmpty();
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldGetUnchecked() throws Exception {
+        // given
+        final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
+
+        // when
+        final Integer result = supplier.unchecked().get();
+
+        // then
+        assertThat(result).isEqualTo(42);
+    }
+
+    @Test(expected = WrappedException.class)
+    public void shouldGetUncheckedAndThrow() throws Exception {
         // given
         final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
 
