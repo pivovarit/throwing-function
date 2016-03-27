@@ -52,4 +52,6 @@ public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingF
             }
         };
     }
+
+
 }

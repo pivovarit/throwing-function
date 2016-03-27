@@ -15,9 +15,6 @@
  */
 package pl.touk.throwing;
 
-import java.util.Comparator;
-import java.util.Objects;
-
 /**
  * Represents an operation upon two operands of the same type, producing a result
  * of the same type as the operands.  This is a specialization of
@@ -34,16 +31,4 @@ import java.util.Objects;
  * @see ThrowingUnaryOperator
  */
 public interface ThrowingBinaryOperator<T, E extends Throwable> extends ThrowingBiFunction<T, T, T, E> {
-
-    static <T, E extends Exception> ThrowingBinaryOperator<T, E> minBy(Comparator<? super T> comparator) {
-        Objects.requireNonNull(comparator);
-
-        return (a, b) -> comparator.compare(a, b) <= 0 ? a : b;
-    }
-
-    static <T, E extends Exception> ThrowingBinaryOperator<T, E> maxBy(Comparator<? super T> comparator) {
-        Objects.requireNonNull(comparator);
-
-        return (a, b) -> comparator.compare(a, b) >= 0 ? a : b;
-    }
 }
