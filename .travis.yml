@@ -2,8 +2,12 @@ language: java
 
 install: mvn install -DskipTests=true -Dgpg.skip=true
 
+before_install:
+  - pip install codecov
+
 after_success:
   - python <(curl -s https://raw.githubusercontent.com/TouK/sputnik-ci/master/sputnik-ci.py)
+  - codecov
 
 jdk:
   - oraclejdk8
