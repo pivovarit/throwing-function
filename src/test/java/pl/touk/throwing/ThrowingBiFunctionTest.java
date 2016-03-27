@@ -102,4 +102,17 @@ public class ThrowingBiFunctionTest {
         //then
         assertThat(result).isPresent();
     }
+
+    @Test
+    public void shouldWrapInOptionalWhenUsingLifted() throws Exception {
+
+        // given
+        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> i + j;
+
+        // when
+        final Optional<Integer> result = ThrowingBiFunction.lifted(f1).apply(2, 2);
+
+        //then
+        assertThat(result).isPresent();
+    }
 }
