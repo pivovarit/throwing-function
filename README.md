@@ -66,5 +66,15 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
+
+## Contributors
+
+- Grzegorz Piwowarek
+- Hubert Lipiński
+- Tomasz Wielga
+
+## License
+
+This project is licenced under Apache License.
     
 
