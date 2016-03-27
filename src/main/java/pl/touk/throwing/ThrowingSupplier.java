@@ -34,16 +34,6 @@ public interface ThrowingSupplier<T, E extends Throwable> {
     T get() throws E;
 
     /**
-     *
-     * @param <T> type
-     * @param <E> checked exception
-     * @return a new Supplier instance returning null
-     */
-    static <T, E extends Exception> ThrowingSupplier<T, E> nullSupplier() {
-        return () -> null;
-    }
-
-    /**
      * @return this Consumer instance as a new Function instance
      */
     default ThrowingFunction<Void, T, E> asFunction() {
