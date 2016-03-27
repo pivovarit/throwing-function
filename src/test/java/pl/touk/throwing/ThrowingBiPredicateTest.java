@@ -1,0 +1,121 @@
+package pl.touk.throwing;
+
+import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+public class ThrowingBiPredicateTest {
+
+    @Test
+    public void shouldTest() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> p = (i, j) -> true;
+
+        // when
+        final boolean result = p.test(42, 0);
+
+        // then
+        assertThat(result).isTrue();
+
+    }
+
+    @Test
+    public void shouldTestOR() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> pTrue = (i, j) -> true;
+        final ThrowingBiPredicate<Integer, Integer, Exception> pFalse = (i, j) -> false;
+
+        // then
+        assertThat(pTrue.or(pFalse).test(42, 0)).isTrue();
+        assertThat(pTrue.or(pTrue).test(42, 0)).isTrue();
+        assertThat(pFalse.or(pTrue).test(42, 0)).isTrue();
+        assertThat(pFalse.or(pFalse).test(42, 0)).isFalse();
+    }
+
+    @Test
+    public void shouldTestXOR() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> pTrue = (i, j) -> true;
+        final ThrowingBiPredicate<Integer, Integer, Exception> pFalse = (i, j) -> false;
+
+        // then
+        assertThat(pTrue.xor(pFalse).test(42, 0)).isTrue();
+        assertThat(pTrue.xor(pTrue).test(42, 0)).isFalse();
+        assertThat(pFalse.xor(pTrue).test(42, 0)).isTrue();
+        assertThat(pFalse.xor(pFalse).test(42, 0)).isFalse();
+    }
+
+    @Test
+    public void shouldTestAND() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> pTrue = (i, j) -> true;
+        final ThrowingBiPredicate<Integer, Integer, Exception> pFalse = (i, j) -> false;
+
+        // then
+        assertThat(pTrue.and(pFalse).test(42, 0)).isFalse();
+        assertThat(pTrue.and(pTrue).test(42, 0)).isTrue();
+        assertThat(pFalse.and(pTrue).test(42, 0)).isFalse();
+        assertThat(pFalse.and(pFalse).test(42, 0)).isFalse();
+    }
+
+    @Test
+    public void shouldTestNegate() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> pTrue = (i, j) -> true;
+        final ThrowingBiPredicate<Integer, Integer, Exception> pFalse = (i, j) -> false;
+
+        // then
+        assertThat(pTrue.negate().test(42, 0)).isFalse();
+        assertThat(pFalse.negate().test(42, 0)).isTrue();
+    }
+
+    @Test
+    public void shouldTestAsFunction() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> p = (i, j) -> true;
+
+        // then
+        assertThat(p.asFunction().apply(1, 2)).isTrue();
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> {
+            throw new Exception();
+        };
+
+        // when
+        ThrowingBiPredicate.unchecked(predicate).test(42, 0);
+
+        // then RuntimeException is thrown
+    }
+
+    @Test
+    public void shouldTestWhenUsingUncheck() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> true;
+
+        // when
+        predicate.unchecked().test(1, 2);
+
+        // then no exception is thrown
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
+        // given
+        final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> {
+            throw new Exception();
+        };
+
+        // when
+        predicate.unchecked().test(0, 2);
+
+        // then RuntimeException is thrown
+    }
+
+
+
+
+}
