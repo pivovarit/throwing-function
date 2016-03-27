@@ -1,7 +1,9 @@
 package pl.touk.throwing;
 
 import org.junit.Test;
+import pl.touk.throwing.exception.WrappedException;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
@@ -108,6 +110,17 @@ public class ThrowingFunctionTest {
         // then RuntimeException is thrown
     }
 
+    @Test
+    public void shouldApplyWhenNoExceptionThrown() throws Exception {
+        //given
+        ThrowingFunction<String, String, Exception> f = String::toUpperCase;
+
+        // when
+        Stream.of(". .").map(f.unchecked()).collect(toList());
+
+        // then no exception thrown
+    }
+
     @Test(expected = URISyntaxException.class)
     public void shouldUnwrapOriginalExceptionWhenUsingStandardUtilsFunctions() throws URISyntaxException {
 
@@ -134,7 +147,17 @@ public class ThrowingFunctionTest {
     public void shouldUnwrapSpecifiedExceptionWithTryCatch() throws Throwable {
 
         // when
-        ThrowingFunction.checked(URISyntaxException.class, () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
+        ThrowingFunction.checked(URISyntaxException.class,
+                () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
+
+        // then a checked exception is thrown
+    }
+
+    @Test(expected = WrappedException.class)
+    public void shouldIgnoreUnspecifiedExceptionWithTryCatch() throws Throwable {
+
+        // when
+        ThrowingFunction.checked(IOException.class, () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
 
         // then a checked exception is thrown
     }
@@ -143,7 +166,23 @@ public class ThrowingFunctionTest {
     public void shouldApplyAfterUnwrapping() throws Throwable {
 
         // when
-        final String result = ThrowingFunction.checked(() -> Stream.of("a").map(String::toUpperCase).collect(joining()));
+        final String result = ThrowingFunction.checked(
+                () -> Stream.of("a")
+                        .map(String::toUpperCase)
+                        .collect(joining()));
+
+        // then
+        assertThat(result).isEqualTo("A");
+    }
+
+    @Test
+    public void shouldApplyAfterUnwrappingSpecifiecEx() throws Throwable {
+
+        // when
+        final String result = ThrowingFunction.checked(URISyntaxException.class,
+                () -> Stream.of("a")
+                        .map(String::toUpperCase)
+                        .collect(joining()));
 
         // then
         assertThat(result).isEqualTo("A");
