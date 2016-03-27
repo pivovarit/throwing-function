@@ -61,7 +61,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Throwable> {
             try {
                 return apply(arg1, arg2);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

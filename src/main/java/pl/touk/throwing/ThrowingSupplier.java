@@ -60,7 +60,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
             try {
                 return get();
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

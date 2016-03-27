@@ -15,10 +15,10 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.function.Consumer;
-
-import pl.touk.throwing.exception.WrappedException;
 
 /**
  * Represents a function that accepts one argument and does not return any value;
@@ -71,7 +71,7 @@ public interface ThrowingConsumer<T, E extends Throwable> {
             try {
                 accept(t);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

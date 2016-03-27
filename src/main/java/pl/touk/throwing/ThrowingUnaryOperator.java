@@ -15,10 +15,10 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.function.UnaryOperator;
-
-import pl.touk.throwing.exception.WrappedException;
 
 /**
  * Represents an operation on a single operand that produces a result of the
@@ -48,7 +48,7 @@ public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingF
             try {
                 return apply(t);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

@@ -15,10 +15,10 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.function.BiConsumer;
-
-import pl.touk.throwing.exception.WrappedException;
 
 /**
  * Represents an operation that accepts two input arguments and returns no
@@ -71,7 +71,7 @@ public interface ThrowingBiConsumer<T, U, E extends Throwable> {
             try {
                 accept(arg1, arg2);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

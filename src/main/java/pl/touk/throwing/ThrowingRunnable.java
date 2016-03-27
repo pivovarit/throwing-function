@@ -15,9 +15,9 @@
  */
 package pl.touk.throwing;
 
-import java.util.Objects;
-
 import pl.touk.throwing.exception.WrappedException;
+
+import java.util.Objects;
 
 /**
  * Represents an action that can be performed.
@@ -43,7 +43,7 @@ public interface ThrowingRunnable<E extends Throwable> {
             try {
                 run();
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

@@ -89,7 +89,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
             try {
                 return apply(t);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

@@ -75,7 +75,7 @@ public interface ThrowingPredicate<T, E extends Throwable> {
             try {
                 return test(t);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }

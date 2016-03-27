@@ -15,10 +15,10 @@
  */
 package pl.touk.throwing;
 
+import pl.touk.throwing.exception.WrappedException;
+
 import java.util.Objects;
 import java.util.function.BiPredicate;
-
-import pl.touk.throwing.exception.WrappedException;
 
 /**
  * Represents a predicate (boolean-valued function) of two arguments.  This is
@@ -76,7 +76,7 @@ public interface ThrowingBiPredicate<T, U, E extends Throwable> {
             try {
                 return test(arg1, arg2);
             } catch (final Throwable e) {
-                throw new WrappedException(e, e.getClass());
+                throw new WrappedException(e);
             }
         };
     }
