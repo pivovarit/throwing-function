@@ -100,6 +100,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return f.unchecked();
     }
 
+    @SuppressWarnings("unchecked")
     static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
         try {
             return supplier.get();
@@ -112,11 +113,12 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     static <T> T checked(Supplier<T> supplier) throws Throwable {
         try {
-            return checked(Throwable.class, supplier);
+            return supplier.get();
         } catch (WrappedException ex) {
-            throw ex.getKlass().cast(ex.getCause());
+            throw ex.getCause();
         }
     }
 }
