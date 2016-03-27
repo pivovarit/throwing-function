@@ -21,10 +21,32 @@ public class ThrowingRunnableTest {
     @Test(expected = WrappedException.class)
     public void shouldRunUnchecked() throws Exception {
         // given
+        ThrowingRunnable<Exception> runnable = () -> { };
+
+        // when
+        runnable.unchecked().run();
+
+        // then WrappedException thrown
+    }
+
+    @Test(expected = WrappedException.class)
+    public void shouldRunUncheckedAndThrow() throws Exception {
+        // given
         ThrowingRunnable<Exception> runnable = () -> { throw new IOException(); };
 
         // when
         runnable.unchecked().run();
+
+        // then WrappedException thrown
+    }
+
+    @Test(expected = WrappedException.class)
+    public void shouldRunUncheckedAndThrowUsingUtilsMethod() throws Exception {
+        // given
+        ThrowingRunnable<Exception> runnable = () -> { throw new IOException(); };
+
+        // when
+        ThrowingRunnable.unchecked(runnable).run();
 
         // then WrappedException thrown
     }
