@@ -35,7 +35,7 @@ For Maven users:
     <dependency>
       <groupId>pl.touk</groupId>
       <artifactId>throwing-function</artifactId>
-      <version>1.2.1</version>
+      <version>1.3</version>
     </dependency>
     
 ### Available types:
