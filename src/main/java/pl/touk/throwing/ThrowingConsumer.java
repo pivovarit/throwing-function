@@ -33,6 +33,12 @@ public interface ThrowingConsumer<T, E extends Throwable> {
 
     void accept(T t) throws E;
 
+    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+        Objects.requireNonNull(consumer);
+
+        return consumer.uncheck();
+    }
+
     /**
      * Chains given ThrowingConsumer instance
      * @param after - consumer that is chained after this instance
@@ -57,16 +63,10 @@ public interface ThrowingConsumer<T, E extends Throwable> {
         };
     }
 
-    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
-        Objects.requireNonNull(consumer);
-
-        return consumer.unchecked();
-    }
-
     /**
      * @return a Consumer instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Consumer<T> unchecked() {
+    default Consumer<T> uncheck() {
         return t -> {
             try {
                 accept(t);

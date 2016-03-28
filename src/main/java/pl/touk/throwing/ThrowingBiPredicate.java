@@ -33,6 +33,12 @@ import java.util.function.BiPredicate;
 public interface ThrowingBiPredicate<T, U, E extends Throwable> {
     boolean test(T t, U u) throws E;
 
+    static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
+        Objects.requireNonNull(predicate);
+
+        return predicate.uncheck();
+    }
+
     default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, E> other) {
         Objects.requireNonNull(other);
 
@@ -62,16 +68,10 @@ public interface ThrowingBiPredicate<T, U, E extends Throwable> {
         return this::test;
     }
 
-    static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
-        Objects.requireNonNull(predicate);
-
-        return predicate.unchecked();
-    }
-
     /**
      * @return a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default BiPredicate<T, U> unchecked() {
+    default BiPredicate<T, U> uncheck() {
         return (arg1, arg2) -> {
             try {
                 return test(arg1, arg2);

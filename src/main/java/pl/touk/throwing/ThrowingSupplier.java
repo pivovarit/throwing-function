@@ -43,7 +43,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
     static <T, E extends Exception> Supplier<T> unchecked(ThrowingSupplier<T, E> supplier) {
         Objects.requireNonNull(supplier);
 
-        return supplier.unchecked();
+        return supplier.uncheck();
     }
 
     static <T, E extends Exception> Supplier<Optional<T>> lifted(ThrowingSupplier<T, E> supplier) {
@@ -55,7 +55,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
     /**
      * @return a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Supplier<T> unchecked() {
+    default Supplier<T> uncheck() {
         return () -> {
             try {
                 return get();

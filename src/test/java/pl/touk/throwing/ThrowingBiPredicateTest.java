@@ -97,25 +97,8 @@ public class ThrowingBiPredicateTest {
         final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> true;
 
         // when
-        predicate.unchecked().test(1, 2);
+        predicate.uncheck().test(1, 2);
 
         // then no exception is thrown
     }
-
-    @Test(expected = RuntimeException.class)
-    public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
-        // given
-        final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> {
-            throw new Exception();
-        };
-
-        // when
-        predicate.unchecked().test(0, 2);
-
-        // then RuntimeException is thrown
-    }
-
-
-
-
 }

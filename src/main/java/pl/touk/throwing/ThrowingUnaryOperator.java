@@ -34,7 +34,7 @@ import java.util.function.UnaryOperator;
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingFunction<T, T, E> {
 
-    static <T, E extends Exception> UnaryOperator<T> uncheck(ThrowingUnaryOperator<T, E> operator) {
+    static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
         Objects.requireNonNull(operator);
 
         return operator.uncheck();

@@ -64,7 +64,7 @@ public class ThrowingSupplierTest {
         final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
         // when
-        final Integer result = supplier.unchecked().get();
+        final Integer result = supplier.uncheck().get();
 
         // then
         assertThat(result).isEqualTo(42);
@@ -76,7 +76,7 @@ public class ThrowingSupplierTest {
         final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
 
         // when
-        supplier.unchecked().get();
+        supplier.uncheck().get();
 
         // then exception is thrown
     }

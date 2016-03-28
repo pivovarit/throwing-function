@@ -59,14 +59,14 @@ public interface ThrowingBiConsumer<T, U, E extends Throwable> {
     static <T, U, E extends Exception> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, E> consumer) {
         Objects.requireNonNull(consumer);
 
-        return consumer.unchecked();
+        return consumer.uncheck();
     }
 
     /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
      */
-    default BiConsumer<T, U> unchecked() {
+    default BiConsumer<T, U> uncheck() {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);
