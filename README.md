@@ -54,12 +54,13 @@ For Maven users:
 
 #### Additional features:
 
-    default Function<T, R> unchecked() {...}
-Transforms ThrowingFunction into a regular Function. Checked exception gets wrapped in a RuntimeException. 
+    default Function<T, R> uncheck() {...}
+Transforms ThrowingFunction instance into a regular Function. Checked exception gets wrapped in a RuntimeException. 
 Feature is available for all java.util.function types. Comes both as a static and as an instance method.
 
-    static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {...}
-Additional static function allowing to catch wrapped checked exception, unwrap and rethrow. Comes in handy sometimes.
+    static Function<T, R> uncheck(ThrowingFunction<> f) {...}
+Static version of the uncheck() method. Works nice when using with original java functional types.
+    ...stream().map(unchecked(URI::new)).forEach(System.out::println);
 
     static Function<T, Optional<R>> lifted() {...}
 Transforms ThrowingFunction into a regular Function returning result wrapped into an Optional instance. If exception 
@@ -67,6 +68,9 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
+
+    Checker.checked()
+Additional static function allowing to catch wrapped checked exception, unwrap and rethrow them. Comes in handy sometimes.
 
 ## Contributors
 
