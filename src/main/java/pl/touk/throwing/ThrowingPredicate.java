@@ -32,6 +32,12 @@ import java.util.function.Predicate;
 public interface ThrowingPredicate<T, E extends Throwable> {
     boolean test(T t) throws E;
 
+    static <T, E extends Throwable> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
+        Objects.requireNonNull(predicate);
+
+        return predicate.uncheck();
+    }
+
     default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, E> other) {
         Objects.requireNonNull(other);
 
@@ -61,16 +67,10 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         return this::test;
     }
 
-    static <T, E extends Throwable> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
-        Objects.requireNonNull(predicate);
-
-        return predicate.unchecked();
-    }
-
     /**
      * @return a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Predicate<T> unchecked() {
+    default Predicate<T> uncheck() {
         return t -> {
             try {
                 return test(t);

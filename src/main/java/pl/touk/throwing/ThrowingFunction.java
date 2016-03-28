@@ -44,6 +44,22 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return t -> t;
     }
 
+    /**
+     * @return a Function that returns the result of the given function as an Optional instance.
+     * In case of a failure, empty Optional is returned
+     */
+    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(ThrowingFunction<T, R, E> f) {
+        Objects.requireNonNull(f);
+
+        return f.lift();
+    }
+
+    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
+        Objects.requireNonNull(f);
+
+        return f.uncheck();
+    }
+
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, E> before) {
         Objects.requireNonNull(before);
 
@@ -71,19 +87,9 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
     }
 
     /**
-     * @return a Function that returns the result of the given function as an Optional instance.
-     * In case of a failure, empty Optional is returned
-     */
-    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(ThrowingFunction<T, R, E> f) {
-        Objects.requireNonNull(f);
-
-        return f.lift();
-    }
-
-    /**
      * @return a new Function instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default Function<T, R> unchecked() {
+    default Function<T, R> uncheck() {
         return t -> {
             try {
                 return apply(t);
@@ -91,11 +97,5 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
                 throw new WrappedException(e);
             }
         };
-    }
-
-    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
-        Objects.requireNonNull(f);
-
-        return f.unchecked();
     }
 }

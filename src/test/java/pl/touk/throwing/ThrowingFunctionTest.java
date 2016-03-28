@@ -82,7 +82,7 @@ public class ThrowingFunctionTest {
         final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
         // when
-        f1.unchecked().apply(42);
+        f1.uncheck().apply(42);
 
         // then RuntimeException is thrown
     }
@@ -102,7 +102,7 @@ public class ThrowingFunctionTest {
         ThrowingFunction<String, String, Exception> f = String::toUpperCase;
 
         // when
-        Stream.of(". .").map(f.unchecked()).collect(toList());
+        Stream.of(". .").map(f.uncheck()).collect(toList());
 
         // then no exception thrown
     }

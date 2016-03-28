@@ -34,16 +34,16 @@ import java.util.function.UnaryOperator;
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingFunction<T, T, E> {
 
-    static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
+    static <T, E extends Exception> UnaryOperator<T> uncheck(ThrowingUnaryOperator<T, E> operator) {
         Objects.requireNonNull(operator);
 
-        return operator.unchecked();
+        return operator.uncheck();
     }
 
     /**
      * Returns a new UnaryOperator instance which wraps thrown checked exception instance into a RuntimeException
      */
-    default UnaryOperator<T> unchecked() {
+    default UnaryOperator<T> uncheck() {
         return t -> {
             try {
                 return apply(t);

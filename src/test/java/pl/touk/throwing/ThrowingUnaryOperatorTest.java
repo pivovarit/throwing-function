@@ -24,7 +24,7 @@ public class ThrowingUnaryOperatorTest {
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
         // when
-        ThrowingUnaryOperator.unchecked(op).apply(42);
+        ThrowingUnaryOperator.uncheck(op).apply(42);
 
         // then no exception thrown
     }
@@ -35,7 +35,7 @@ public class ThrowingUnaryOperatorTest {
         ThrowingUnaryOperator<Integer, IOException> op = i -> { throw new IOException(); };
 
         // when
-        ThrowingUnaryOperator.unchecked(op).apply(42);
+        ThrowingUnaryOperator.uncheck(op).apply(42);
 
         // then no exception thrown
     }

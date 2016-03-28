@@ -9,7 +9,7 @@ public final class Checker {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, E extends Throwable> T checked(Class<E> exceptionType, Supplier<T> supplier) throws E {
+    public static <T, E extends Throwable> T checked(Class exceptionType, Supplier<T> supplier) throws E {
         try {
             return supplier.get();
         } catch (WrappedException ex) {

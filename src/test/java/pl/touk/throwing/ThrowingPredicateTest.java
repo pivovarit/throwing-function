@@ -104,7 +104,7 @@ public class ThrowingPredicateTest {
         final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        integers.stream().anyMatch(predicate.unchecked());
+        integers.stream().anyMatch(predicate.uncheck());
 
         // then RuntimeException is thrown
     }
@@ -118,7 +118,7 @@ public class ThrowingPredicateTest {
         final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        integers.stream().anyMatch(i -> predicate.unchecked().test(i));
+        integers.stream().anyMatch(i -> predicate.uncheck().test(i));
 
         // then RuntimeException is thrown
     }
