@@ -70,7 +70,7 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
 
     Checker.checked()
-Additional static function allowing to catch wrapped checked exception, unwrap and rethrow them. Comes in handy sometimes.
+Additional static function allowing to catch wrapped checked exceptions, unwrap and rethrow them. Comes in handy sometimes.
 
 ## Contributors
 
