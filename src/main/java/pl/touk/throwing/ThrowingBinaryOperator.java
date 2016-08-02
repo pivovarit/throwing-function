@@ -15,6 +15,11 @@
  */
 package pl.touk.throwing;
 
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.BinaryOperator;
+import pl.touk.throwing.exception.WrappedException;
+
 /**
  * Represents an operation upon two operands of the same type, producing a result
  * of the same type as the operands.  This is a specialization of
@@ -31,4 +36,21 @@ package pl.touk.throwing;
  * @see ThrowingUnaryOperator
  */
 public interface ThrowingBinaryOperator<T, E extends Throwable> extends ThrowingBiFunction<T, T, T, E> {
+
+    static <T, E extends Throwable> BiFunction<T, T, T> unchecked(ThrowingBinaryOperator<T, E> function) {
+        Objects.requireNonNull(function);
+
+        return function.unchecked();
+    }
+    
+    @Override
+    default BinaryOperator<T> unchecked() {
+        return (arg1, arg2) -> {
+            try {
+                return apply(arg1, arg2);
+            } catch (final Throwable e) {
+                throw new WrappedException(e);
+            }
+        };
+    }
 }
