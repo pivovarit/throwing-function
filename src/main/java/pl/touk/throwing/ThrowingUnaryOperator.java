@@ -43,6 +43,7 @@ public interface ThrowingUnaryOperator<T, E extends Throwable> extends ThrowingF
     /**
      * Returns a new UnaryOperator instance which wraps thrown checked exception instance into a RuntimeException
      */
+    @Override
     default UnaryOperator<T> uncheck() {
         return t -> {
             try {
