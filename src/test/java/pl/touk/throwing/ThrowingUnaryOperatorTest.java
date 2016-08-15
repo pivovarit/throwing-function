@@ -37,6 +37,16 @@ public class ThrowingUnaryOperatorTest {
         // when
         ThrowingUnaryOperator.unchecked(op).apply(42);
 
-        // then no exception thrown
+        // then an exception is thrown
     }
+    
+    @Test(expected = NullPointerException.class)
+    public void shouldApplyUncheckedAndThrowNPE() throws Exception {
+
+        // when
+        ThrowingUnaryOperator.unchecked(null).apply(42);
+
+        // then NPE is thrown
+    }
+
 }
