@@ -1,18 +1,26 @@
 package pl.touk.throwing;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.isA;
+import static org.junit.Assert.fail;
 import static pl.touk.throwing.TestCommons.givenThrowingFunction;
 import static pl.touk.throwing.ThrowingFunction.lifted;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
 
 public class ThrowingFunctionTest {
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldCompose() throws Exception {
@@ -65,35 +73,47 @@ public class ThrowingFunctionTest {
         assertThat(result.isPresent()).isFalse();
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void shouldThrowEx() throws Exception {
+        thrown.expect(Exception.class);
+        thrown.expectMessage("custom exception message");
+        
         // given
-        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction("custom exception message");
 
         // when
         f1.apply(42);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldWrapInRuntimeEx() throws Exception {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("custom exception message");
+        
         // given
-        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
+        final ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction("custom exception message");
 
         // when
         f1.uncheck().apply(42);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Illegal character in path at index 1: . .");
+        thrown.expectCause(isA(URISyntaxException.class));
 
         // when
         Stream.of(". .").map(unchecked(URI::new)).collect(toList());
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
     @Test

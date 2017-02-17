@@ -1,14 +1,21 @@
 package pl.touk.throwing;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.fail;
 import static pl.touk.throwing.ThrowingPredicate.unchecked;
 
 public class ThrowingPredicateTest {
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldTest() throws Exception {
@@ -83,11 +90,17 @@ public class ThrowingPredicateTest {
                 .isInstanceOf(ThrowingFunction.class);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+        final Exception cause = new Exception("some message");
+        
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
         final ThrowingPredicate<Integer, Exception> predicate = i -> {
-            throw new Exception();
+            throw cause;
         };
         final List<Integer> integers = Collections.singletonList(42);
 
@@ -95,6 +108,7 @@ public class ThrowingPredicateTest {
         integers.stream().anyMatch(i -> unchecked(predicate).test(i));
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
     @Test
@@ -109,11 +123,17 @@ public class ThrowingPredicateTest {
         // then RuntimeException is thrown
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
+        final Exception cause = new Exception("some message");
+        
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
         final ThrowingPredicate<Integer, Exception> predicate = i -> {
-            throw new Exception();
+            throw cause;
         };
         final List<Integer> integers = Collections.singletonList(42);
 
@@ -121,9 +141,6 @@ public class ThrowingPredicateTest {
         integers.stream().anyMatch(i -> predicate.uncheck().test(i));
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
-
-
-
-
 }

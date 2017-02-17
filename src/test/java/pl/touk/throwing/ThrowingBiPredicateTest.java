@@ -1,10 +1,18 @@
 package pl.touk.throwing;
 
+import static org.junit.Assert.fail;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 
 public class ThrowingBiPredicateTest {
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldTest() throws Exception {
@@ -78,17 +86,24 @@ public class ThrowingBiPredicateTest {
         assertThat(p.asFunction().apply(1, 2)).isTrue();
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+        final Exception cause = new Exception("some message");
+        
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
         final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> {
-            throw new Exception();
+            throw cause;
         };
 
         // when
         ThrowingBiPredicate.unchecked(predicate).test(42, 0);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
     @Test

@@ -1,21 +1,34 @@
 package pl.touk.throwing;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import pl.touk.throwing.exception.WrappedException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
 public class ThrowingRunnableTest {
 
-    @Test(expected = IOException.class)
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
     public void shouldRun() throws Exception {
+        thrown.expect(IOException.class);
+        thrown.expectMessage("some message");
+        
         // given
-        ThrowingRunnable<Exception> runnable = () -> { throw new IOException(); };
+        ThrowingRunnable<Exception> runnable = () -> { throw new IOException("some message"); };
 
         // when
         runnable.run();
 
         // then exception thrown
+        fail("exception expected");
     }
 
     @Test
@@ -29,26 +42,40 @@ public class ThrowingRunnableTest {
         // then WrappedException thrown
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldRunUncheckedAndThrow() throws Exception {
+        final IOException cause = new IOException("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        ThrowingRunnable<Exception> runnable = () -> { throw new IOException(); };
+        ThrowingRunnable<Exception> runnable = () -> { throw cause; };
 
         // when
         runnable.unchecked().run();
 
         // then WrappedException thrown
+        fail("exception expected");
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldRunUncheckedAndThrowUsingUtilsMethod() throws Exception {
+        final IOException cause = new IOException("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        ThrowingRunnable<Exception> runnable = () -> { throw new IOException(); };
+        ThrowingRunnable<Exception> runnable = () -> { throw cause; };
 
         // when
         ThrowingRunnable.unchecked(runnable).run();
 
         // then WrappedException thrown
+        fail("exception expected");
     }
 
 }

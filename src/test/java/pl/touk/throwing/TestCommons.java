@@ -10,4 +10,10 @@ public final class TestCommons {
             throw new Exception();
         };
     }
+
+    static ThrowingFunction<Integer, Integer, Exception> givenThrowingFunction(String message) throws Exception {
+        return i -> {
+            throw new Exception(message);
+        };
+    }
 }
