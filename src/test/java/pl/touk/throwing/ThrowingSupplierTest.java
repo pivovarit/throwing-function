@@ -1,14 +1,22 @@
 package pl.touk.throwing;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import pl.touk.throwing.exception.WrappedException;
 
 import java.io.IOException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.fail;
 
 public class ThrowingSupplierTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldGet() throws Exception {
@@ -70,26 +78,40 @@ public class ThrowingSupplierTest {
         assertThat(result).isEqualTo(42);
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldGetUncheckedAndThrow() throws Exception {
+        final IOException cause = new IOException("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
+        final ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
 
         // when
         supplier.uncheck().get();
 
         // then exception is thrown
+        fail("exception expected");
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldGetUncheckedWithUtilsFunction() throws Exception {
+        final IOException cause = new IOException("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
+        final ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
 
         // when
         ThrowingSupplier.unchecked(supplier).get();
 
         // then exception is thrown
+        fail("exception expected");
     }
 
     @Test

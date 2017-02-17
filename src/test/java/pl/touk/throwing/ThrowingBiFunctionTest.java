@@ -1,13 +1,21 @@
 package pl.touk.throwing;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import pl.touk.throwing.exception.WrappedException;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.fail;
 
 public class ThrowingBiFunctionTest {
+    
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldAndThen() throws Exception {
@@ -46,37 +54,55 @@ public class ThrowingBiFunctionTest {
         assertThat(result).isEmpty();
     }
 
-    @Test(expected = Exception.class)
+    @Test
     public void shouldThrowEx() throws Exception {
+        thrown.expect(Exception.class);
+        thrown.expectMessage("some message");
+
         // given
-        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception(); };
+        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception("some message"); };
 
         // when
         f1.apply(42, 42);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldWrapInWrappedEx() throws Exception {
+        final Exception cause = new Exception("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception(); };
+        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw cause; };
 
         // when
         f1.unchecked().apply(42, 42);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
+        final Exception cause = new Exception("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception(); };
+        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw cause; };
 
         // when
         ThrowingBiFunction.unchecked(f1).apply(42, 42);
 
         // then RuntimeException is thrown
+        fail("exception expected");
     }
 
     @Test

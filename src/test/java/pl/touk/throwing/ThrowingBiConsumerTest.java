@@ -1,12 +1,20 @@
 package pl.touk.throwing;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import pl.touk.throwing.exception.WrappedException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
 public class ThrowingBiConsumerTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void shouldConsume() throws Exception {
@@ -51,15 +59,22 @@ public class ThrowingBiConsumerTest {
         Assertions.assertThat(input[0]).isEqualTo(2);
     }
 
-    @Test(expected = WrappedException.class)
+    @Test
     public void shouldConsumeAndThrowUnchecked() throws Exception {
+        final IOException cause = new IOException("some message");
+        
+        thrown.expect(WrappedException.class);
+        thrown.expectMessage("some message");
+        thrown.expectCause(is(cause));
+
         // given
-        ThrowingBiConsumer<Integer, Integer, IOException> consumer = (i, j) -> { throw new IOException(); };
+        ThrowingBiConsumer<Integer, Integer, IOException> consumer = (i, j) -> { throw cause; };
 
         // when
         ThrowingBiConsumer.unchecked(consumer).accept(3, 3);
 
         // then WrappedException was thrown
+        fail("exception expected");
     }
 
     @Test
