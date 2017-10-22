@@ -15,9 +15,13 @@ Java 8+ functional types supporting checked exceptions + some handy utils.
 
 ### And use those functions seamlessly with native Java 8 classes by using a custom unchecked() adapter
 
-    ...stream().map(ThrowingFunction.unchecked(URI::new)).forEach(System.out::println);
+    ...stream()
+      .map(ThrowingFunction.unchecked(URI::new))
+      .forEach(System.out::println);
 
-    ...stream().map(unchecked(URI::new)).forEach(System.out::println); //with a static import
+    ...stream()
+      .map(unchecked(URI::new))
+      .forEach(System.out::println); //with a static import
 
 ### No more:
 
