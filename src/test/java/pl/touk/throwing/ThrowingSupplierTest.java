@@ -43,7 +43,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldLiftAndGet() throws Exception {
+    public void shouldLiftAndGet() {
         // given
         final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
@@ -55,7 +55,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldLiftAndGetEmpty() throws Exception {
+    public void shouldLiftAndGetEmpty() {
         // given
         final ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
 
@@ -67,7 +67,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldGetUnchecked() throws Exception {
+    public void shouldGetUnchecked() {
         // given
         final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
@@ -79,7 +79,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldGetUncheckedAndThrow() throws Exception {
+    public void shouldGetUncheckedAndThrow() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);
@@ -97,7 +97,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldGetUncheckedWithUtilsFunction() throws Exception {
+    public void shouldGetUncheckedWithUtilsFunction() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);
@@ -115,7 +115,7 @@ public class ThrowingSupplierTest {
     }
 
     @Test
-    public void shouldLiftAndGetWithUtilsFunction() throws Exception {
+    public void shouldLiftAndGetWithUtilsFunction() {
         // given
         final ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 

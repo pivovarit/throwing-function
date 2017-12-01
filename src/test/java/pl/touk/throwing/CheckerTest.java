@@ -3,7 +3,6 @@ package pl.touk.throwing;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import pl.touk.throwing.exception.WrappedException;
 
 import java.io.IOException;
@@ -14,14 +13,13 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.not;
 import static org.hamcrest.CoreMatchers.isA;
 import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.fail;
 import static pl.touk.throwing.ThrowingFunction.unchecked;
 
 public class CheckerTest {
-    
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -44,7 +42,7 @@ public class CheckerTest {
 
         // when
         Checker.checked(URISyntaxException.class,
-                () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
+          () -> Stream.of(". .").map(unchecked(URI::new)).collect(toList()));
 
         // then a checked exception is thrown
         fail("exception expected");
@@ -68,9 +66,9 @@ public class CheckerTest {
 
         // when
         final String result = Checker.checked(
-                () -> Stream.of("a")
-                        .map(String::toUpperCase)
-                        .collect(joining()));
+          () -> Stream.of("a")
+            .map(String::toUpperCase)
+            .collect(joining()));
 
         // then
         assertThat(result).isEqualTo("A");
@@ -81,9 +79,9 @@ public class CheckerTest {
 
         // when
         final String result = Checker.checked(URISyntaxException.class,
-                () -> Stream.of("a")
-                        .map(String::toUpperCase)
-                        .collect(joining()));
+          () -> Stream.of("a")
+            .map(String::toUpperCase)
+            .collect(joining()));
 
         // then
         assertThat(result).isEqualTo("A");
@@ -96,9 +94,9 @@ public class CheckerTest {
 
         // when
         Checker.checked(URISyntaxException.class,
-                () -> Stream.of(". .")
-                        .map(unchecked(URI::new))
-                        .collect(toList())
+          () -> Stream.of(". .")
+            .map(unchecked(URI::new))
+            .collect(toList())
         );
 
         // then a checked exception is thrown

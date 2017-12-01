@@ -30,7 +30,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldReturnOptional() throws Exception {
+    public void shouldReturnOptional() {
         // given
         final ThrowingBinaryOperator<Integer, Exception> f1 = (i, j) -> i * j;
 
@@ -42,7 +42,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldReturnEmptyOptional() throws Exception {
+    public void shouldReturnEmptyOptional() {
         // given
         final ThrowingBinaryOperator<Integer, Exception> f1 = 
             (i, j) -> { throw new Exception(); };
@@ -71,7 +71,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldWrapInWrappedEx() throws Exception {
+    public void shouldWrapInWrappedEx() {
         final Exception cause = new Exception("some message");
         
         thrown.expect(WrappedException.class);
@@ -90,7 +90,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingUnchecked() {
         final Exception cause = new Exception("some message");
         
         thrown.expect(WrappedException.class);
@@ -109,7 +109,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldApplyWhenNoExceptionThrown() throws Exception {
+    public void shouldApplyWhenNoExceptionThrown() {
         // given
         final ThrowingBinaryOperator<Integer, Exception> f1 = (i, j) -> i + j;
 
@@ -120,7 +120,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
 
         // given
         final ThrowingBinaryOperator<Integer, Exception> f1 = (i, j) -> i + j;
@@ -133,7 +133,7 @@ public class ThrowingBinaryOperatorTest {
     }
 
     @Test
-    public void shouldWrapInOptionalWhenUsingLifted() throws Exception {
+    public void shouldWrapInOptionalWhenUsingLifted() {
 
         // given
         final ThrowingBinaryOperator<Integer, Exception> f1 = (i, j) -> i + j;

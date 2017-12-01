@@ -3,7 +3,6 @@ package pl.touk.throwing;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import pl.touk.throwing.exception.WrappedException;
 
 import java.util.Optional;
@@ -13,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.fail;
 
 public class ThrowingBiFunctionTest {
-    
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -31,7 +30,7 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldReturnOptional() throws Exception {
+    public void shouldReturnOptional() {
         // given
         final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> i * j;
 
@@ -43,7 +42,7 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldReturnEmptyOptional() throws Exception {
+    public void shouldReturnEmptyOptional() {
         // given
         final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception(); };
 
@@ -60,7 +59,9 @@ public class ThrowingBiFunctionTest {
         thrown.expectMessage("some message");
 
         // given
-        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception("some message"); };
+        final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> {
+            throw new Exception("some message");
+        };
 
         // when
         f1.apply(42, 42);
@@ -70,9 +71,9 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldWrapInWrappedEx() throws Exception {
+    public void shouldWrapInWrappedEx() {
         final Exception cause = new Exception("some message");
-        
+
         thrown.expect(WrappedException.class);
         thrown.expectMessage("some message");
         thrown.expectCause(is(cause));
@@ -88,9 +89,9 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingUnchecked() {
         final Exception cause = new Exception("some message");
-        
+
         thrown.expect(WrappedException.class);
         thrown.expectMessage("some message");
         thrown.expectCause(is(cause));
@@ -106,7 +107,7 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldApplyWhenNoExceptionThrown() throws Exception {
+    public void shouldApplyWhenNoExceptionThrown() {
         // given
         final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> i + j;
 
@@ -117,7 +118,7 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
 
         // given
         final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> i + j;
@@ -130,7 +131,7 @@ public class ThrowingBiFunctionTest {
     }
 
     @Test
-    public void shouldWrapInOptionalWhenUsingLifted() throws Exception {
+    public void shouldWrapInOptionalWhenUsingLifted() {
 
         // given
         final ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> i + j;

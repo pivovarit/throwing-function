@@ -81,7 +81,7 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestAsFunction() throws Exception {
+    public void shouldTestAsFunction() {
         // given
         final ThrowingPredicate<Integer, Exception> p = i -> true;
 
@@ -91,7 +91,7 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
         final Exception cause = new Exception("some message");
         
         thrown.expect(RuntimeException.class);
@@ -112,7 +112,7 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestWhenUsingUncheck() throws Exception {
+    public void shouldTestWhenUsingUncheck() {
         // given
         final ThrowingPredicate<Integer, Exception> predicate = i -> true;
         final List<Integer> integers = Collections.singletonList(42);
@@ -124,7 +124,7 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingUncheck() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingUncheck() {
         final Exception cause = new Exception("some message");
         
         thrown.expect(RuntimeException.class);

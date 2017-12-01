@@ -50,7 +50,7 @@ public class ThrowingFunctionTest {
     }
 
     @Test
-    public void shouldReturnOptional() throws Exception {
+    public void shouldReturnOptional() {
         // given
         final ThrowingFunction<Integer, Integer, Exception> f1 = ThrowingFunction.identity();
 
@@ -104,7 +104,7 @@ public class ThrowingFunctionTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingUnchecked() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingUnchecked() {
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Illegal character in path at index 1: . .");
         thrown.expectCause(isA(URISyntaxException.class));
@@ -117,7 +117,7 @@ public class ThrowingFunctionTest {
     }
 
     @Test
-    public void shouldApplyWhenNoExceptionThrown() throws Exception {
+    public void shouldApplyWhenNoExceptionThrown() {
         //given
         ThrowingFunction<String, String, Exception> f = String::toUpperCase;
 
@@ -128,7 +128,7 @@ public class ThrowingFunctionTest {
     }
 
     @Test
-    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
 
         // when
         final Long result = Stream.of(". .")

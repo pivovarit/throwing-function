@@ -32,7 +32,7 @@ public class ThrowingRunnableTest {
     }
 
     @Test
-    public void shouldRunUnchecked() throws Exception {
+    public void shouldRunUnchecked() {
         // given
         ThrowingRunnable<Exception> runnable = () -> { };
 
@@ -43,7 +43,7 @@ public class ThrowingRunnableTest {
     }
 
     @Test
-    public void shouldRunUncheckedAndThrow() throws Exception {
+    public void shouldRunUncheckedAndThrow() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);
@@ -61,7 +61,7 @@ public class ThrowingRunnableTest {
     }
 
     @Test
-    public void shouldRunUncheckedAndThrowUsingUtilsMethod() throws Exception {
+    public void shouldRunUncheckedAndThrowUsingUtilsMethod() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);

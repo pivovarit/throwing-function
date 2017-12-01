@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.touk</groupId>
@@ -9,14 +10,12 @@
     <packaging>jar</packaging>
 
     <description>Java 8 functional types on steroids supporting checked exceptions</description>
-    <url>https://github.com/TouK/ThrowingFunction</url>
+    <url>https://github.com/pivovarit/ThrowingFunction</url>
 
     <developers>
         <developer>
             <name>Grzegorz Piwowarek</name>
             <email>gpiwowarek@gmail.com</email>
-            <organization>TouK</organization>
-            <organizationUrl>https://touk.pl/</organizationUrl>
             <id>gpiwowarek</id>
         </developer>
     </developers>
@@ -29,13 +28,13 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/TouK/ThrowingFunction</url>
-        <connection>scm:git:git@github.com:TouK/ThrowingFunction.git</connection>
-        <developerConnection>scm:git:git@github.com:TouK/ThrowingFunction.git</developerConnection>
+        <url>https://github.com/pivovarit/ThrowingFunction</url>
+        <connection>scm:git:git@github.com:pivovarit/ThrowingFunction.git</connection>
+        <developerConnection>scm:git:git@github.com:pivovarit/ThrowingFunction.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/TouK/ThrowingFunction/issues</url>
+        <url>https://github.com/pivovarit/ThrowingFunction/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 

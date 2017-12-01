@@ -28,7 +28,7 @@ public class ThrowingUnaryOperatorTest {
     }
 
     @Test
-    public void shouldApplyUnchecked() throws Exception {
+    public void shouldApplyUnchecked() {
         // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
@@ -39,7 +39,7 @@ public class ThrowingUnaryOperatorTest {
     }
 
     @Test
-    public void shouldApplyUncheckedAndThrow() throws Exception {
+    public void shouldApplyUncheckedAndThrow() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);
@@ -57,7 +57,7 @@ public class ThrowingUnaryOperatorTest {
     }
     
     @Test
-    public void shouldApplyUncheckedAndThrowNPE() throws Exception {
+    public void shouldApplyUncheckedAndThrowNPE() {
         thrown.expect(NullPointerException.class);
 
         // when

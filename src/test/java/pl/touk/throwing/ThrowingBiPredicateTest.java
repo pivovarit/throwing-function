@@ -87,7 +87,7 @@ public class ThrowingBiPredicateTest {
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() throws Exception {
+    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
         final Exception cause = new Exception("some message");
         
         thrown.expect(RuntimeException.class);
@@ -107,7 +107,7 @@ public class ThrowingBiPredicateTest {
     }
 
     @Test
-    public void shouldTestWhenUsingUncheck() throws Exception {
+    public void shouldTestWhenUsingUncheck() {
         // given
         final ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> true;
 

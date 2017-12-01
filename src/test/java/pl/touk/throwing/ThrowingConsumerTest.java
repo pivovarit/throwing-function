@@ -61,7 +61,7 @@ public class ThrowingConsumerTest {
     }
 
     @Test
-    public void shouldConsumeAndThrowUnchecked() throws Exception {
+    public void shouldConsumeAndThrowUnchecked() {
         final IOException cause = new IOException("some message");
         
         thrown.expect(WrappedException.class);
@@ -79,7 +79,7 @@ public class ThrowingConsumerTest {
     }
 
     @Test
-    public void shouldConsumeUnchecked() throws Exception {
+    public void shouldConsumeUnchecked() {
         // given
         ThrowingConsumer<Integer, IOException> consumer = i -> {};
 

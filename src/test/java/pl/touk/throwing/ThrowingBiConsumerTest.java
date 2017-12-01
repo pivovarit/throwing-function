@@ -4,13 +4,12 @@ import org.assertj.core.api.Assertions;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-
 import pl.touk.throwing.exception.WrappedException;
+
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.fail;
-
-import java.io.IOException;
 
 public class ThrowingBiConsumerTest {
     @Rule
@@ -60,9 +59,9 @@ public class ThrowingBiConsumerTest {
     }
 
     @Test
-    public void shouldConsumeAndThrowUnchecked() throws Exception {
+    public void shouldConsumeAndThrowUnchecked() {
         final IOException cause = new IOException("some message");
-        
+
         thrown.expect(WrappedException.class);
         thrown.expectMessage("some message");
         thrown.expectCause(is(cause));
@@ -78,7 +77,7 @@ public class ThrowingBiConsumerTest {
     }
 
     @Test
-    public void shouldConsumeUnchecked() throws Exception {
+    public void shouldConsumeUnchecked() {
         // given
         ThrowingBiConsumer<Integer, Integer, IOException> consumer = (i, j) -> {};
 
