@@ -35,9 +35,9 @@ import pl.touk.throwing.exception.WrappedException;
  * @see ThrowingBiFunction
  * @see ThrowingUnaryOperator
  */
-public interface ThrowingBinaryOperator<T, E extends Throwable> extends ThrowingBiFunction<T, T, T, E> {
+public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
 
-    static <T, E extends Throwable> BiFunction<T, T, T> unchecked(ThrowingBinaryOperator<T, E> function) {
+    static <T, E extends Exception> BiFunction<T, T, T> unchecked(ThrowingBinaryOperator<T, E> function) {
         Objects.requireNonNull(function);
 
         return function.unchecked();
@@ -48,7 +48,7 @@ public interface ThrowingBinaryOperator<T, E extends Throwable> extends Throwing
         return (arg1, arg2) -> {
             try {
                 return apply(arg1, arg2);
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };

@@ -29,10 +29,10 @@ import java.util.function.Predicate;
  *
  */
 @FunctionalInterface
-public interface ThrowingPredicate<T, E extends Throwable> {
+public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
 
-    static <T, E extends Throwable> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
+    static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
         Objects.requireNonNull(predicate);
 
         return predicate.uncheck();
@@ -74,7 +74,7 @@ public interface ThrowingPredicate<T, E extends Throwable> {
         return t -> {
             try {
                 return test(t);
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };

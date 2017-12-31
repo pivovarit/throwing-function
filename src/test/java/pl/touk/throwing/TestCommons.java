@@ -1,6 +1,6 @@
 package pl.touk.throwing;
 
-public final class TestCommons {
+final class TestCommons {
 
     private TestCommons() {
     }

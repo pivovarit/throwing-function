@@ -1,38 +1,28 @@
 package pl.touk.throwing;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
+import org.junit.jupiter.api.Test;
 import pl.touk.throwing.exception.WrappedException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
-public class ThrowingRunnableTest {
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+class ThrowingRunnableTest {
 
     @Test
-    public void shouldRun() throws Exception {
-        thrown.expect(IOException.class);
-        thrown.expectMessage("some message");
-        
+    void shouldRun() {
+
         // given
         ThrowingRunnable<Exception> runnable = () -> { throw new IOException("some message"); };
 
         // when
-        runnable.run();
-
-        // then exception thrown
-        fail("exception expected");
+        assertThatThrownBy(runnable::run)
+          .isInstanceOf(IOException.class)
+          .hasMessage("some message");
     }
 
     @Test
-    public void shouldRunUnchecked() {
+    void shouldRunUnchecked() {
         // given
         ThrowingRunnable<Exception> runnable = () -> { };
 
@@ -43,39 +33,30 @@ public class ThrowingRunnableTest {
     }
 
     @Test
-    public void shouldRunUncheckedAndThrow() {
-        final IOException cause = new IOException("some message");
-        
-        thrown.expect(WrappedException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
+    void shouldRunUncheckedAndThrow() {
+        IOException cause = new IOException("some message");
 
         // given
         ThrowingRunnable<Exception> runnable = () -> { throw cause; };
 
         // when
-        runnable.unchecked().run();
-
-        // then WrappedException thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> runnable.unchecked().run())
+          .isInstanceOf(WrappedException.class)
+          .hasMessage(cause.getMessage())
+          .hasCause(cause);
     }
 
     @Test
-    public void shouldRunUncheckedAndThrowUsingUtilsMethod() {
-        final IOException cause = new IOException("some message");
-        
-        thrown.expect(WrappedException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
+    void shouldRunUncheckedAndThrowUsingUtilsMethod() {
+        IOException cause = new IOException("some message");
 
         // given
         ThrowingRunnable<Exception> runnable = () -> { throw cause; };
 
         // when
-        ThrowingRunnable.unchecked(runnable).run();
-
-        // then WrappedException thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> ThrowingRunnable.unchecked(runnable).run())
+          .isInstanceOf(WrappedException.class)
+          .hasMessage(cause.getMessage())
+          .hasCause(cause);
     }
-
 }

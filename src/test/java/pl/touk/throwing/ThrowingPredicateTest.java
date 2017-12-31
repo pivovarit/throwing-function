@@ -1,40 +1,32 @@
 package pl.touk.throwing;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static pl.touk.throwing.ThrowingPredicate.unchecked;
 
-public class ThrowingPredicateTest {
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+class ThrowingPredicateTest {
 
     @Test
-    public void shouldTest() throws Exception {
+    void shouldTest() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> p = i -> true;
+        ThrowingPredicate<Integer, Exception> p = i -> true;
 
         // when
-        final boolean result = p.test(42);
+        boolean result = p.test(42);
 
         // then
         assertThat(result).isTrue();
-
     }
 
     @Test
-    public void shouldTestOR() throws Exception {
+    void shouldTestOR() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
+        ThrowingPredicate<Integer, Exception> pTrue = i -> true;
+        ThrowingPredicate<Integer, Exception> pFalse = i -> false;
 
         // then
         assertThat(pTrue.or(pFalse).test(42)).isTrue();
@@ -44,10 +36,10 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestXOR() throws Exception {
+    void shouldTestXOR() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
+        ThrowingPredicate<Integer, Exception> pTrue = i -> true;
+        ThrowingPredicate<Integer, Exception> pFalse = i -> false;
 
         // then
         assertThat(pTrue.xor(pFalse).test(42)).isTrue();
@@ -57,10 +49,10 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestAND() throws Exception {
+    void shouldTestAND() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
+        ThrowingPredicate<Integer, Exception> pTrue = i -> true;
+        ThrowingPredicate<Integer, Exception> pFalse = i -> false;
 
         // then
         assertThat(pTrue.and(pFalse).test(42)).isFalse();
@@ -70,10 +62,10 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestNegate() throws Exception {
+    void shouldTestNegate() throws Exception {
         // given
-        final ThrowingPredicate<Integer, Exception> pTrue = i -> true;
-        final ThrowingPredicate<Integer, Exception> pFalse = i -> false;
+        ThrowingPredicate<Integer, Exception> pTrue = i -> true;
+        ThrowingPredicate<Integer, Exception> pFalse = i -> false;
 
         // then
         assertThat(pTrue.negate().test(42)).isFalse();
@@ -81,66 +73,55 @@ public class ThrowingPredicateTest {
     }
 
     @Test
-    public void shouldTestAsFunction() {
+    void shouldTestAsFunction() {
         // given
-        final ThrowingPredicate<Integer, Exception> p = i -> true;
+        ThrowingPredicate<Integer, Exception> p = i -> true;
 
         // then
         assertThat(p.asFunction())
-                .isInstanceOf(ThrowingFunction.class);
+          .isInstanceOf(ThrowingFunction.class);
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
-        final Exception cause = new Exception("some message");
-        
-        thrown.expect(RuntimeException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
+    void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
+        Exception cause = new Exception("some message");
 
         // given
-        final ThrowingPredicate<Integer, Exception> predicate = i -> {
+        ThrowingPredicate<Integer, Exception> predicate = i -> {
             throw cause;
         };
-        final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        integers.stream().anyMatch(i -> unchecked(predicate).test(i));
-
-        // then RuntimeException is thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> Stream.of(42).anyMatch(i -> unchecked(predicate).test(i)))
+          .isInstanceOf(RuntimeException.class)
+          .hasMessage(cause.getMessage())
+          .hasCause(cause);
     }
 
     @Test
-    public void shouldTestWhenUsingUncheck() {
+    void shouldTestWhenUsingUncheck() {
         // given
-        final ThrowingPredicate<Integer, Exception> predicate = i -> true;
-        final List<Integer> integers = Collections.singletonList(42);
+        ThrowingPredicate<Integer, Exception> predicate = i -> true;
 
         // when
-        integers.stream().anyMatch(predicate.uncheck());
+        Stream.of(42).anyMatch(predicate.uncheck());
 
-        // then RuntimeException is thrown
+        // then compiles
     }
 
     @Test
-    public void shouldWrapInRuntimeExWhenUsingUncheck() {
-        final Exception cause = new Exception("some message");
-        
-        thrown.expect(RuntimeException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
+    void shouldWrapInRuntimeExWhenUsingUncheck() {
+        Exception cause = new Exception("some message");
 
         // given
-        final ThrowingPredicate<Integer, Exception> predicate = i -> {
+        ThrowingPredicate<Integer, Exception> predicate = i -> {
             throw cause;
         };
-        final List<Integer> integers = Collections.singletonList(42);
 
         // when
-        integers.stream().anyMatch(i -> predicate.uncheck().test(i));
-
-        // then RuntimeException is thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> Stream.of(42).anyMatch(i -> predicate.uncheck().test(i)))
+          .isInstanceOf(RuntimeException.class)
+          .hasMessage(cause.getMessage())
+          .hasCause(cause);
     }
 }

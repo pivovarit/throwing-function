@@ -9,13 +9,14 @@
     <name>ThrowingFunction</name>
     <packaging>jar</packaging>
 
-    <description>Java 8 functional types on steroids supporting checked exceptions</description>
+    <description>Java 8 functional interfaces on steroids supporting checked exceptions</description>
     <url>https://github.com/pivovarit/ThrowingFunction</url>
 
     <developers>
         <developer>
             <name>Grzegorz Piwowarek</name>
             <email>gpiwowarek@gmail.com</email>
+            <url>http://pivovarit.github.io/</url>
             <id>gpiwowarek</id>
         </developer>
     </developers>
@@ -40,8 +41,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>4.12</junit.version>
-        <assertj.version>3.3.0</assertj.version>
+        <junit.version>5.0.1</junit.version>
+        <assertj.version>3.8.0</assertj.version>
     </properties>
 
     <build>
@@ -49,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.5</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -136,8 +137,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>

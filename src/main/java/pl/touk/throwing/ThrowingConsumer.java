@@ -29,11 +29,11 @@ import java.util.function.Consumer;
  *
  */
 @FunctionalInterface
-public interface ThrowingConsumer<T, E extends Throwable> {
+public interface ThrowingConsumer<T, E extends Exception> {
 
     void accept(T t) throws E;
 
-    static <T, E extends Throwable> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+    static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
         Objects.requireNonNull(consumer);
 
         return consumer.uncheck();
@@ -70,7 +70,7 @@ public interface ThrowingConsumer<T, E extends Throwable> {
         return t -> {
             try {
                 accept(t);
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };

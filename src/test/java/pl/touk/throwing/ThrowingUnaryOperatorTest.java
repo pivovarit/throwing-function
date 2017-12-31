@@ -1,23 +1,16 @@
 package pl.touk.throwing;
 
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
+import org.junit.jupiter.api.Test;
 import pl.touk.throwing.exception.WrappedException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
-public class ThrowingUnaryOperatorTest {
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+class ThrowingUnaryOperatorTest {
 
     @Test
-    public void shouldApply() throws Exception {
+    void shouldApply() throws Exception {
         // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
@@ -28,7 +21,7 @@ public class ThrowingUnaryOperatorTest {
     }
 
     @Test
-    public void shouldApplyUnchecked() {
+    void shouldApplyUnchecked() {
         // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
@@ -39,32 +32,24 @@ public class ThrowingUnaryOperatorTest {
     }
 
     @Test
-    public void shouldApplyUncheckedAndThrow() {
+    void shouldApplyUncheckedAndThrow() {
         final IOException cause = new IOException("some message");
-        
-        thrown.expect(WrappedException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
 
         // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> { throw cause; };
 
-        // when
-        ThrowingUnaryOperator.unchecked(op).apply(42);
-
-        // then an exception is thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> {
+            ThrowingUnaryOperator.unchecked(op).apply(42);
+        }).hasMessage(cause.getMessage())
+          .isInstanceOf(WrappedException.class)
+          .hasCauseInstanceOf(cause.getClass());
     }
-    
+
     @Test
-    public void shouldApplyUncheckedAndThrowNPE() {
-        thrown.expect(NullPointerException.class);
-
+    void shouldApplyUncheckedAndThrowNPE() {
         // when
-        ThrowingUnaryOperator.unchecked(null).apply(42);
-
-        // then NPE is thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> {
+            ThrowingUnaryOperator.unchecked(null).apply(42);
+        }).isInstanceOf(NullPointerException.class);
     }
-
 }

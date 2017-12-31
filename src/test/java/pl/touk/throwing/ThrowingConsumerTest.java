@@ -1,26 +1,19 @@
 package pl.touk.throwing;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
+import org.junit.jupiter.api.Test;
 import pl.touk.throwing.exception.WrappedException;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.fail;
 
 import java.io.IOException;
 
-public class ThrowingConsumerTest {
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+class ThrowingConsumerTest {
 
     @Test
-    public void shouldConsume() throws Exception {
+    void shouldConsume() throws Exception {
         // given
-        final Integer[] input = {0};
+        Integer[] input = {0};
 
         ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
 
@@ -28,13 +21,13 @@ public class ThrowingConsumerTest {
         consumer.accept(2);
 
         // then
-        Assertions.assertThat(input[0]).isEqualTo(2);
+        assertThat(input[0]).isEqualTo(2);
     }
 
     @Test
-    public void shouldConsumeAfter() throws Exception {
+    void shouldConsumeAfter() throws Exception {
         // given
-        final Integer[] input = {0};
+        Integer[] input = {0};
 
         ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
         ThrowingConsumer<Integer, Exception> after = i -> input[0] = 3;
@@ -43,13 +36,13 @@ public class ThrowingConsumerTest {
         consumer.andThenConsume(after).accept(2);
 
         // then
-        Assertions.assertThat(input[0]).isEqualTo(3);
+        assertThat(input[0]).isEqualTo(3);
     }
 
     @Test
-    public void shouldConsumeAsFunction() throws Exception {
+    void shouldConsumeAsFunction() throws Exception {
         // given
-        final Integer[] input = {0};
+        Integer[] input = {0};
 
         ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
 
@@ -57,29 +50,25 @@ public class ThrowingConsumerTest {
         consumer.asFunction().apply(42);
 
         // then
-        Assertions.assertThat(input[0]).isEqualTo(2);
+        assertThat(input[0]).isEqualTo(2);
     }
 
     @Test
-    public void shouldConsumeAndThrowUnchecked() {
-        final IOException cause = new IOException("some message");
-        
-        thrown.expect(WrappedException.class);
-        thrown.expectMessage("some message");
-        thrown.expectCause(is(cause));
+    void shouldConsumeAndThrowUnchecked() {
+        IOException cause = new IOException("some message");
 
         // given
         ThrowingConsumer<Integer, IOException> consumer = i -> { throw cause; };
 
         // when
-        ThrowingConsumer.unchecked(consumer).accept(3);
-
-        // then WrappedException was thrown
-        fail("exception expected");
+        assertThatThrownBy(() -> ThrowingConsumer.unchecked(consumer).accept(3))
+          .isInstanceOf(WrappedException.class)
+          .hasMessage(cause.getMessage())
+          .hasCause(cause);
     }
 
     @Test
-    public void shouldConsumeUnchecked() {
+    void shouldConsumeUnchecked() {
         // given
         ThrowingConsumer<Integer, IOException> consumer = i -> {};
 

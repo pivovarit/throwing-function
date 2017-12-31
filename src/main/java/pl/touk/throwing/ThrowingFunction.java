@@ -32,7 +32,7 @@ import java.util.function.Function;
  *
  */
 @FunctionalInterface
-public interface ThrowingFunction<T,R,E extends Throwable> {
+public interface ThrowingFunction<T,R,E extends Exception> {
     R apply(T arg) throws E;
 
     /**
@@ -80,7 +80,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return t -> {
             try {
                 return Optional.of(apply(t));
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 return Optional.empty();
             }
         };
@@ -93,7 +93,7 @@ public interface ThrowingFunction<T,R,E extends Throwable> {
         return t -> {
             try {
                 return apply(t);
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };

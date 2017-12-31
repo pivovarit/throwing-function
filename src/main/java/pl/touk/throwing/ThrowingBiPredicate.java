@@ -30,7 +30,7 @@ import java.util.function.BiPredicate;
  * @param <E> the type of the thrown checked exception
  */
 @FunctionalInterface
-public interface ThrowingBiPredicate<T, U, E extends Throwable> {
+public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
 
     static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
@@ -75,7 +75,7 @@ public interface ThrowingBiPredicate<T, U, E extends Throwable> {
         return (arg1, arg2) -> {
             try {
                 return test(arg1, arg2);
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };

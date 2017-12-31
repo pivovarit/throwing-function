@@ -30,7 +30,7 @@ import java.util.function.Supplier;
  *
  */
 @FunctionalInterface
-public interface ThrowingSupplier<T, E extends Throwable> {
+public interface ThrowingSupplier<T, E extends Exception> {
     T get() throws E;
 
     /**
@@ -59,7 +59,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
         return () -> {
             try {
                 return get();
-            } catch (final Throwable e) {
+            } catch (final Exception e) {
                 throw new WrappedException(e);
             }
         };
@@ -73,7 +73,7 @@ public interface ThrowingSupplier<T, E extends Throwable> {
         return () -> {
             try {
                 return Optional.of(get());
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 return Optional.empty();
             }
         };
