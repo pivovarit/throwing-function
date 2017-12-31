@@ -2,7 +2,6 @@
 Java 8+ functional types supporting checked exceptions + some handy utils. 
 
 [![Build Status](https://travis-ci.org/pivovarit/ThrowingFunction.svg?branch=master)](https://travis-ci.org/pivovarit/ThrowingFunction)
-[![Sputnik](https://sputnik.touk.pl/conf/badge)](https://sputnik.touk.pl/app#/builds/pivovarit/ThrowingFunction)
 [![codecov.io](https://codecov.io/github/pivovarit/ThrowingFunction/coverage.svg?branch=master)](https://codecov.io/github/pivovarit/ThrowingFunction?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/pl.touk/throwing-function/badge.svg)](http://www.javadoc.io/doc/pl.touk/throwing-function)
