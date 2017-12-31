@@ -1,5 +1,5 @@
 # ThrowingFunction
-Java 8+ functional types supporting checked exceptions + some handy utils. 
+Java 8+ functional interfaces supporting checked exceptions + some handy utils. 
 
 [![Build Status](https://travis-ci.org/pivovarit/ThrowingFunction.svg?branch=master)](https://travis-ci.org/pivovarit/ThrowingFunction)
 [![codecov.io](https://codecov.io/github/pivovarit/ThrowingFunction/coverage.svg?branch=master)](https://codecov.io/github/pivovarit/ThrowingFunction?branch=master)
@@ -9,14 +9,16 @@ Java 8+ functional types supporting checked exceptions + some handy utils.
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
 
-### You can now define functions that throw checked exceptions
+### You can now define functions that throw checked exceptions:
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-### And use those functions seamlessly with native Java 8 classes by using a custom unchecked() adapter
+### And use those functions seamlessly with native Java 8 classes by using a custom ThrowingFunction.unchecked() adapter:
 
     ...stream()
       .map(ThrowingFunction.unchecked(URI::new))
       .forEach(System.out::println);
+
+with a static import:
 
     ...stream()
       .map(unchecked(URI::new))
@@ -36,9 +38,9 @@ Java 8+ functional types supporting checked exceptions + some handy utils.
 For Maven users:
 
     <dependency>
-      <groupId>pl.touk</groupId>
-      <artifactId>throwing-function</artifactId>
-      <version>1.3</version>
+        <groupId>pl.touk</groupId>
+        <artifactId>throwing-function</artifactId>
+        <version>1.3</version>
     </dependency>
     
 ### Available types:
