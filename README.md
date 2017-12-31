@@ -3,8 +3,6 @@ Java 8+ functional interfaces supporting checked exceptions + some handy utils.
 
 [![Build Status](https://travis-ci.org/pivovarit/ThrowingFunction.svg?branch=master)](https://travis-ci.org/pivovarit/ThrowingFunction)
 [![codecov.io](https://codecov.io/github/pivovarit/ThrowingFunction/coverage.svg?branch=master)](https://codecov.io/github/pivovarit/ThrowingFunction?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/pl.touk/throwing-function)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/pl.touk/throwing-function/badge.svg)](http://www.javadoc.io/doc/pl.touk/throwing-function)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
@@ -76,15 +74,3 @@ Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new Th
 
     Checker.checked()
 Additional static function allowing to catch wrapped checked exceptions, unwrap and rethrow them. Comes in handy sometimes.
-
-## Contributors
-
-- Grzegorz Piwowarek
-- Hubert Lipiński
-- Tomasz Wielga
-
-## License
-
-This project is licenced under Apache License.
-    
-
