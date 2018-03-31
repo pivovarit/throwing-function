@@ -36,15 +36,6 @@ public interface ThrowingFunction<T,R,E extends Exception> {
     R apply(T arg) throws E;
 
     /**
-     * @param <T> type
-     * @param <E> checked exception
-     * @return a function that accepts one argument and returns it as a value.
-     */
-    static <T, E extends Exception> ThrowingFunction<T, T, E> identity() {
-        return t -> t;
-    }
-
-    /**
      * @return a Function that returns the result of the given function as an Optional instance.
      * In case of a failure, empty Optional is returned
      */

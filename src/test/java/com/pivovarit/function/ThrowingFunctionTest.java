@@ -43,7 +43,7 @@ class ThrowingFunctionTest {
     @Test
     void shouldReturnOptional() {
         // given
-        ThrowingFunction<Integer, Integer, Exception> f1 = ThrowingFunction.identity();
+        ThrowingFunction<Integer, Integer, Exception> f1 = i -> i;
 
         // when
         Optional<Integer> result = f1.lift().apply(42);
