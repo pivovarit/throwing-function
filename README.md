@@ -6,10 +6,10 @@ Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
 
-### You can now define functions that throw checked exceptions:
+### You can define functions that throw checked exceptions:
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-### And use those functions seamlessly with native Java 8 classes by using a custom ThrowingFunction.unchecked() adapter:
+### And use those functions seamlessly with native `java.util.function` classes by using a custom `ThrowingFunction#unchecked` adapter:
 
     ...stream()
       .map(unchecked(URI::new)) // static import of ThrowingFunction#unchecked
@@ -33,6 +33,10 @@ For Maven users:
         <version>1.3</version>
     </dependency>
     
+For Gradle users:
+
+    compile 'pl.touk:throwing-function:1.3'
+    
 ### Available types:
 
 + ThrowingBiConsumer
@@ -50,7 +54,7 @@ For Maven users:
 #### Additional features:
 
     default Function<T, R> uncheck() {...}
-Transforms ThrowingFunction instance into a regular Function. Checked exception gets wrapped in a RuntimeException. 
+Transforms a `ThrowingFunction` instance into a regular `Function`. Checked exceptions get wrapped in a `RuntimeException`. 
 Feature is available for all java.util.function types. Comes both as a static and as an instance method.
 
     static Function<T, R> uncheck(ThrowingFunction<> f) {...}
@@ -65,4 +69,4 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
 
     Checker.checked()
-Additional static function allowing to catch wrapped checked exceptions, unwrap and rethrow them. Comes in handy sometimes.
+Additional static function allowing catching wrapped checked exceptions, unwrap and rethrow them. Comes in handy sometimes.
