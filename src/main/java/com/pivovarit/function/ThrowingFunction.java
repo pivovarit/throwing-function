@@ -41,26 +41,18 @@ public interface ThrowingFunction<T,R,E extends Exception> {
      * In case of a failure, empty Optional is returned
      */
     static <T, R, E extends Exception> Function<T, Optional<R>> lifted(ThrowingFunction<T, R, E> f) {
-        Objects.requireNonNull(f);
-
         return f.lift();
     }
 
     static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
-        Objects.requireNonNull(f);
-
         return f.uncheck();
     }
 
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, E> before) {
-        Objects.requireNonNull(before);
-
         return (V v) -> apply(before.apply(v));
     }
 
     default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
-        Objects.requireNonNull(after);
-
         return (T t) -> after.apply(apply(t));
     }
 

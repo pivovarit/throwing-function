@@ -39,8 +39,6 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
     void accept(T t, U u) throws E;
 
     default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, E> after) {
-        Objects.requireNonNull(after);
-
         return (arg1, arg2) -> {
             accept(arg1, arg2);
             after.accept(arg1, arg2);
@@ -59,8 +57,6 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
     }
 
     static <T, U, E extends Exception> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, E> consumer) {
-        Objects.requireNonNull(consumer);
-
         return consumer.uncheck();
     }
 

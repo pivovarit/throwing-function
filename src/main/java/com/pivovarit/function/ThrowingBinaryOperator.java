@@ -40,8 +40,6 @@ import com.pivovarit.function.exception.WrappedException;
 public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
 
     static <T, E extends Exception> BiFunction<T, T, T> unchecked(ThrowingBinaryOperator<T, E> function) {
-        Objects.requireNonNull(function);
-
         return function.unchecked();
     }
     

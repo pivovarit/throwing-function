@@ -41,14 +41,10 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
     R apply(T1 arg1, T2 arg2) throws E;
 
     static <T1, T2, R, E extends Exception> BiFunction<T1, T2, R> unchecked(ThrowingBiFunction<T1, T2, R, E> function) {
-        Objects.requireNonNull(function);
-
         return function.unchecked();
     }
 
     static <T1, T2, R, E extends Exception> BiFunction<T1, T2, Optional<R>> lifted(ThrowingBiFunction<T1, T2, R, E> f) {
-        Objects.requireNonNull(f);
-
         return f.lift();
     }
 
@@ -59,8 +55,6 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
      * @return combined function
      */
     default <V> ThrowingBiFunction<T1, T2, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
-        Objects.requireNonNull(after);
-
         return (arg1, arg2) -> after.apply(apply(arg1, arg2));
     }
 

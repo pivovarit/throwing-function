@@ -32,8 +32,6 @@ public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
     static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
-        Objects.requireNonNull(runnable);
-
         return runnable.unchecked();
     }
 

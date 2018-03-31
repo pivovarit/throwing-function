@@ -36,26 +36,18 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
 
     static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
-        Objects.requireNonNull(predicate);
-
         return predicate.uncheck();
     }
 
     default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        Objects.requireNonNull(other);
-
         return (arg1, arg2) -> test(arg1, arg2) && other.test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> or(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        Objects.requireNonNull(other);
-
         return (arg1, arg2) -> test(arg1, arg2) || other.test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> xor(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        Objects.requireNonNull(other);
-
         return (arg1, arg2) -> test(arg1, arg2) ^ other.test(arg1, arg2);
     }
 

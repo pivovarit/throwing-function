@@ -34,26 +34,18 @@ public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
 
     static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
-        Objects.requireNonNull(predicate);
-
         return predicate.uncheck();
     }
 
     default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, E> other) {
-        Objects.requireNonNull(other);
-
         return t -> test(t) && other.test(t);
     }
 
     default ThrowingPredicate<T, E> or(final ThrowingPredicate<? super T, E> other) {
-        Objects.requireNonNull(other);
-
         return t -> test(t) || other.test(t);
     }
 
     default ThrowingPredicate<T, E> xor(final ThrowingPredicate<? super T, E> other) {
-        Objects.requireNonNull(other);
-
         return t -> test(t) ^ other.test(t);
     }
 
