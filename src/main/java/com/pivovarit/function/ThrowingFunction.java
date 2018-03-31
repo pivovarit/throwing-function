@@ -63,10 +63,6 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         return (T t) -> after.apply(apply(t));
     }
 
-    /**
-     * @return a Function that returns the result as an Optional instance. In case of a failure, empty Optional is
-     * returned
-     */
     default Function<T, Optional<R>> lift() {
         return t -> {
             try {
@@ -77,9 +73,6 @@ public interface ThrowingFunction<T,R,E extends Exception> {
         };
     }
 
-    /**
-     * @return a new Function instance which wraps thrown checked exception instance into a RuntimeException
-     */
     default Function<T, R> uncheck() {
         return t -> {
             try {
