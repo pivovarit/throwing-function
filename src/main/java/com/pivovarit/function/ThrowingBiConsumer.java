@@ -31,6 +31,8 @@ import java.util.function.BiConsumer;
  * @param <E> the type of the thrown checked exception
  *
  * @see ThrowingConsumer
+ *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingBiConsumer<T, U, E extends Exception> {

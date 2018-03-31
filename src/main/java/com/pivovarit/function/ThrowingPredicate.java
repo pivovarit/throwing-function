@@ -27,6 +27,7 @@ import java.util.function.Predicate;
  * @param <T> the type of the input to the function
  * @param <E> the type of the thrown checked exception
  *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingPredicate<T, E extends Exception> {

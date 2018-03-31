@@ -30,6 +30,7 @@ import java.util.function.Function;
  * @param <R> the type of the result of the function
  * @param <E> the type of the thrown checked exception
  *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingFunction<T,R,E extends Exception> {

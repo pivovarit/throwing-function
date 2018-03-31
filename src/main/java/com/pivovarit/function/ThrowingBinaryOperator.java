@@ -34,6 +34,8 @@ import com.pivovarit.function.exception.WrappedException;
  *
  * @see ThrowingBiFunction
  * @see ThrowingUnaryOperator
+ *
+ * @author Grzegorz Piwowarek
  */
 public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
 

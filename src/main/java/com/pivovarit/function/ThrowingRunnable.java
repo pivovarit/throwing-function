@@ -24,6 +24,8 @@ import java.util.Objects;
  * Function might throw a checked exception instance.
  *
  * @param <E> the type of the thrown checked exception
+ *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingRunnable<E extends Exception> {

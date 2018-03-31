@@ -28,6 +28,7 @@ import java.util.function.Supplier;
  * @param <T> the type of the output to the function
  * @param <E> the type of the thrown checked exception
  *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingSupplier<T, E extends Exception> {

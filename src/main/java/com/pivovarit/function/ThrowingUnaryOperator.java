@@ -30,6 +30,8 @@ import java.util.function.UnaryOperator;
  * @param <E> the type of the thrown checked exception
  *
  * @see ThrowingFunction
+ *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {

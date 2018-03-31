@@ -33,6 +33,8 @@ import java.util.function.BiFunction;
  * @param <E> the type of the thrown checked exception
  *
  * @see ThrowingFunction
+ *
+ * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
 public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
