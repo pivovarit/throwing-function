@@ -1,8 +1,7 @@
-# ThrowingFunction
-Java 8+ functional interfaces supporting checked exceptions + some handy utils. 
+# throwing-function
+Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 
 [![Build Status](https://travis-ci.org/pivovarit/ThrowingFunction.svg?branch=master)](https://travis-ci.org/pivovarit/ThrowingFunction)
-[![codecov.io](https://codecov.io/github/pivovarit/ThrowingFunction/coverage.svg?branch=master)](https://codecov.io/github/pivovarit/ThrowingFunction?branch=master)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
@@ -13,24 +12,17 @@ Java 8+ functional interfaces supporting checked exceptions + some handy utils.
 ### And use those functions seamlessly with native Java 8 classes by using a custom ThrowingFunction.unchecked() adapter:
 
     ...stream()
-      .map(ThrowingFunction.unchecked(URI::new))
+      .map(unchecked(URI::new)) // static import of ThrowingFunction#unchecked
       .forEach(System.out::println);
-
-with a static import:
-
-    ...stream()
-      .map(unchecked(URI::new))
-      .forEach(System.out::println); //with a static import
 
 ### No more:
 
      ...stream().map(path -> {
-                try {
-                    return new URI(path);
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
-                }
-            }).forEach(System.out::println);
+         try {
+             return new URI(path);
+         } catch (URISyntaxException e) {
+             throw new RuntimeException(e);
+         }}).forEach(System.out::println);
 
 
 For Maven users:
