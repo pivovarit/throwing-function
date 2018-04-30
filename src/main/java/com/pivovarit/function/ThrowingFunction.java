@@ -15,11 +15,10 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+
+import com.pivovarit.function.exception.WrappedException;
 
 
 /**
@@ -40,27 +39,27 @@ public interface ThrowingFunction<T,R,E extends Exception> {
      * @return a Function that returns the result of the given function as an Optional instance.
      * In case of a failure, empty Optional is returned
      */
-    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(ThrowingFunction<T, R, E> f) {
+    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ? extends E> f) {
         return f.lift();
     }
 
-    static <T, R, E extends Exception> Function<T, R> unchecked(ThrowingFunction<T, R, E> f) {
+    static <T, R, E extends Exception> Function<T, R> unchecked(final ThrowingFunction<T, R, ? extends E> f) {
         return f.uncheck();
     }
 
-    default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, E> before) {
-        return (V v) -> apply(before.apply(v));
+    default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, ? extends E> before) {
+        return v -> apply(before.apply(v));
     }
 
-    default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {
-        return (T t) -> after.apply(apply(t));
+    default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, ? extends E> after) {
+        return t -> after.apply(apply(t));
     }
 
     default Function<T, Optional<R>> lift() {
         return t -> {
             try {
                 return Optional.of(apply(t));
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 return Optional.empty();
             }
         };
