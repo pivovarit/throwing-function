@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -40,18 +41,22 @@ public interface ThrowingFunction<T,R,E extends Exception> {
      * In case of a failure, empty Optional is returned
      */
     static <T, R, E extends Exception> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ? extends E> f) {
+        Objects.requireNonNull(f);
         return f.lift();
     }
 
     static <T, R, E extends Exception> Function<T, R> unchecked(final ThrowingFunction<T, R, ? extends E> f) {
+      Objects.requireNonNull(f);
         return f.uncheck();
     }
 
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, ? extends E> before) {
+      Objects.requireNonNull(before);
         return v -> apply(before.apply(v));
     }
 
     default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, ? extends E> after) {
+      Objects.requireNonNull(after);
         return t -> after.apply(apply(t));
     }
 
