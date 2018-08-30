@@ -4,6 +4,7 @@ import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.LongAdder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
@@ -13,44 +14,44 @@ class ThrowingBiConsumerTest {
     @Test
     void shouldConsume() throws Exception {
         // given
-        Integer[] input = {0};
+        LongAdder input = new LongAdder();
 
-        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input[0] = 2;
+        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input.increment();
 
         // when
         consumer.accept(2, 3);
 
         // then
-        assertThat(input[0]).isEqualTo(2);
+        assertThat(input.sum()).isEqualTo(1);
     }
 
     @Test
     void shouldConsumeAfter() throws Exception {
         // given
-        Integer[] input = {0};
+        LongAdder input = new LongAdder();
 
-        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input[0] = 2;
-        ThrowingBiConsumer<Integer, Integer, Exception> after = (i, j) -> input[0] = 3;
+        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input.increment();
+        ThrowingBiConsumer<Integer, Integer, Exception> after = (i, j) -> input.increment();
 
         // when
         consumer.andThenConsume(after).accept(2, 3);
 
         // then
-        assertThat(input[0]).isEqualTo(3);
+        assertThat(input.sum()).isEqualTo(2);
     }
 
     @Test
     void shouldConsumeAsFunction() throws Exception {
         // given
-        Integer[] input = {0};
+        LongAdder input = new LongAdder();
 
-        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input[0] = 2;
+        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input.increment();
 
         // when
         consumer.asFunction().apply(42, 0);
 
         // then
-        assertThat(input[0]).isEqualTo(2);
+        assertThat(input.sum()).isEqualTo(1);
     }
 
     @Test
