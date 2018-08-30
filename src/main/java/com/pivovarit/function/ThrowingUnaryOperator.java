@@ -17,8 +17,9 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
 import java.util.function.UnaryOperator;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents an operation on a single operand that produces a result of the
@@ -37,7 +38,7 @@ import java.util.function.UnaryOperator;
 public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {
 
     static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
-        return operator.uncheck();
+        return requireNonNull(operator).uncheck();
     }
 
     /**

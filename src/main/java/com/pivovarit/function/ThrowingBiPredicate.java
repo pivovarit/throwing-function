@@ -17,8 +17,9 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
 import java.util.function.BiPredicate;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a predicate (boolean-valued function) of two arguments.  This is
@@ -36,19 +37,19 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
 
     static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
-        return predicate.uncheck();
+        return requireNonNull(predicate).uncheck();
     }
 
     default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) && other.test(arg1, arg2);
+        return (arg1, arg2) -> test(arg1, arg2) && requireNonNull(other).test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> or(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) || other.test(arg1, arg2);
+        return (arg1, arg2) -> test(arg1, arg2) || requireNonNull(other).test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> xor(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) ^ other.test(arg1, arg2);
+        return (arg1, arg2) -> test(arg1, arg2) ^ requireNonNull(other).test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> negate() {

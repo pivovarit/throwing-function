@@ -15,12 +15,12 @@
  */
 package com.pivovarit.function;
 
-import java.util.Objects;
+import com.pivovarit.function.exception.WrappedException;
+
 import java.util.Optional;
 import java.util.function.Function;
 
-import com.pivovarit.function.exception.WrappedException;
-
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a function that accepts one argument and returns a value;
@@ -29,11 +29,10 @@ import com.pivovarit.function.exception.WrappedException;
  * @param <T> the type of the input to the function
  * @param <R> the type of the result of the function
  * @param <E> the type of the thrown checked exception
- *
  * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
-public interface ThrowingFunction<T,R,E extends Exception> {
+public interface ThrowingFunction<T, R, E extends Exception> {
     R apply(T arg) throws E;
 
     /**
@@ -41,23 +40,19 @@ public interface ThrowingFunction<T,R,E extends Exception> {
      * In case of a failure, empty Optional is returned
      */
     static <T, R, E extends Exception> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ? extends E> f) {
-        Objects.requireNonNull(f);
-        return f.lift();
+        return requireNonNull(f).lift();
     }
 
     static <T, R, E extends Exception> Function<T, R> unchecked(final ThrowingFunction<T, R, ? extends E> f) {
-      Objects.requireNonNull(f);
-        return f.uncheck();
+        return requireNonNull(f).uncheck();
     }
 
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, ? extends E> before) {
-      Objects.requireNonNull(before);
-        return v -> apply(before.apply(v));
+        return v -> apply(requireNonNull(before).apply(v));
     }
 
     default <V> ThrowingFunction<T, V, E> andThen(final ThrowingFunction<? super R, ? extends V, ? extends E> after) {
-      Objects.requireNonNull(after);
-        return t -> after.apply(apply(t));
+        return t -> requireNonNull(after).apply(apply(t));
     }
 
     default Function<T, Optional<R>> lift() {

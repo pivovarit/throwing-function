@@ -17,8 +17,9 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
 import java.util.function.Predicate;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a function that accepts one argument and returns a boolean value
@@ -34,19 +35,19 @@ public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
 
     static <T, E extends Exception> Predicate<T> unchecked(ThrowingPredicate<T, E> predicate) {
-        return predicate.uncheck();
+        return requireNonNull(predicate).uncheck();
     }
 
     default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, E> other) {
-        return t -> test(t) && other.test(t);
+        return t -> test(t) && requireNonNull(other).test(t);
     }
 
     default ThrowingPredicate<T, E> or(final ThrowingPredicate<? super T, E> other) {
-        return t -> test(t) || other.test(t);
+        return t -> test(t) || requireNonNull(other).test(t);
     }
 
     default ThrowingPredicate<T, E> xor(final ThrowingPredicate<? super T, E> other) {
-        return t -> test(t) ^ other.test(t);
+        return t -> test(t) ^ requireNonNull(other).test(t);
     }
 
     default ThrowingPredicate<T, E> negate() {

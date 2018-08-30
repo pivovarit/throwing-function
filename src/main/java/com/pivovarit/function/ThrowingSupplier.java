@@ -17,9 +17,10 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a function that accepts zero arguments and returns some value.
@@ -27,7 +28,6 @@ import java.util.function.Supplier;
  *
  * @param <T> the type of the output to the function
  * @param <E> the type of the thrown checked exception
- *
  * @author Grzegorz Piwowarek
  */
 @FunctionalInterface
@@ -42,11 +42,11 @@ public interface ThrowingSupplier<T, E extends Exception> {
     }
 
     static <T, E extends Exception> Supplier<T> unchecked(ThrowingSupplier<T, E> supplier) {
-        return supplier.uncheck();
+        return requireNonNull(supplier).uncheck();
     }
 
     static <T, E extends Exception> Supplier<Optional<T>> lifted(ThrowingSupplier<T, E> supplier) {
-        return supplier.lift();
+        return requireNonNull(supplier).lift();
     }
 
     /**

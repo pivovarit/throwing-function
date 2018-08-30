@@ -17,8 +17,9 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
 import java.util.function.Consumer;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a function that accepts one argument and does not return any value;
@@ -35,7 +36,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
     void accept(T t) throws E;
 
     static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
-        return consumer.uncheck();
+        return requireNonNull(consumer).uncheck();
     }
 
     /**
@@ -46,7 +47,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
     default ThrowingConsumer<T, E> andThenConsume(final ThrowingConsumer<? super T, E> after) {
         return t -> {
             accept(t);
-            after.accept(t);
+            requireNonNull(after).accept(t);
         };
     }
 

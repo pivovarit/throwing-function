@@ -17,7 +17,7 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents an action that can be performed.
@@ -32,7 +32,7 @@ public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
     static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
-        return runnable.unchecked();
+        return requireNonNull(runnable).unchecked();
     }
 
     /**
