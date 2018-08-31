@@ -20,7 +20,7 @@ final class SneakyThrowUtil {
     private SneakyThrowUtil() {
     }
 
-    static <T extends Exception> void sneakyThrow(Exception t) throws T {
+    static <T extends Exception, R> R sneakyThrow(Exception t) throws T {
         throw (T) t;
     }
 }

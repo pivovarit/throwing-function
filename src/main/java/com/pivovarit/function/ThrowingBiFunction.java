@@ -29,12 +29,10 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T1> the type of the first argument to the function
  * @param <T2> the type of the second argument to the function
- * @param <R> the type of the result of the function
- * @param <E> the type of the thrown checked exception
- *
- * @see ThrowingFunction
- *
+ * @param <R>  the type of the result of the function
+ * @param <E>  the type of the thrown checked exception
  * @author Grzegorz Piwowarek
+ * @see ThrowingFunction
  */
 @FunctionalInterface
 public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
@@ -44,14 +42,25 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
         return requireNonNull(function).unchecked();
     }
 
+    static <T1, T2, R, E extends Exception> BiFunction<T1, T2, R> sneaky(ThrowingBiFunction<T1, T2, R, E> function) {
+        return (t1, t2) -> {
+            try {
+                return requireNonNull(function).apply(t1, t2);
+            } catch (Exception ex) {
+                return SneakyThrowUtil.sneakyThrow(ex);
+            }
+        };
+    }
+
     static <T1, T2, R, E extends Exception> BiFunction<T1, T2, Optional<R>> lifted(ThrowingBiFunction<T1, T2, R, E> f) {
         return requireNonNull(f).lift();
     }
 
     /**
      * Performs provided action on the result of this ThrowingBiFunction instance
+     *
      * @param after action that is supposed to be made on the result of apply()
-     * @param <V> after function's result type
+     * @param <V>   after function's result type
      * @return combined function
      */
     default <V> ThrowingBiFunction<T1, T2, V, E> andThen(final ThrowingFunction<? super R, ? extends V, E> after) {

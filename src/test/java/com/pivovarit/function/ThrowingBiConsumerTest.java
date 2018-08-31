@@ -12,6 +12,17 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class ThrowingBiConsumerTest {
 
     @Test
+    void givenString_whenSortJava8_thenSorted() {
+        String sorted = "bdCa".chars()
+          .sorted()
+          .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+          .toString();
+
+        assertThat(sorted).isEqualTo("abcd");
+    }
+
+
+    @Test
     void shouldConsume() throws Exception {
         // given
         LongAdder input = new LongAdder();
@@ -62,9 +73,8 @@ class ThrowingBiConsumerTest {
         ThrowingBiConsumer<Integer, Integer, IOException> consumer = (i, j) -> { throw cause; };
 
         // when
-        assertThatThrownBy(() -> {
-            ThrowingBiConsumer.unchecked(consumer).accept(3, 3);
-        }).hasMessage(cause.getMessage())
+        assertThatThrownBy(() -> ThrowingBiConsumer.unchecked(consumer).accept(3, 3))
+          .hasMessage(cause.getMessage())
           .isInstanceOf(WrappedException.class)
           .hasCauseInstanceOf(cause.getClass());
     }
