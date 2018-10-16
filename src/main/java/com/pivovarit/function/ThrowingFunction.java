@@ -15,12 +15,10 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Optional;
 import java.util.function.Function;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a function that accepts one argument and returns a value;
@@ -70,7 +68,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
             try {
                 return apply(t);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                return SneakyThrowUtil.sneakyThrow(e);
             }
         };
     }

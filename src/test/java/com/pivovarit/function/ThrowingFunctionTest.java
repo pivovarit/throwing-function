@@ -1,16 +1,17 @@
 package com.pivovarit.function;
 
-import org.junit.jupiter.api.Test;
+import static com.pivovarit.function.TestCommons.givenThrowingFunction;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static com.pivovarit.function.TestCommons.givenThrowingFunction;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 class ThrowingFunctionTest {
 
@@ -83,6 +84,8 @@ class ThrowingFunctionTest {
           .hasMessage("custom exception message");
     }
 
+    /* Disabled test method as it will contradict with the sneaky throws approach implemented in ThrowingFunction#uncheck */
+    @Disabled
     @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
         assertThatThrownBy(() -> Stream.of(". .")
@@ -115,5 +118,11 @@ class ThrowingFunctionTest {
 
         //then
         assertThat(result).isZero();
+    }
+    
+    @Test
+    void shouldSneakyThrowsException() {
+      assertThatThrownBy(() -> ThrowingFunction.unchecked((String uri) -> new URI(uri)).apply(". ."))
+        .isInstanceOf(URISyntaxException.class);
     }
 }
