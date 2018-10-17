@@ -1,7 +1,7 @@
 # throwing-function
 Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 
-[![Build Status](https://travis-ci.org/pivovarit/ThrowingFunction.svg?branch=master)](https://travis-ci.org/pivovarit/ThrowingFunction)
+[![Build Status](https://travis-ci.org/pivovarit/throwing-function.svg?branch=master)](https://travis-ci.org/pivovarit/throwing-function)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
