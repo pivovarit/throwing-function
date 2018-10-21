@@ -36,20 +36,23 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
 
-    static <T, U, E extends Exception> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, E> predicate) {
+    static <T, U> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, ?> predicate) {
         return requireNonNull(predicate).uncheck();
     }
 
-    default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) && requireNonNull(other).test(arg1, arg2);
+    default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
+        requireNonNull(other);
+        return (arg1, arg2) -> test(arg1, arg2) && other.test(arg1, arg2);
     }
 
-    default ThrowingBiPredicate<T, U, E> or(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) || requireNonNull(other).test(arg1, arg2);
+    default ThrowingBiPredicate<T, U, E> or(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
+        requireNonNull(other);
+        return (arg1, arg2) -> test(arg1, arg2) || other.test(arg1, arg2);
     }
 
-    default ThrowingBiPredicate<T, U, E> xor(final ThrowingBiPredicate<? super T, ? super U, E> other) {
-        return (arg1, arg2) -> test(arg1, arg2) ^ requireNonNull(other).test(arg1, arg2);
+    default ThrowingBiPredicate<T, U, E> xor(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
+        requireNonNull(other);
+        return (arg1, arg2) -> test(arg1, arg2) ^ other.test(arg1, arg2);
     }
 
     default ThrowingBiPredicate<T, U, E> negate() {
