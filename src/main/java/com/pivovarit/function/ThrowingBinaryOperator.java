@@ -39,7 +39,7 @@ import static java.util.Objects.requireNonNull;
  */
 public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
 
-    static <T, E extends Exception> BiFunction<T, T, T> unchecked(ThrowingBinaryOperator<T, E> function) {
+    static <T> BinaryOperator<T> unchecked(ThrowingBinaryOperator<T, ?> function) {
         return requireNonNull(function).unchecked();
     }
 
