@@ -53,10 +53,11 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingBiConsumer<T, U, E extends Exception> {
     void accept(T t, U u) throws E;
 
-    default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, E> after) {
+    default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
+        requireNonNull(after);
         return (arg1, arg2) -> {
             accept(arg1, arg2);
-            requireNonNull(after).accept(arg1, arg2);
+            after.accept(arg1, arg2);
         };
     }
 
@@ -71,7 +72,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
         };
     }
 
-    static <T, U, E extends Exception> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, E> consumer) {
+    static <T, U> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, ?> consumer) {
         return requireNonNull(consumer).uncheck();
     }
 
