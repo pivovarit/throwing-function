@@ -37,7 +37,7 @@ import static java.util.Objects.requireNonNull;
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {
 
-    static <T, E extends Exception> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, E> operator) {
+    static <T> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, ?> operator) {
         return requireNonNull(operator).uncheck();
     }
 
