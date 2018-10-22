@@ -39,11 +39,11 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * @return a Function that returns the result of the given function as an Optional instance.
      * In case of a failure, empty Optional is returned
      */
-    static <T, R, E extends Exception> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ? extends E> f) {
+    static <T, R> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ?> f) {
         return requireNonNull(f).lift();
     }
 
-    static <T, R, E extends Exception> Function<T, R> unchecked(final ThrowingFunction<T, R, ? extends E> f) {
+    static <T, R> Function<T, R> unchecked(final ThrowingFunction<T, R, ?> f) {
         return requireNonNull(f).uncheck();
     }
 
@@ -58,7 +58,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     default Function<T, Optional<R>> lift() {
         return t -> {
             try {
-                return Optional.of(apply(t));
+                return Optional.ofNullable(apply(t));
             } catch (final Exception e) {
                 return Optional.empty();
             }
