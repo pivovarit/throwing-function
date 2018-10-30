@@ -77,6 +77,20 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
     }
 
     /**
+     * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<T, U, ?> consumer) {
+        return (t, u) -> {
+            try {
+                consumer.accept(t, u);
+            } catch (Exception e) {
+                SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
      */

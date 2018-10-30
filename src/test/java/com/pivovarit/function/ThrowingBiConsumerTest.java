@@ -89,4 +89,18 @@ class ThrowingBiConsumerTest {
 
         // then no exception thrown
     }
+
+    @Test
+    void shouldConsumeAndSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingBiConsumer<Integer, Integer, IOException> consumer = (i, j) -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingBiConsumer.sneaky(consumer).accept(3, 3))
+          .hasMessage(cause.getMessage())
+          .isInstanceOf(IOException.class)
+          .hasNoCause();
+    }
 }
