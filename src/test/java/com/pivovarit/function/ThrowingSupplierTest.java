@@ -60,6 +60,18 @@ class ThrowingSupplierTest {
     }
 
     @Test
+    void shouldLiftAndGetEmptyWhenNull() {
+        // given
+        ThrowingSupplier<Integer, IOException> supplier = () -> null;
+
+        // when
+        Optional<Integer> result = supplier.lift().get();
+
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
     void shouldGetUnchecked() {
         // given
         ThrowingSupplier<Integer, IOException> supplier = () -> 42;
