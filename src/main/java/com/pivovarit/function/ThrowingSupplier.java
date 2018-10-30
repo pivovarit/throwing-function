@@ -63,7 +63,7 @@ public interface ThrowingSupplier<T, E extends Exception> {
     }
 
     /**
-     * @return a new Supplier that returns the result as an Optional instance. In case of a failure, empty Optional is
+     * @return a new Supplier that returns the result as an Optional instance. In case of a failure or null, empty Optional is
      * returned
      */
     default Supplier<Optional<T>> lift() {
