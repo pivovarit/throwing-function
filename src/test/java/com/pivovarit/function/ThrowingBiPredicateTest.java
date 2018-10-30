@@ -88,9 +88,8 @@ class ThrowingBiPredicateTest {
         };
 
         // when
-        assertThatThrownBy(() -> {
-            ThrowingBiPredicate.unchecked(predicate).test(42, 0);
-        }).isInstanceOf(RuntimeException.class)
+        assertThatThrownBy(() -> ThrowingBiPredicate.unchecked(predicate).test(42, 0))
+          .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }

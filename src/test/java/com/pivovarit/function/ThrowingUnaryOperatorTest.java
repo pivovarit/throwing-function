@@ -38,9 +38,8 @@ class ThrowingUnaryOperatorTest {
         // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> { throw cause; };
 
-        assertThatThrownBy(() -> {
-            ThrowingUnaryOperator.unchecked(op).apply(42);
-        }).hasMessage(cause.getMessage())
+        assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(op).apply(42))
+          .hasMessage(cause.getMessage())
           .isInstanceOf(WrappedException.class)
           .hasCauseInstanceOf(cause.getClass());
     }
@@ -48,8 +47,7 @@ class ThrowingUnaryOperatorTest {
     @Test
     void shouldApplyUncheckedAndThrowNPE() {
         // when
-        assertThatThrownBy(() -> {
-            ThrowingUnaryOperator.unchecked(null).apply(42);
-        }).isInstanceOf(NullPointerException.class);
+        assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(null).apply(42))
+          .isInstanceOf(NullPointerException.class);
     }
 }

@@ -53,7 +53,7 @@ class ThrowingFunctionTest {
     }
 
     @Test
-    void shouldReturnEmptyOptional() throws Exception {
+    void shouldReturnEmptyOptional() {
         // given
         ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
@@ -65,7 +65,7 @@ class ThrowingFunctionTest {
     }
 
     @Test
-    void shouldThrowEx() throws Exception {
+    void shouldThrowEx() {
         ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction("custom exception message");
 
         assertThatThrownBy(() -> f1.apply(42))
@@ -74,7 +74,7 @@ class ThrowingFunctionTest {
     }
 
     @Test
-    void shouldWrapInRuntimeEx() throws Exception {
+    void shouldWrapInRuntimeEx() {
         ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction("custom exception message");
 
         // when

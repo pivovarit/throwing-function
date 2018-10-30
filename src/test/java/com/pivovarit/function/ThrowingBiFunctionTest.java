@@ -137,7 +137,8 @@ class ThrowingBiFunctionTest {
         // given
         ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw cause; };
 
-        assertThatThrownBy(() -> sneaky(f1).apply(42, 42)).isInstanceOf(IOException.class)
+        assertThatThrownBy(() -> sneaky(f1).apply(42, 42))
+          .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage());
     }
 }
