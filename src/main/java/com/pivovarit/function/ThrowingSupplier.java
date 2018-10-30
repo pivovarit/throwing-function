@@ -41,11 +41,11 @@ public interface ThrowingSupplier<T, E extends Exception> {
         return arg -> get();
     }
 
-    static <T, E extends Exception> Supplier<T> unchecked(ThrowingSupplier<T, E> supplier) {
+    static <T> Supplier<T> unchecked(ThrowingSupplier<T, ?> supplier) {
         return requireNonNull(supplier).uncheck();
     }
 
-    static <T, E extends Exception> Supplier<Optional<T>> lifted(ThrowingSupplier<T, E> supplier) {
+    static <T> Supplier<Optional<T>> lifted(ThrowingSupplier<T, ?> supplier) {
         return requireNonNull(supplier).lift();
     }
 
@@ -69,8 +69,8 @@ public interface ThrowingSupplier<T, E extends Exception> {
     default Supplier<Optional<T>> lift() {
         return () -> {
             try {
-                return Optional.of(get());
-            } catch (Exception e) {
+                return Optional.ofNullable(get());
+            } catch (final Exception e) {
                 return Optional.empty();
             }
         };

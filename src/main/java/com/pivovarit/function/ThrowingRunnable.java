@@ -31,7 +31,7 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
-    static <E extends Exception> Runnable unchecked(ThrowingRunnable<E> runnable) {
+    static Runnable unchecked(ThrowingRunnable<?> runnable) {
         return requireNonNull(runnable).unchecked();
     }
 

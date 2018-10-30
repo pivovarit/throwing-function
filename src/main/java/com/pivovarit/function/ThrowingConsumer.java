@@ -35,7 +35,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
 
     void accept(T t) throws E;
 
-    static <T, E extends Exception> Consumer<T> unchecked(ThrowingConsumer<T, E> consumer) {
+    static <T> Consumer<T> unchecked(ThrowingConsumer<T, ?> consumer) {
         return requireNonNull(consumer).uncheck();
     }
 
@@ -44,10 +44,11 @@ public interface ThrowingConsumer<T, E extends Exception> {
      * @param after - consumer that is chained after this instance
      * @return chained Consumer instance
      */
-    default ThrowingConsumer<T, E> andThenConsume(final ThrowingConsumer<? super T, E> after) {
+    default ThrowingConsumer<T, E> andThenConsume(final ThrowingConsumer<? super T, ? extends E> after) {
+        requireNonNull(after);
         return t -> {
             accept(t);
-            requireNonNull(after).accept(t);
+            after.accept(t);
         };
     }
 
@@ -56,7 +57,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
      */
     default ThrowingFunction<T, Void, E> asFunction() {
         return arg -> {
-            this.accept(arg);
+            accept(arg);
             return null;
         };
     }
