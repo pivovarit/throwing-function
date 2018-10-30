@@ -6,7 +6,26 @@ Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 
 ## Provides shortcuts for solving Java 8 checked exceptions lambda repackaging hell.
 
-### You can define functions that throw checked exceptions:
+## Rationale
+Functional Interfaces from `java.util.function` package are not exception-friendly due to the absence of `throws` clause in all of them - which results in tedious and verbose necessity of `try-catch`ing every single checked exception potentially being thrown inside a lambda expression body.
+
+So, something as simple as:
+```
+path -> new URI(path)
+```
+becomes:
+
+```
+path -> {
+    try {
+        return new URI(path);
+    } catch (URISyntaxException e) {
+        throw new RuntimeException(e);
+    }
+}
+```    
+
+### With throwing-function, you can define functions that throw checked exceptions:
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
 ### And use those functions seamlessly with native `java.util.function` classes by using a custom `ThrowingFunction#unchecked` adapter:
@@ -37,6 +56,7 @@ For Gradle users:
 
     compile 'pl.touk:throwing-function:1.3'
     
+
 ### Available types:
 
 + [ThrowingFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingFunction.java)
@@ -67,6 +87,3 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
-
-    Checker.checked()
-Additional static function allowing catching wrapped checked exceptions, unwrap and rethrow them. Comes in handy sometimes.
