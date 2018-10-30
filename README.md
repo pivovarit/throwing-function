@@ -13,7 +13,7 @@ So, something as simple as:
 ```
 path -> new URI(path)
 ```
-becomes:easing
+becomes:
 
 ```
 path -> {
