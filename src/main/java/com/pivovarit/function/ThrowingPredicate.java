@@ -18,7 +18,6 @@ package com.pivovarit.function;
 import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Objects;
-import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import static java.util.Objects.requireNonNull;

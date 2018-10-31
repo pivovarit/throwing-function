@@ -18,7 +18,6 @@ package com.pivovarit.function;
 import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;

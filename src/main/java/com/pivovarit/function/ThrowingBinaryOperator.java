@@ -17,7 +17,6 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
-import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
 
 import static java.util.Objects.requireNonNull;

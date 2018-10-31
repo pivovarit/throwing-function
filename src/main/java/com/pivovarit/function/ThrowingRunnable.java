@@ -18,7 +18,6 @@ package com.pivovarit.function;
 import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
 
