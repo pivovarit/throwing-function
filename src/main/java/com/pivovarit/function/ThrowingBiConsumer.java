@@ -31,6 +31,7 @@ package com.pivovarit.function;
  */
 import com.pivovarit.function.exception.WrappedException;
 
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 import static java.util.Objects.requireNonNull;
@@ -81,6 +82,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<T, U, ?> consumer) {
+        Objects.requireNonNull(consumer);
         return (t, u) -> {
             try {
                 consumer.accept(t, u);
