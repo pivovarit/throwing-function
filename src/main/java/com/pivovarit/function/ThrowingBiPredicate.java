@@ -17,6 +17,8 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
+import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 
 import static java.util.Objects.requireNonNull;
@@ -38,6 +40,20 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
 
     static <T, U> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, ?> predicate) {
         return requireNonNull(predicate).uncheck();
+    }
+
+    /**
+     * @return BiPredicate instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T, U> BiPredicate<T, U> sneaky(ThrowingBiPredicate<T, U, ?> predicate) {
+        Objects.requireNonNull(predicate);
+        return (t, u) -> {
+            try {
+                return predicate.test(t, u);
+            } catch (Exception e) {
+                return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
     }
 
     default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {

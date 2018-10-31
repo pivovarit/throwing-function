@@ -18,6 +18,7 @@ package com.pivovarit.function;
 import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
@@ -47,6 +48,21 @@ public interface ThrowingSupplier<T, E extends Exception> {
 
     static <T> Supplier<Optional<T>> lifted(ThrowingSupplier<T, ?> supplier) {
         return requireNonNull(supplier).lift();
+    }
+
+    /**
+     * Returns a new Supplier instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @return Supplier instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T1> Supplier<T1> sneaky(ThrowingSupplier<T1, ?> supplier) {
+        requireNonNull(supplier);
+        return () -> {
+            try {
+                return supplier.get();
+            } catch (final Exception ex) {
+                return SneakyThrowUtil.sneakyThrow(ex);
+            }
+        };
     }
 
     /**

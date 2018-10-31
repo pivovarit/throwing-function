@@ -17,6 +17,7 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
+import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
@@ -39,6 +40,21 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
 
     static <T> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, ?> operator) {
         return requireNonNull(operator).uncheck();
+    }
+
+    /**
+     * Returns a new UnaryOperator instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @return UnaryOperator instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T> UnaryOperator<T> sneaky(ThrowingUnaryOperator<T, ?> operator) {
+        Objects.requireNonNull(operator);
+        return t -> {
+            try {
+                return operator.apply(t);
+            } catch (Exception e) {
+                return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
     }
 
     /**

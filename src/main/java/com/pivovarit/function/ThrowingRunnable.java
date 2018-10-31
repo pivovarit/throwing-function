@@ -17,6 +17,9 @@ package com.pivovarit.function;
 
 import com.pivovarit.function.exception.WrappedException;
 
+import java.util.Objects;
+import java.util.function.Consumer;
+
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -33,6 +36,21 @@ public interface ThrowingRunnable<E extends Exception> {
 
     static Runnable unchecked(ThrowingRunnable<?> runnable) {
         return requireNonNull(runnable).unchecked();
+    }
+
+    /**
+     * Returns a new Runnable instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @return Runnable instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static Runnable sneaky(ThrowingRunnable<?> runnable) {
+        Objects.requireNonNull(runnable);
+        return () -> {
+            try {
+                runnable.run();
+            } catch (Exception e) {
+                SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
     }
 
     /**

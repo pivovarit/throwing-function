@@ -18,6 +18,7 @@ package com.pivovarit.function;
 import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
@@ -45,6 +46,17 @@ public interface ThrowingFunction<T, R, E extends Exception> {
 
     static <T, R> Function<T, R> unchecked(final ThrowingFunction<T, R, ?> f) {
         return requireNonNull(f).uncheck();
+    }
+
+    static <T1, R> Function<T1, R> sneaky(ThrowingFunction<? super T1, ? extends R, ?> function) {
+        requireNonNull(function);
+        return t -> {
+            try {
+                return function.apply(t);
+            } catch (final Exception ex) {
+                return SneakyThrowUtil.sneakyThrow(ex);
+            }
+        };
     }
 
     default <V> ThrowingFunction<V, R, E> compose(final ThrowingFunction<? super V, ? extends T, ? extends E> before) {
