@@ -5,7 +5,7 @@
     <parent>
         <artifactId>oss-parent</artifactId>
         <groupId>org.sonatype.oss</groupId>
-        <version>7</version>
+        <version>9</version>
     </parent>
 
     <groupId>com.pivovarit</groupId>
