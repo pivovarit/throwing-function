@@ -88,3 +88,13 @@ is thrown, result will contain an empty Optional instance. Exception gets ignore
 
     default ThrowingFunction<T, Void, E> asFunction() {...}
 Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new ThrowingFunction instance.
+
+## Version history
+
+### 1.5.0 (26-01-2010)
+
+* Introduction of [Semantic Versioning](https://semver.org)
+* Introduction of `ThrowingIntFunction`
+* All functional interfaces were moved to `com.pivovarit.function`
+* Removed controversial `uncheck()` functionality
+
