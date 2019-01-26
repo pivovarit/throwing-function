@@ -47,14 +47,14 @@ path -> {
 For Maven users:
 
     <dependency>
-        <groupId>pl.touk</groupId>
-        <artifactId>throwing-function</artifactId>
-        <version>1.3</version>
+      <groupId>com.pivovarit</groupId>
+      <artifactId>throwing-function</artifactId>
+      <version>1.4</version>
     </dependency>
     
 For Gradle users:
 
-    compile 'pl.touk:throwing-function:1.3'
+    compile 'com.pivovarit:throwing-function:1.4'
     
 
 ### Available types:
