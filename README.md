@@ -96,5 +96,5 @@ Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new Th
 * Introduction of [Semantic Versioning](https://semver.org)
 * Introduction of `ThrowingIntFunction`
 * All functional interfaces were moved to `com.pivovarit.function`
-* Removed controversial `uncheck()` functionality
+* Removed controversial `unwrap()` functionality
 
