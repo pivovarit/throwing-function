@@ -9,14 +9,15 @@
     <name>throwing-function</name>
     <packaging>jar</packaging>
 
-    <description>Java 8 functional interfaces on steroids supporting checked exceptions</description>
+    <description>Java 8+ functional interfaces with checked exceptions support</description>
     <url>https://github.com/pivovarit/throwing-function</url>
 
     <developers>
         <developer>
             <name>Grzegorz Piwowarek</name>
             <email>gpiwowarek@gmail.com</email>
-            <url>http://pivovarit.github.io/</url>
+            <url>4comprehension.com</url>
+            <organization>4comprehension</organization>
             <id>gpiwowarek</id>
         </developer>
     </developers>
@@ -29,13 +30,13 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/pivovarit/ThrowingFunction</url>
-        <connection>scm:git:git@github.com:pivovarit/ThrowingFunction.git</connection>
-        <developerConnection>scm:git:git@github.com:pivovarit/ThrowingFunction.git</developerConnection>
+        <url>https://github.com/pivovarit/throwing-function</url>
+        <connection>scm:git:git@github.com:pivovarit/throwing-function.git</connection>
+        <developerConnection>scm:git:git@github.com:pivovarit/throwing-function.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/pivovarit/ThrowingFunction/issues</url>
+        <url>https://github.com/pivovarit/throwing-function/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
