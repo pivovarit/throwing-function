@@ -91,7 +91,7 @@ Returns ThrowingPredicate/ThrowingSupplier/ThrowingConsumer instance as a new Th
 
 ## Version history
 
-### 1.5.0 (26-01-2010)
+### [1.5.0 (26-01-2010)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.0)
 
 * Introduction of [Semantic Versioning](https://semver.org)
 * Introduction of `ThrowingIntFunction`
