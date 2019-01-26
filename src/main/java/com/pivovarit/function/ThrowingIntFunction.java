@@ -17,6 +17,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <R> the type of the result of the function
  * @param <E> the type of the thrown checked exception
+ * @since 1.5.0
  */
 @FunctionalInterface
 interface ThrowingIntFunction<R, E extends Exception> {
@@ -65,5 +66,4 @@ interface ThrowingIntFunction<R, E extends Exception> {
             }
         };
     }
-
 }

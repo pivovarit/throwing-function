@@ -47,8 +47,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.0.1</junit.version>
-        <assertj.version>3.8.0</assertj.version>
+        <junit.version>5.3.2</junit.version>
+        <assertj.version>3.11.1</assertj.version>
     </properties>
 
     <build>
@@ -78,7 +78,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
