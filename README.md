@@ -50,7 +50,7 @@ For Maven users:
     <dependency>
       <groupId>com.pivovarit</groupId>
       <artifactId>throwing-function</artifactId>
-      <version>1.4</version>
+      <version>1.5.0</version>
     </dependency>
     
 For Gradle users:
