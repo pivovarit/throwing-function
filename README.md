@@ -46,6 +46,8 @@ which avoids ending up with:
 
 ### Basic API
 
+#### Functional Interfaces
+
 - [ThrowingFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingFunction.java)
 - [ThrowingIntFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingIntFunction.java)
 - [ThrowingBiConsumer](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingBiConsumer.java)
