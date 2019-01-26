@@ -8,7 +8,8 @@ Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 # Easing the checked exceptions lambda repackaging pain.
 
 ## Rationale
-Functional Interfaces from `java.util.function` package are not exception-friendly due to the absence of `throws` clause in all of them - which results in tedious and verbose necessity of `try-catch`ing every single checked exception potentially being thrown inside a lambda expression body.
+
+Functional Interfaces from `java.util.function` package are not checked-exception-friendly due to the lack of `throws` which results in tedious and verbose necessity of `try-catch`ing every single checked exception potentially being thrown inside a lambda expression body.
 
 So, something as simple as:
 ```
@@ -55,7 +56,7 @@ For Maven users:
     
 For Gradle users:
 
-    compile 'com.pivovarit:throwing-function:1.4'
+    compile 'com.pivovarit:throwing-function:1.5.0'
     
 
 ### Available types:
