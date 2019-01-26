@@ -3,7 +3,7 @@ Checked Exceptions-enabled Java 8+ functional interfaces + adapters
 
 [![Build Status](https://travis-ci.org/pivovarit/throwing-function.svg?branch=master)](https://travis-ci.org/pivovarit/throwing-function)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/parallel-collectors/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/parallel-collectors)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function)
 
 # Easing the checked exceptions lambda repackaging pain.
 
