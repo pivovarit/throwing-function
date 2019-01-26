@@ -72,7 +72,7 @@ Transforms a `ThrowingFunction` instance into a regular `Function` returning res
 
 + `default ThrowingFunction<T, Void, E> asFunction() {...}`
 
-Returns `Throwing(Predicate|SupplierConsumer`) instance as a new `ThrowingFunction` instance.
+Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunction` instance.
 
 ### Maven Central
 
