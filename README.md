@@ -1,4 +1,4 @@
-# Checked-Exceptions-enabled Java 8 Functional Interfaces
+# Checked-Exceptions-enabled Java 8+ Functional Interfaces
 and adapters
 
 [![Build Status](https://travis-ci.org/pivovarit/throwing-function.svg?branch=master)](https://travis-ci.org/pivovarit/throwing-function)
@@ -7,13 +7,13 @@ and adapters
 
 ## Rationale
 
-Standard Functional Interfaces from `java.util.function` package are not checked-exception-friendly due to the lack of `throws ...` clause which results in tedious and verbose necessity of handling them by adding `try-catch` boilerplate.
+Standard `java.util.function` Functional Interfaces aren't checked-exception-friendly due to the absence of `throws ...` clause which results in tedious and verbose necessity of handling them by adding `try-catch` boilerplate.
 
-This makes one-liners like this:
+Which makes one-liners like this:
 ```
 path -> new URI(path)
 ```
-as verbose as:
+become as verbose as:
 
 ```
 path -> {
@@ -29,7 +29,7 @@ By applying `com.pivovarit.function` functional interfaces, it's possible to reg
 
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-and use them seamlessly with native `java.util.function` classes by using a custom `ThrowingFunction#unchecked` adapter:
+and use them seamlessly with native `java.util.function` classes by using custom `ThrowingFunction#unchecked` adapters:
 
     ...stream()
       .map(unchecked(URI::new)) // static import of ThrowingFunction#unchecked
@@ -94,7 +94,7 @@ None - the library is implemented using core Java libraries.
 
 ### [1.5.0 (26-01-2019)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.0)
 
-* Introduced [Semantic Versioning](https://semver.org)
+* Introduced proper [Semantic Versioning](https://semver.org)
 * Introduced `ThrowingIntFunction`
 * Moved interfaces to `com.pivovarit.function`
 * Removed controversial `unwrap()` functionality
