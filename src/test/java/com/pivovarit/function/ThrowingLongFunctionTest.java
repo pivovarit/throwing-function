@@ -6,24 +6,24 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
-import static com.pivovarit.function.ThrowingIntFunction.lifted;
-import static com.pivovarit.function.ThrowingIntFunction.unchecked;
+import static com.pivovarit.function.ThrowingLongFunction.lifted;
+import static com.pivovarit.function.ThrowingLongFunction.unchecked;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class ThrowingIntFunctionTest {
+class ThrowingLongFunctionTest {
 
     private static final String EXPECTED_MESSAGE = "Oh no! " + UUID.randomUUID();
-    private static final ThrowingIntFunction<String, Exception> THROWS_CHECKED = i -> {
+    private static final ThrowingLongFunction<String, Exception> THROWS_CHECKED = i -> {
         throw new Exception(EXPECTED_MESSAGE);
     };
 
     @Test
     void shouldReturnOptional() {
-        ThrowingIntFunction<String, Exception> f = Integer::toString;
+        ThrowingLongFunction<String, Exception> f = Long::toString;
 
         Optional<String> result = f.lift().apply(42);
 
@@ -54,7 +54,7 @@ class ThrowingIntFunctionTest {
 
     @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
-        assertThatThrownBy(() -> IntStream.of(1).mapToObj(unchecked(THROWS_CHECKED)).count())
+        assertThatThrownBy(() -> LongStream.of(1).mapToObj(unchecked(THROWS_CHECKED)).count())
                 .isInstanceOf(WrappedException.class)
                 .hasMessage(EXPECTED_MESSAGE)
                 .hasCauseInstanceOf(Exception.class);
@@ -62,16 +62,16 @@ class ThrowingIntFunctionTest {
 
     @Test
     void shouldApplyWhenNoExceptionThrown() {
-        ThrowingIntFunction<String, Exception> f = Integer::toString;
+        ThrowingLongFunction<String, Exception> f = Long::toString;
 
-        List<String> result = IntStream.of(42, 256).mapToObj(f.uncheck()).collect(toList());
+        List<String> result = LongStream.of(42, 256).mapToObj(f.uncheck()).collect(toList());
 
         assertThat(result).containsExactly("42", "256");
     }
 
     @Test
     void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
-        Long result = IntStream.of(42).mapToObj(lifted(THROWS_CHECKED)).filter(Optional::isPresent).count();
+        Long result = LongStream.of(42).mapToObj(lifted(THROWS_CHECKED)).filter(Optional::isPresent).count();
 
         assertThat(result).isZero();
     }
