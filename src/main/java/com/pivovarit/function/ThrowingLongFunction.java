@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
  * @since 1.5.0
  */
 @FunctionalInterface
-interface ThrowingLongFunction<R, E extends Exception> {
+public interface ThrowingLongFunction<R, E extends Exception> {
 
     R apply(long l) throws E;
 

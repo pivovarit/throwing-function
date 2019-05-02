@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
  * @since 1.5.0
  */
 @FunctionalInterface
-interface ThrowingDoubleFunction<R, E extends Exception> {
+public interface ThrowingDoubleFunction<R, E extends Exception> {
 
     R apply(double d) throws E;
 
