@@ -11,6 +11,11 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class ThrowingBiConsumerTest {
 
+
+    /*
+     I dont think that this test have to stay, because as the articla says it have to fail without toLowerCase
+  	https://www.baeldung.com/java-sort-string-alphabetically
+    
     @Test
     void givenString_whenSortJava8_thenSorted() {
         String sorted = "bdCa".chars()
@@ -20,8 +25,8 @@ class ThrowingBiConsumerTest {
 
         assertThat(sorted).isEqualTo("abcd");
     }
-
-
+    */
+ 
     @Test
     void shouldConsume() throws Exception {
         // given
