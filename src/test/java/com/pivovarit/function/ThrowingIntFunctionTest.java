@@ -55,7 +55,7 @@ class ThrowingIntFunctionTest {
 
     @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
-        assertThatThrownBy(() -> IntStream.of(1).mapToObj(unchecked(THROWS_CHECKED)).collect(Collectors.toList()))
+        assertThatThrownBy(() -> unchecked(THROWS_CHECKED).apply(42))
                 .isInstanceOf(WrappedException.class)
                 .hasMessage(EXPECTED_MESSAGE)
                 .hasCauseInstanceOf(Exception.class);
