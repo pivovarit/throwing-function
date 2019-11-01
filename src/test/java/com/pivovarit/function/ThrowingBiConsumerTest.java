@@ -12,17 +12,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 class ThrowingBiConsumerTest {
 
     @Test
-    void givenString_whenSortJava8_thenSorted() {
-        String sorted = "bdCa".chars()
-          .sorted()
-          .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-          .toString();
-
-        assertThat(sorted).isEqualTo("abcd");
-    }
-
-
-    @Test
     void shouldConsume() throws Exception {
         // given
         LongAdder input = new LongAdder();
