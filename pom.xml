@@ -15,7 +15,7 @@
     <name>throwing-function</name>
     <packaging>jar</packaging>
 
-    <description>Java 8+ functional interfaces with checked exceptions support</description>
+    <description>Java 8+ functional interfaces with enhanced checked exceptions support</description>
     <url>https://github.com/pivovarit/throwing-function</url>
 
     <developers>
@@ -48,8 +48,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.3.2</junit.version>
-        <assertj.version>3.11.1</assertj.version>
+        <junit.version>5.5.2</junit.version>
+        <assertj.version>3.14.0</assertj.version>
     </properties>
 
     <build>
@@ -65,18 +65,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>2.22.2</version>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
