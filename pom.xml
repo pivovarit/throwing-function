@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -14,7 +15,7 @@
     <name>throwing-function</name>
     <packaging>bundle</packaging>
 
-    <description>Java 8+ functional interfaces with checked exceptions support</description>
+    <description>Java 8+ functional interfaces with enhanced checked exceptions support</description>
     <url>https://github.com/pivovarit/throwing-function</url>
 
     <developers>
@@ -47,8 +48,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.3.2</junit.version>
-        <assertj.version>3.11.1</assertj.version>
+        <junit.version>5.5.2</junit.version>
+        <assertj.version>3.14.0</assertj.version>
     </properties>
 
     <build>
@@ -56,7 +57,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
