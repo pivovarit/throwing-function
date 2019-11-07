@@ -1,7 +1,0 @@
-language: java
-
-install: mvn test -Dgpg.skip=true
-
-jdk:
-  - openjdk8
-  - openjdk11
