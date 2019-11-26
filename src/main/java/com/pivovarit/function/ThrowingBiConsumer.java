@@ -29,7 +29,6 @@ package com.pivovarit.function;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import com.pivovarit.function.exception.WrappedException;
 
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -101,7 +100,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
             try {
                 accept(arg1, arg2);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

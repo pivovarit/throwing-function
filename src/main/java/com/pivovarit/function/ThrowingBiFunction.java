@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -74,7 +72,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
             try {
                 return apply(arg1, arg2);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

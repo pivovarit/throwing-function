@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Objects;
 import java.util.function.BiPredicate;
 
@@ -89,7 +87,7 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
             try {
                 return test(arg1, arg2);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

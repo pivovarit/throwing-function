@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
@@ -60,7 +58,7 @@ public interface ThrowingRunnable<E extends Exception> {
             try {
                 run();
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

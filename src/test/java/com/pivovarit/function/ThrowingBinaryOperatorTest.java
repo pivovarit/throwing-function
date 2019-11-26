@@ -1,6 +1,5 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -70,7 +69,7 @@ class ThrowingBinaryOperatorTest {
 
         // when
         assertThatThrownBy(() -> f1.unchecked().apply(42, 42))
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }
@@ -85,7 +84,7 @@ class ThrowingBinaryOperatorTest {
 
         // when
         assertThatThrownBy(() -> ThrowingBinaryOperator.unchecked(f1).apply(42, 42))
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }

@@ -1,6 +1,5 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -40,7 +39,7 @@ class ThrowingUnaryOperatorTest {
 
         assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(op).apply(42))
           .hasMessage(cause.getMessage())
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasCauseInstanceOf(cause.getClass());
     }
 

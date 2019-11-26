@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Objects;
 import java.util.function.UnaryOperator;
 
@@ -66,7 +64,7 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
             try {
                 return apply(t);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

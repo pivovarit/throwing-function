@@ -1,6 +1,5 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -64,7 +63,7 @@ class ThrowingBiConsumerTest {
         // when
         assertThatThrownBy(() -> ThrowingBiConsumer.unchecked(consumer).accept(3, 3))
           .hasMessage(cause.getMessage())
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasCauseInstanceOf(cause.getClass());
     }
 

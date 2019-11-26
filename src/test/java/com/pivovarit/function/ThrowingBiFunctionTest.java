@@ -1,6 +1,5 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -75,7 +74,7 @@ class ThrowingBiFunctionTest {
 
         // when
         assertThatThrownBy(() -> f1.unchecked().apply(42, 42))
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCauseInstanceOf(cause.getClass());
     }
@@ -88,7 +87,7 @@ class ThrowingBiFunctionTest {
         ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw cause; };
 
         // when
-        assertThatThrownBy(() -> unchecked(f1).apply(42, 42)).isInstanceOf(WrappedException.class)
+        assertThatThrownBy(() -> unchecked(f1).apply(42, 42)).isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCauseInstanceOf(cause.getClass());
     }

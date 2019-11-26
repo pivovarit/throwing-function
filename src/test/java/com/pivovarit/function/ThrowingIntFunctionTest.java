@@ -1,12 +1,10 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.pivovarit.function.ThrowingIntFunction.lifted;
@@ -48,7 +46,7 @@ class ThrowingIntFunctionTest {
     @Test
     void shouldWrapInRuntimeEx() {
         assertThatThrownBy(() -> THROWS_CHECKED.uncheck().apply(42))
-                .isInstanceOf(WrappedException.class)
+                .isInstanceOf(CheckedException.class)
                 .hasMessage(EXPECTED_MESSAGE);
     }
 
@@ -56,7 +54,7 @@ class ThrowingIntFunctionTest {
     @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
         assertThatThrownBy(() -> unchecked(THROWS_CHECKED).apply(42))
-                .isInstanceOf(WrappedException.class)
+                .isInstanceOf(CheckedException.class)
                 .hasMessage(EXPECTED_MESSAGE)
                 .hasCauseInstanceOf(Exception.class);
     }
