@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pivovarit.function.exception;
+package com.pivovarit.function;
 
-public class WrappedException extends RuntimeException {
-    public WrappedException(Throwable cause) {
+public class CheckedException extends RuntimeException {
+    public CheckedException(Throwable cause) {
         super(cause.getMessage(), cause);
     }
 }

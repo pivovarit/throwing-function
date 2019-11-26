@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -87,7 +85,7 @@ public interface ThrowingPredicate<T, E extends Exception> {
             try {
                 return test(t);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

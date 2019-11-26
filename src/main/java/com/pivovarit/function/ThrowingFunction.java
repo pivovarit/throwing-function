@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -83,7 +81,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
             try {
                 return apply(t);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

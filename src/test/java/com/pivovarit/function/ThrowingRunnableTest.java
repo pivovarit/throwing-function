@@ -1,6 +1,5 @@
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -41,7 +40,7 @@ class ThrowingRunnableTest {
 
         // when
         assertThatThrownBy(() -> runnable.unchecked().run())
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }
@@ -55,7 +54,7 @@ class ThrowingRunnableTest {
 
         // when
         assertThatThrownBy(() -> ThrowingRunnable.unchecked(runnable).run())
-          .isInstanceOf(WrappedException.class)
+          .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }

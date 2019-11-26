@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -86,7 +84,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
             try {
                 accept(t);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }

@@ -15,8 +15,6 @@
  */
 package com.pivovarit.function;
 
-import com.pivovarit.function.exception.WrappedException;
-
 import java.util.function.BinaryOperator;
 
 import static java.util.Objects.requireNonNull;
@@ -48,7 +46,7 @@ public interface ThrowingBinaryOperator<T, E extends Exception> extends Throwing
             try {
                 return apply(arg1, arg2);
             } catch (final Exception e) {
-                throw new WrappedException(e);
+                throw new CheckedException(e);
             }
         };
     }
