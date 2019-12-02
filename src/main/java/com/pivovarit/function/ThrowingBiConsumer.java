@@ -14,26 +14,9 @@
  * limitations under the License.
  */
 package com.pivovarit.function;
-/*
- * Copyright 2016 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
-import java.util.Objects;
 import java.util.function.BiConsumer;
 
-import static java.util.Objects.*;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -42,18 +25,17 @@ import static java.util.Objects.requireNonNull;
  * Unlike most other functional interfaces, {@code ThrowingBiConsumer}  is expected
  * to operate via side-effects.
  *
- * @param <T> the type of the first argument to the operation
- * @param <U> the type of the second argument to the operation
- * @param <E> the type of the thrown checked exception
- *
- * @see ThrowingConsumer
+ * @param <T1> the type of the first argument to the operation
+ * @param <T2> the type of the second argument to the operation
+ * @param <EX> the type of the thrown checked exception
  *
  * @author Grzegorz Piwowarek
+ * @see ThrowingConsumer
  */
 @FunctionalInterface
-public interface ThrowingBiConsumer<T, U, E extends Exception> {
+public interface ThrowingBiConsumer<T1, T2, EX extends Exception> {
 
-    void accept(T t, U u) throws E;
+    void accept(T1 t, T2 t2) throws EX;
 
     static <T, U> BiConsumer<T, U> unchecked(ThrowingBiConsumer<? super T, ? super U, ?> consumer) {
         requireNonNull(consumer);
@@ -68,6 +50,7 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
 
     /**
      * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<? super T, ? super U, ?> consumer) {
@@ -83,9 +66,10 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
 
     /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
+     *
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
      */
-    default BiConsumer<T, U> unchecked() {
+    default BiConsumer<T1, T2> unchecked() {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);
@@ -97,9 +81,10 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
 
     /**
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
+     *
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
      */
-    default BiConsumer<T, U> sneaky() {
+    default BiConsumer<T1, T2> sneaky() {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);
