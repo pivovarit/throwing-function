@@ -33,59 +33,27 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingPredicate<T, E extends Exception> {
     boolean test(T t) throws E;
 
-    static <T> Predicate<T> unchecked(ThrowingPredicate<T, ?> predicate) {
-        return requireNonNull(predicate).uncheck();
+    static <T> Predicate<T> unchecked(ThrowingPredicate<? super T, ?> predicate) {
+        requireNonNull(predicate);
+        return t -> {
+            try {
+                return predicate.test(t);
+            } catch (final Exception e) {
+                throw new CheckedException(e);
+            }
+        };
     }
 
     /**
      * @return Predicate instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T> Predicate<T> sneaky(ThrowingPredicate<T, ?> predicate) {
+    static <T> Predicate<T> sneaky(ThrowingPredicate<? super T, ?> predicate) {
         Objects.requireNonNull(predicate);
         return t -> {
             try {
                 return predicate.test(t);
             } catch (Exception e) {
                 return SneakyThrowUtil.sneakyThrow(e);
-            }
-        };
-    }
-
-    default ThrowingPredicate<T, E> and(final ThrowingPredicate<? super T, ? extends E> other) {
-        requireNonNull(other);
-        return t -> test(t) && other.test(t);
-    }
-
-    default ThrowingPredicate<T, E> or(final ThrowingPredicate<? super T, ? extends E> other) {
-        requireNonNull(other);
-        return t -> test(t) || other.test(t);
-    }
-
-    default ThrowingPredicate<T, E> xor(final ThrowingPredicate<? super T, ? extends E> other) {
-        requireNonNull(other);
-        return t -> test(t) ^ other.test(t);
-    }
-
-    default ThrowingPredicate<T, E> negate() {
-        return t -> !test(t);
-    }
-
-    /**
-     * @return this Predicate instance as a Function instance
-     */
-    default ThrowingFunction<T, Boolean, E> asFunction() {
-        return this::test;
-    }
-
-    /**
-     * @return a new Predicate instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default Predicate<T> uncheck() {
-        return t -> {
-            try {
-                return test(t);
-            } catch (final Exception e) {
-                throw new CheckedException(e);
             }
         };
     }
