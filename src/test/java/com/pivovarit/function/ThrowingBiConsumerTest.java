@@ -25,35 +25,6 @@ class ThrowingBiConsumerTest {
     }
 
     @Test
-    void shouldConsumeAfter() throws Exception {
-        // given
-        LongAdder input = new LongAdder();
-
-        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input.increment();
-        ThrowingBiConsumer<Integer, Integer, Exception> after = (i, j) -> input.increment();
-
-        // when
-        consumer.andThenConsume(after).accept(2, 3);
-
-        // then
-        assertThat(input.sum()).isEqualTo(2);
-    }
-
-    @Test
-    void shouldConsumeAsFunction() throws Exception {
-        // given
-        LongAdder input = new LongAdder();
-
-        ThrowingBiConsumer<Integer, Integer, Exception> consumer = (i, j) -> input.increment();
-
-        // when
-        consumer.asFunction().apply(42, 0);
-
-        // then
-        assertThat(input.sum()).isEqualTo(1);
-    }
-
-    @Test
     void shouldConsumeAndThrowUnchecked() {
         IOException cause = new IOException("some message");
 

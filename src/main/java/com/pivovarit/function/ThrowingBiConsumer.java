@@ -33,6 +33,7 @@ package com.pivovarit.function;
 import java.util.Objects;
 import java.util.function.BiConsumer;
 
+import static java.util.Objects.*;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -51,41 +52,30 @@ import static java.util.Objects.requireNonNull;
  */
 @FunctionalInterface
 public interface ThrowingBiConsumer<T, U, E extends Exception> {
+
     void accept(T t, U u) throws E;
 
-    default ThrowingBiConsumer<T, U, E> andThenConsume(final ThrowingBiConsumer<? super T, ? super U, ? extends E> after) {
-        requireNonNull(after);
+    static <T, U> BiConsumer<T, U> unchecked(ThrowingBiConsumer<? super T, ? super U, ?> consumer) {
+        requireNonNull(consumer);
         return (arg1, arg2) -> {
-            accept(arg1, arg2);
-            after.accept(arg1, arg2);
+            try {
+                consumer.accept(arg1, arg2);
+            } catch (final Exception e) {
+                throw new CheckedException(e);
+            }
         };
-    }
-
-    /**
-     * Returns this ThrowingBiConsumer instance as a ThrowingBiFunction
-     * @return this action as a ThrowingBiFunction
-     */
-    default ThrowingBiFunction<T, U, Void, E> asFunction() {
-        return (arg1, arg2) -> {
-            accept(arg1, arg2);
-            return null;
-        };
-    }
-
-    static <T, U> BiConsumer<T, U> unchecked(ThrowingBiConsumer<T, U, ?> consumer) {
-        return requireNonNull(consumer).uncheck();
     }
 
     /**
      * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<T, U, ?> consumer) {
-        Objects.requireNonNull(consumer);
-        return (t, u) -> {
+    static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<? super T, ? super U, ?> consumer) {
+        requireNonNull(consumer);
+        return (arg1, arg2) -> {
             try {
-                consumer.accept(t, u);
-            } catch (Exception e) {
+                consumer.accept(arg1, arg2);
+            } catch (final Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
             }
         };
@@ -95,12 +85,26 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
      * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
      * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
      */
-    default BiConsumer<T, U> uncheck() {
+    default BiConsumer<T, U> unchecked() {
         return (arg1, arg2) -> {
             try {
                 accept(arg1, arg2);
             } catch (final Exception e) {
                 throw new CheckedException(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
+     * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
+     */
+    default BiConsumer<T, U> sneaky() {
+        return (arg1, arg2) -> {
+            try {
+                accept(arg1, arg2);
+            } catch (final Exception e) {
+                SneakyThrowUtil.sneakyThrow(e);
             }
         };
     }
