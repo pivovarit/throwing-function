@@ -63,34 +63,4 @@ public interface ThrowingBiConsumer<T1, T2, EX extends Exception> {
             }
         };
     }
-
-    /**
-     * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
-     *
-     * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
-     */
-    default BiConsumer<T1, T2> unchecked() {
-        return (arg1, arg2) -> {
-            try {
-                accept(arg1, arg2);
-            } catch (final Exception e) {
-                throw new CheckedException(e);
-            }
-        };
-    }
-
-    /**
-     * Returns a new BiConsumer instance which wraps thrown checked exception instance into a RuntimeException
-     *
-     * @return BiConsumer instance that packages checked exceptions into RuntimeException instances
-     */
-    default BiConsumer<T1, T2> sneaky() {
-        return (arg1, arg2) -> {
-            try {
-                accept(arg1, arg2);
-            } catch (final Exception e) {
-                SneakyThrowUtil.sneakyThrow(e);
-            }
-        };
-    }
 }
