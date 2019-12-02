@@ -23,7 +23,6 @@ class ThrowingConsumerTest {
         assertThat(input[0]).isEqualTo(2);
     }
 
-
     @Test
     void shouldConsumeAndThrowUnchecked() {
         IOException cause = new IOException("some message");
