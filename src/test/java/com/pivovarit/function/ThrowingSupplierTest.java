@@ -23,81 +23,6 @@ class ThrowingSupplierTest {
     }
 
     @Test
-    void shouldGetAsFunction() throws Exception {
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> 42;
-
-        // when
-        ThrowingFunction<Void, Integer, IOException> result = supplier.asFunction();
-
-        // then
-        assertThat(result.apply(null)).isEqualTo(42);
-    }
-
-    @Test
-    void shouldLiftAndGet() {
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> 42;
-
-        // when
-        Optional<Integer> result = supplier.lift().get();
-
-        // then
-        assertThat(result).isPresent();
-    }
-
-    @Test
-    void shouldLiftAndGetEmpty() {
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException(); };
-
-        // when
-        Optional<Integer> result = supplier.lift().get();
-
-        // then
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    void shouldLiftAndGetEmptyWhenNull() {
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> null;
-
-        // when
-        Optional<Integer> result = supplier.lift().get();
-
-        // then
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    void shouldGetUnchecked() {
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> 42;
-
-        // when
-        Integer result = supplier.uncheck().get();
-
-        // then
-        assertThat(result).isEqualTo(42);
-    }
-
-    @Test
-    void shouldGetUncheckedAndThrow() {
-        IOException cause = new IOException("some message");
-
-        // given
-        ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
-
-        // when
-
-        assertThatThrownBy(() -> supplier.uncheck().get())
-          .isInstanceOf(CheckedException.class)
-          .hasMessage(cause.getMessage())
-          .hasCause(cause);
-    }
-
-    @Test
     void shouldGetUncheckedWithUtilsFunction() {
         IOException cause = new IOException("some message");
 
@@ -116,7 +41,7 @@ class ThrowingSupplierTest {
         ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
         // when
-        Optional<Integer> result = ThrowingSupplier.lifted(supplier).get();
+        Optional<Integer> result = ThrowingSupplier.optional(supplier).get();
 
         // then
         assertThat(result).isPresent();

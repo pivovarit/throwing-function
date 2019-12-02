@@ -32,59 +32,39 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingSupplier<T, E extends Exception> {
     T get() throws E;
 
-    /**
-     * @return this Consumer instance as a new Function instance
-     */
-    default ThrowingFunction<Void, T, E> asFunction() {
-        return arg -> get();
-    }
-
-    static <T> Supplier<T> unchecked(ThrowingSupplier<T, ?> supplier) {
-        return requireNonNull(supplier).uncheck();
-    }
-
-    static <T> Supplier<Optional<T>> lifted(ThrowingSupplier<T, ?> supplier) {
-        return requireNonNull(supplier).lift();
-    }
-
-    /**
-     * Returns a new Supplier instance which rethrows the checked exception using the Sneaky Throws pattern
-     * @return Supplier instance that rethrows the checked exception using the Sneaky Throws pattern
-     */
-    static <T1> Supplier<T1> sneaky(ThrowingSupplier<T1, ?> supplier) {
+    static <T> Supplier<T> unchecked(ThrowingSupplier<? extends T, ?> supplier) {
         requireNonNull(supplier);
         return () -> {
             try {
                 return supplier.get();
-            } catch (final Exception ex) {
-                return SneakyThrowUtil.sneakyThrow(ex);
-            }
-        };
-    }
-
-    /**
-     * @return a new Supplier instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default Supplier<T> uncheck() {
-        return () -> {
-            try {
-                return get();
             } catch (final Exception e) {
                 throw new CheckedException(e);
             }
         };
     }
 
-    /**
-     * @return a new Supplier that returns the result as an Optional instance. In case of a failure or null, empty Optional is
-     * returned
-     */
-    default Supplier<Optional<T>> lift() {
+    static <T> Supplier<Optional<T>> optional(ThrowingSupplier<? extends T, ?> supplier) {
+        requireNonNull(supplier);
         return () -> {
             try {
-                return Optional.ofNullable(get());
+                return Optional.ofNullable(supplier.get());
             } catch (final Exception e) {
                 return Optional.empty();
+            }
+        };
+    }
+
+    /**
+     * Returns a new Supplier instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @return Supplier instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T> Supplier<T> sneaky(ThrowingSupplier<? extends T, ?> supplier) {
+        requireNonNull(supplier);
+        return () -> {
+            try {
+                return supplier.get();
+            } catch (final Exception ex) {
+                return SneakyThrowUtil.sneakyThrow(ex);
             }
         };
     }

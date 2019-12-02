@@ -32,11 +32,19 @@ public interface ThrowingRunnable<E extends Exception> {
     void run() throws E;
 
     static Runnable unchecked(ThrowingRunnable<?> runnable) {
-        return requireNonNull(runnable).unchecked();
+        requireNonNull(runnable);
+        return () -> {
+            try {
+                runnable.run();
+            } catch (final Exception e) {
+                throw new CheckedException(e);
+            }
+        };
     }
 
     /**
      * Returns a new Runnable instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
      * @return Runnable instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static Runnable sneaky(ThrowingRunnable<?> runnable) {
@@ -46,19 +54,6 @@ public interface ThrowingRunnable<E extends Exception> {
                 runnable.run();
             } catch (Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
-            }
-        };
-    }
-
-    /**
-     * @return a new Runnable instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default Runnable unchecked() {
-        return () -> {
-            try {
-                run();
-            } catch (final Exception e) {
-                throw new CheckedException(e);
             }
         };
     }
