@@ -35,59 +35,27 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingBiPredicate<T, U, E extends Exception> {
     boolean test(T t, U u) throws E;
 
-    static <T, U> BiPredicate<T, U> unchecked(ThrowingBiPredicate<T, U, ?> predicate) {
-        return requireNonNull(predicate).uncheck();
+    static <T, U> BiPredicate<T, U> unchecked(ThrowingBiPredicate<? super T, ? super U, ?> predicate) {
+        requireNonNull(predicate);
+        return (arg1, arg2) -> {
+            try {
+                return predicate.test(arg1, arg2);
+            } catch (final Exception e) {
+                throw new CheckedException(e);
+            }
+        };
     }
 
     /**
      * @return BiPredicate instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T, U> BiPredicate<T, U> sneaky(ThrowingBiPredicate<T, U, ?> predicate) {
+    static <T, U> BiPredicate<T, U> sneaky(ThrowingBiPredicate<? super T, ? super U, ?> predicate) {
         Objects.requireNonNull(predicate);
         return (t, u) -> {
             try {
                 return predicate.test(t, u);
             } catch (Exception e) {
                 return SneakyThrowUtil.sneakyThrow(e);
-            }
-        };
-    }
-
-    default ThrowingBiPredicate<T, U, E> and(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
-        requireNonNull(other);
-        return (arg1, arg2) -> test(arg1, arg2) && other.test(arg1, arg2);
-    }
-
-    default ThrowingBiPredicate<T, U, E> or(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
-        requireNonNull(other);
-        return (arg1, arg2) -> test(arg1, arg2) || other.test(arg1, arg2);
-    }
-
-    default ThrowingBiPredicate<T, U, E> xor(final ThrowingBiPredicate<? super T, ? super U, ? extends E> other) {
-        requireNonNull(other);
-        return (arg1, arg2) -> test(arg1, arg2) ^ other.test(arg1, arg2);
-    }
-
-    default ThrowingBiPredicate<T, U, E> negate() {
-        return (arg1, arg2) -> !test(arg1, arg2);
-    }
-
-    /**
-     * @return this ThrowingBiFunction instance as a ThrowingBiFunction
-     */
-    default ThrowingBiFunction<T, U, Boolean, E> asFunction() {
-        return this::test;
-    }
-
-    /**
-     * @return a new BiPredicate instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default BiPredicate<T, U> uncheck() {
-        return (arg1, arg2) -> {
-            try {
-                return test(arg1, arg2);
-            } catch (final Exception e) {
-                throw new CheckedException(e);
             }
         };
     }

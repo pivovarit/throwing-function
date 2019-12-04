@@ -34,57 +34,28 @@ public interface ThrowingConsumer<T, E extends Exception> {
 
     void accept(T t) throws E;
 
-    static <T> Consumer<T> unchecked(ThrowingConsumer<T, ?> consumer) {
-        return requireNonNull(consumer).uncheck();
+    static <T> Consumer<T> unchecked(ThrowingConsumer<? super T, ?> consumer) {
+        requireNonNull(consumer);
+        return t -> {
+            try {
+                consumer.accept(t);
+            } catch (final Exception e) {
+                throw new CheckedException(e);
+            }
+        };
     }
 
     /**
      * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T> Consumer<T> sneaky(ThrowingConsumer<T, ?> consumer) {
+    static <T> Consumer<T> sneaky(ThrowingConsumer<? super T, ?> consumer) {
         Objects.requireNonNull(consumer);
         return t -> {
             try {
                 consumer.accept(t);
             } catch (Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
-            }
-        };
-    }
-
-    /**
-     * Chains given ThrowingConsumer instance
-     * @param after - consumer that is chained after this instance
-     * @return chained Consumer instance
-     */
-    default ThrowingConsumer<T, E> andThenConsume(final ThrowingConsumer<? super T, ? extends E> after) {
-        requireNonNull(after);
-        return t -> {
-            accept(t);
-            after.accept(t);
-        };
-    }
-
-    /**
-     * @return this consumer instance as a Function instance
-     */
-    default ThrowingFunction<T, Void, E> asFunction() {
-        return arg -> {
-            accept(arg);
-            return null;
-        };
-    }
-
-    /**
-     * @return a Consumer instance which wraps thrown checked exception instance into a RuntimeException
-     */
-    default Consumer<T> uncheck() {
-        return t -> {
-            try {
-                accept(t);
-            } catch (final Exception e) {
-                throw new CheckedException(e);
             }
         };
     }

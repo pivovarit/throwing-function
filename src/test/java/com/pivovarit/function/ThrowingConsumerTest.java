@@ -24,35 +24,6 @@ class ThrowingConsumerTest {
     }
 
     @Test
-    void shouldConsumeAfter() throws Exception {
-        // given
-        Integer[] input = {0};
-
-        ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
-        ThrowingConsumer<Integer, Exception> after = i -> input[0] = 3;
-
-        // when
-        consumer.andThenConsume(after).accept(2);
-
-        // then
-        assertThat(input[0]).isEqualTo(3);
-    }
-
-    @Test
-    void shouldConsumeAsFunction() throws Exception {
-        // given
-        Integer[] input = {0};
-
-        ThrowingConsumer<Integer, Exception> consumer = i -> input[0] = 2;
-
-        // when
-        consumer.asFunction().apply(42);
-
-        // then
-        assertThat(input[0]).isEqualTo(2);
-    }
-
-    @Test
     void shouldConsumeAndThrowUnchecked() {
         IOException cause = new IOException("some message");
 

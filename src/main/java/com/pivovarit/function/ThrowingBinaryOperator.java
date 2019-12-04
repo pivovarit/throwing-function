@@ -30,6 +30,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T> the type of the operands and result of the operator
  * @param <E> the type of the thrown checked exception
+ *
  * @author Grzegorz Piwowarek
  * @see ThrowingBiFunction
  * @see ThrowingUnaryOperator
@@ -37,14 +38,10 @@ import static java.util.Objects.requireNonNull;
 public interface ThrowingBinaryOperator<T, E extends Exception> extends ThrowingBiFunction<T, T, T, E> {
 
     static <T> BinaryOperator<T> unchecked(ThrowingBinaryOperator<T, ?> function) {
-        return requireNonNull(function).unchecked();
-    }
-
-    @Override
-    default BinaryOperator<T> unchecked() {
+        requireNonNull(function);
         return (arg1, arg2) -> {
             try {
-                return apply(arg1, arg2);
+                return function.apply(arg1, arg2);
             } catch (final Exception e) {
                 throw new CheckedException(e);
             }

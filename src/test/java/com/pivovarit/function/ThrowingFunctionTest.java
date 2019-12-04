@@ -7,38 +7,12 @@ import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.pivovarit.function.TestCommons.givenThrowingFunction;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static com.pivovarit.function.TestCommons.givenThrowingFunction;
 
 class ThrowingFunctionTest {
-
-    @Test
-    void shouldCompose() throws Exception {
-        // given
-        ThrowingFunction<Integer, Integer, Exception> f1 = i -> 2 * i;
-        ThrowingFunction<Integer, Integer, Exception> f2 = i -> i + 10;
-
-        // when
-        Integer result = f1.compose(f2).apply(3);
-
-        // then
-        assertThat(result).isEqualTo(26);
-    }
-
-    @Test
-    void shouldAndThen() throws Exception {
-        // given
-        ThrowingFunction<Integer, Integer, Exception> f1 = i -> 2 * i;
-        ThrowingFunction<Integer, Integer, Exception> f2 = i -> i + 10;
-
-        // when
-        Integer result = f1.andThen(f2).apply(3);
-
-        // then
-        assertThat(result).isEqualTo(16);
-    }
 
     @Test
     void shouldReturnOptional() {
@@ -74,16 +48,6 @@ class ThrowingFunctionTest {
     }
 
     @Test
-    void shouldWrapInRuntimeEx() {
-        ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction("custom exception message");
-
-        // when
-        assertThatThrownBy(() -> f1.uncheck().apply(42))
-          .isInstanceOf(Exception.class)
-          .hasMessage("custom exception message");
-    }
-
-    @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
         assertThatThrownBy(() -> Stream.of(". .")
           .map(ThrowingFunction.unchecked(URI::new))
@@ -91,17 +55,6 @@ class ThrowingFunctionTest {
           .isInstanceOf(RuntimeException.class)
           .hasMessage("Illegal character in path at index 1: . .")
           .hasCauseInstanceOf(URISyntaxException.class);
-    }
-
-    @Test
-    void shouldApplyWhenNoExceptionThrown() {
-        //given
-        ThrowingFunction<String, String, Exception> f = String::toUpperCase;
-
-        // when
-        Stream.of(". .").map(f.uncheck()).collect(toList());
-
-        // then no exception thrown
     }
 
     @Test
