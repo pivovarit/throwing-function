@@ -79,18 +79,22 @@ Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunct
     <dependency>
         <groupId>com.pivovarit</groupId>
         <artifactId>throwing-function</artifactId>
-        <version>1.5.0</version>
+        <version>1.5.1</version>
     </dependency>
     
 ##### Gradle
 
-    compile 'com.pivovarit:throwing-function:1.5.0'
+    compile 'com.pivovarit:throwing-function:1.5.1'
 
 ### Dependencies
 
 None - the library is implemented using core Java libraries.
 
 ## Version history
+
+### [1.5.1 (06-05-2020)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.1)
+
+* Fixed visibility issues with `ThrowingIntFunction`
 
 ### [1.5.0 (26-01-2019)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.0)
 
