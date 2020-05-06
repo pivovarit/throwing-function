@@ -19,7 +19,7 @@ import static java.util.Objects.requireNonNull;
  * @param <E> the type of the thrown checked exception
  */
 @FunctionalInterface
-interface ThrowingIntFunction<R, E extends Exception> {
+public interface ThrowingIntFunction<R, E extends Exception> {
 
     R apply(int i) throws E;
 
