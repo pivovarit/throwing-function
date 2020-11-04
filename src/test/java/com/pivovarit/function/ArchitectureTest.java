@@ -29,10 +29,7 @@ class ArchitectureTest {
       .because("users appreciate not experiencing a dependency hell");
 
     private static final JavaClasses classes = new ClassFileImporter()
-      .importClasspath(new ImportOptions()
-        .with(DO_NOT_INCLUDE_JARS)
-        .with(DO_NOT_INCLUDE_ARCHIVES)
-        .with(DO_NOT_INCLUDE_TESTS));
+      .importPackages("com.pivovarit");
 
     @Test
     void shouldHavePublicInterfacesWithCorrectNamingPattern() {
