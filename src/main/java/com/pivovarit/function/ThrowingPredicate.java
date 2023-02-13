@@ -44,6 +44,28 @@ public interface ThrowingPredicate<T, E extends Exception> {
         };
     }
 
+    static <T> Predicate<T> uncheckedFalse(ThrowingPredicate<? super T, ?> predicate) {
+        requireNonNull(predicate);
+        return t -> {
+            try {
+                return predicate.test(t);
+            } catch (final Exception e) {
+                return false;
+            }
+        };
+    }
+
+    static <T> Predicate<T> uncheckedTrue(ThrowingPredicate<? super T, ?> predicate) {
+        requireNonNull(predicate);
+        return t -> {
+            try {
+                return predicate.test(t);
+            } catch (final Exception e) {
+                return true;
+            }
+        };
+    }
+
     /**
      * @return Predicate instance that rethrows the checked exception using the Sneaky Throws pattern
      */
