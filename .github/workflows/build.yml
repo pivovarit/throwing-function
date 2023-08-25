@@ -10,7 +10,7 @@ jobs:
         architecture: [ 'x64' ]
     name: Build with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3.6.0
       - name: Setup JDK
         uses: actions/setup-java@v3.10.0
         with:
