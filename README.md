@@ -80,12 +80,12 @@ Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunct
     <dependency>
         <groupId>com.pivovarit</groupId>
         <artifactId>throwing-function</artifactId>
-        <version>1.5.1</version>
+        <version>1.6.0</version>
     </dependency>
     
 ##### Gradle
 
-    compile 'com.pivovarit:throwing-function:1.5.1'
+    compile 'com.pivovarit:throwing-function:1.6.0'
 
 ### Dependencies
 
