@@ -1,7 +1,7 @@
 # Checked-Exceptions-enabled Java 8+ Functional Interfaces
 and adapters
 
-[![Build Status](https://travis-ci.org/pivovarit/throwing-function.svg?branch=master)](https://travis-ci.org/pivovarit/throwing-function)
+[![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function)
 
