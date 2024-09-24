@@ -1,24 +1,86 @@
+name: release
 on:
-  push:
-    tags:
-      - '*'
-
-name: Create Release
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'Version to release'
+        required: true
 
 jobs:
   build:
-    name: Create Release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '21' ]
+        architecture: [ 'x64' ]
+        
+    name: Release ${{ github.event.inputs.release-tag }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4.1.7
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1.1.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-          draft: true
-          prerelease: false
+          ref: ${{ github.event.inputs.release-tag }}
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: ${{ matrix.java }}
+          architecture: ${{ matrix.architecture }}
+          cache: 'maven'
+          server-id: oss.sonatype.org
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+
+      - name: Release with Maven
+        run: mvn -B --no-transfer-progress -Psonatype-oss-release -DskipTests=true deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          MAVEN_OPTS: "--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'Version to release'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '21' ]
+        architecture: [ 'x64' ]
+        
+    name: Release ${{ github.event.inputs.release-tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'oracle'
+          java-version: ${{ matrix.java }}
+          architecture: ${{ matrix.architecture }}
+          cache: 'maven'
+          server-id: oss.sonatype.org
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+
+      - name: Release with Maven
+        run: mvn -B --no-transfer-progress -Psonatype-oss-release -DskipTests=true deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          MAVEN_OPTS: "--add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.text=ALL-UNNAMED --add-opens=java.desktop/java.awt.font=ALL-UNNAMED"
