@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.pivovarit</groupId>
     <artifactId>throwing-function</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.1-SNAPSHOT</version>
 
     <name>throwing-function</name>
     <packaging>jar</packaging>
@@ -31,7 +31,7 @@
         <url>https://github.com/pivovarit/throwing-function</url>
         <connection>scm:git:git@github.com:pivovarit/throwing-function.git</connection>
         <developerConnection>scm:git:git@github.com:pivovarit/throwing-function.git</developerConnection>
-      <tag>1.6.0</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <issueManagement>
