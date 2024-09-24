@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class ThrowingIntFunctionTest {
 
     private static final String EXPECTED_MESSAGE = "Oh no! " + UUID.randomUUID();
+
     private static final ThrowingIntFunction<String, Exception> THROWS_CHECKED = i -> {
         throw new Exception(EXPECTED_MESSAGE);
     };
@@ -54,7 +55,7 @@ class ThrowingIntFunctionTest {
 
     @Test
     void shouldWrapInRuntimeExWhenUsingUnchecked() {
-        assertThatThrownBy(() -> IntStream.of(1).mapToObj(unchecked(THROWS_CHECKED)).count())
+        assertThatThrownBy(() -> IntStream.of(1).mapToObj(unchecked(THROWS_CHECKED)).toArray())
                 .isInstanceOf(WrappedException.class)
                 .hasMessage(EXPECTED_MESSAGE)
                 .hasCauseInstanceOf(Exception.class);
