@@ -5,6 +5,8 @@ and adapters
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function)
 
+[![Stargazers over time](https://starchart.cc/pivovarit/throwing-function.svg?variant=adaptive)](https://starchart.cc/pivovarit/throwing-function)
+
 ## Rationale
 
 Standard `java.util.function` Functional Interfaces aren't checked-exception-friendly due to the absence of `throws ...` clause which results in tedious and verbose necessity of handling them by adding `try-catch` boilerplate.
