@@ -1,15 +1,15 @@
 # Checked-Exceptions-enabled Java 8+ Functional Interfaces
-and adapters
 
-[![Build Status](https://travis-ci.org/pivovarit/throwing-function.svg?branch=master)](https://travis-ci.org/pivovarit/throwing-function)
+[![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function)
 
-## Rationale
+[![Stargazers over time](https://starchart.cc/pivovarit/throwing-function.svg?variant=adaptive)](https://starchart.cc/pivovarit/throwing-function)
 
-Standard `java.util.function` Functional Interfaces aren't checked-exception-friendly due to the absence of `throws ...` clause which results in tedious and verbose necessity of handling them by adding `try-catch` boilerplate.
+## Overview
 
-Which makes one-liners like this:
+Java’s standard `java.util.function` interfaces are not compatible with checked exceptions. This leads to verbose and cluttered code, requiring manual try-catch blocks for exception handling, which makes one-liners like this:
+
 ```
 path -> new URI(path)
 ```
@@ -25,17 +25,17 @@ path -> {
 }
 ```    
 
-By applying `com.pivovarit.function` functional interfaces, it's possible to regain clarity and readability:
+This library introduces checked-exception-enabled functional interfaces, like `ThrowingFunction`, allowing cleaner, more concise code. You can now handle exceptions in functional pipelines without sacrificing readability:
 
     ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
 
-and use them seamlessly with native `java.util.function` classes by using custom `ThrowingFunction#unchecked` adapters:
+Using the `ThrowingFunction#unchecked` adapter, this can be seamlessly integrated into standard streams:
 
     ...stream()
       .map(unchecked(URI::new)) // static import of ThrowingFunction#unchecked
       .forEach(System.out::println);
 
-which avoids ending up with:
+This eliminates the need for bulky try-catch blocks within stream operations:
 
      ...stream().map(path -> {
          try {
@@ -44,7 +44,13 @@ which avoids ending up with:
              throw new RuntimeException(e);
          }}).forEach(System.out::println);
 
-### Basic API
+### Key Features
+
+- Functional Interfaces: Supports various functional types with checked exceptions.
+- Adapters: Provides utility methods to convert `Throwing*` types into standard Java functional interfaces.
+- Lightweight: No external dependencies, implemented using core Java libraries.
+
+### Core API
 
 #### Functional Interfaces
 
@@ -80,18 +86,22 @@ Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunct
     <dependency>
         <groupId>com.pivovarit</groupId>
         <artifactId>throwing-function</artifactId>
-        <version>1.5.1</version>
+        <version>1.6.0</version>
     </dependency>
     
 ##### Gradle
 
-    compile 'com.pivovarit:throwing-function:1.5.1'
+    compile 'com.pivovarit:throwing-function:1.6.0'
 
 ### Dependencies
 
 None - the library is implemented using core Java libraries.
 
 ## Version history
+
+## [1.6.0 (24-09-2024)](https://github.com/pivovarit/throwing-function/releases/tag/1.6.0)
+
+* Added `Automatic-Module-Name` to MANIFEST
 
 ### [1.5.1 (06-05-2020)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.1)
 
