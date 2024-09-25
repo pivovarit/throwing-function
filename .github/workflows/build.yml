@@ -1,5 +1,11 @@
 name: Build against JDKs
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
