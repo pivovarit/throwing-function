@@ -160,7 +160,6 @@
                         </manifest>
                         <manifestEntries>
                             <Build-Time>${maven.build.timestamp}</Build-Time>
-                            <Automatic-Module-Name>com.pivovarit.function</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>
@@ -201,12 +200,11 @@
                         <configuration>
                             <jvmVersion>9</jvmVersion>
                             <module>
-                                <moduleInfo>
-                                    <name>com.pivovarit.function</name>
-                                    <exports>
-                                        com.pivovarit.function;
-                                    </exports>
-                                </moduleInfo>
+                                <moduleInfoSource>
+                                    module com.pivovarit.function {
+                                        exports com.pivovarit.function;
+                                    }
+                                </moduleInfoSource>
                             </module>
                             <overwriteExistingFiles>true</overwriteExistingFiles>
                         </configuration>
