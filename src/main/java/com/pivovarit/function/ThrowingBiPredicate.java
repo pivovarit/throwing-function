@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,12 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
     }
 
     /**
+     * Returns a new BiPredicate instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
      * @return BiPredicate instance that rethrows the checked exception using the Sneaky Throws pattern
+     * @param predicate operation throwing checked exception
+     * @param <T> type of the first argument to the predicate
+     * @param <U> type of the second argument to the predicate
      */
     static <T, U> BiPredicate<T, U> sneaky(ThrowingBiPredicate<T, U, ?> predicate) {
         Objects.requireNonNull(predicate);

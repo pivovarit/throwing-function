@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,17 +36,36 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     R apply(T arg) throws E;
 
     /**
+     * Returns a new Function instance which wraps a result of the given function in an Optional, returning an empty Optional in case of a checked exception
+     *
+     * @param f operation throwing checked exception
+     * @param <T> type of the argument to the function
+     * @param <R> type of the result of the function
      * @return a Function that returns the result of the given function as an Optional instance.
-     * In case of a failure, empty Optional is returned
      */
     static <T, R> Function<T, Optional<R>> lifted(final ThrowingFunction<T, R, ?> f) {
         return requireNonNull(f).lift();
     }
 
+    /**
+     * Returns a new Function instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
+     * @param f operation throwing checked exception
+     * @param <T> type of the argument to the function
+     * @param <R> type of the result of the function
+     * @return Function instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
     static <T, R> Function<T, R> unchecked(final ThrowingFunction<T, R, ?> f) {
         return requireNonNull(f).uncheck();
     }
 
+    /**
+     * Returns a new Function instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @param function operation throwing checked exception
+     * @param <T1> type of the argument to the function
+     * @param <R> type of the result of the function
+     * @return Function instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
     static <T1, R> Function<T1, R> sneaky(ThrowingFunction<? super T1, ? extends R, ?> function) {
         requireNonNull(function);
         return t -> {
