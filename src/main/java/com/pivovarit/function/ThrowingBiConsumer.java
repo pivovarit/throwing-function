@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package com.pivovarit.function;
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static java.util.Objects.requireNonNull;
  * Represents an operation that accepts two input arguments and returns no
  * result.  This is the two-arity specialization of {@link ThrowingConsumer}.
  * Unlike most other functional interfaces, {@code ThrowingBiConsumer}  is expected
- * to operate via side-effects.
+ * to operate via side effects.
  *
  * @param <T> the type of the first argument to the operation
  * @param <U> the type of the second argument to the operation
@@ -79,6 +79,9 @@ public interface ThrowingBiConsumer<T, U, E extends Exception> {
 
     /**
      * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @param consumer ThrowingBiConsumer operation throwing checked exception
+     * @param <T> the type of the first argument to the operation
+     * @param <U> the type of the second argument to the operation
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static <T, U> BiConsumer<T, U> sneaky(ThrowingBiConsumer<T, U, ?> consumer) {

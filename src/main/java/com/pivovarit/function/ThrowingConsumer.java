@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2024 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,8 @@ public interface ThrowingConsumer<T, E extends Exception> {
 
     /**
      * Returns a new BiConsumer instance which rethrows the checked exception using the Sneaky Throws pattern
+     * @param consumer operation throwing checked exception
+     * @param <T> type of the argument to the consumer
      * @return BiConsumer instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static <T> Consumer<T> sneaky(ThrowingConsumer<T, ?> consumer) {
