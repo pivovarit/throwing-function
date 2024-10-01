@@ -16,12 +16,12 @@ jobs:
         
     name: Release ${{ github.event.inputs.release-tag }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.7
         with:
           ref: ${{ github.event.inputs.release-tag }}
 
       - name: Setup JDK
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v4.3.0
         with:
           distribution: 'oracle'
           java-version: ${{ matrix.java }}
