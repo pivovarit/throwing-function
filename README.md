@@ -2,7 +2,8 @@
 
 [![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.pivovarit/throwing-function)
+![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)
+
 
 [![Stargazers over time](https://starchart.cc/pivovarit/throwing-function.svg?variant=adaptive)](https://starchart.cc/pivovarit/throwing-function)
 
