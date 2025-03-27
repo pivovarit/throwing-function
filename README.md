@@ -1,6 +1,6 @@
 # Checked-Exceptions-enabled Java 8+ Functional Interfaces
 
-[![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/build.yml)
+[![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 ![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)
 [![libs.tech recommends](https://libs.tech/project/46967967/badge.svg)](https://libs.tech/project/46967967/throwing-function)
