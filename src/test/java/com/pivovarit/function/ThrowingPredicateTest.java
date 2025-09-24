@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class ThrowingPredicateTest {
 
@@ -35,5 +34,24 @@ class ThrowingPredicateTest {
           .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
+    }
+
+    @Test
+    void returnValueWhenExceptionOccurs() {
+        Exception cause = new Exception("some message");
+
+        // given
+        ThrowingPredicate<Integer, Exception> predicate = i -> {
+            throw cause;
+        };
+
+        // when
+        assertThatCode(() -> Stream.of(42).anyMatch(i -> ThrowingPredicate.uncheckedFalse(predicate).test(i)))
+                .doesNotThrowAnyException();
+        assertThatCode(() -> Stream.of(42).anyMatch(i -> ThrowingPredicate.uncheckedTrue(predicate).test(i)))
+                .doesNotThrowAnyException();
+
+        assertThat(Stream.of(42).anyMatch(i -> ThrowingPredicate.uncheckedFalse(predicate).test(i))).isFalse();
+        assertThat(Stream.of(42).anyMatch(i -> ThrowingPredicate.uncheckedTrue(predicate).test(i))).isTrue();
     }
 }
