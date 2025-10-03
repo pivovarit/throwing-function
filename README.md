@@ -98,25 +98,3 @@ Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunct
 ### Dependencies
 
 None - the library is implemented using core Java libraries.
-
-## Version history
-
-## [1.6.1 (25-09-2024)](https://github.com/pivovarit/throwing-function/releases/tag/1.6.1)
-
-* Explicit module configuration via a multi-release jar
-* Improved Javadoc 
-
-### [1.6.0 (24-09-2024)](https://github.com/pivovarit/throwing-function/releases/tag/1.6.0)
-
-* Added `Automatic-Module-Name` to MANIFEST
-
-### [1.5.1 (06-05-2020)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.1)
-
-* Fixed visibility issues with `ThrowingIntFunction`
-
-### [1.5.0 (26-01-2019)](https://github.com/pivovarit/throwing-function/releases/tag/1.5.0)
-
-* Introduced proper [Semantic Versioning](https://semver.org)
-* Introduced `ThrowingIntFunction`
-* Moved interfaces to `com.pivovarit.function`
-* Removed controversial `unwrap()` functionality
