@@ -20,7 +20,9 @@ final class SneakyThrowUtil {
     private SneakyThrowUtil() {
     }
 
-    static <T extends Exception, R> R sneakyThrow(Exception t) throws T {
+    @SuppressWarnings("unchecked")
+    static <T extends Throwable> void sneakyThrow(Throwable t) throws T {
         throw (T) t;
     }
 }
+
