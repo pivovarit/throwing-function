@@ -56,18 +56,18 @@ This eliminates the need for bulky try-catch blocks within stream operations:
 
 #### Functional Interfaces
 
-- [ThrowingFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingFunction.java)
-- [ThrowingIntFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingIntFunction.java)
-- [ThrowingToLongFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingToLongFunction.java)
-- [ThrowingBiConsumer](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingBiConsumer.java)
-- [ThrowingBiFunction](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingBiFunction.java)
-- [ThrowingBiPredicate](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingBiPredicate.java)
-- [ThrowingBinaryOperator](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingBinaryOperator.java)
-- [ThrowingConsumer](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingConsumer.java)
-- [ThrowingPredicate](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingPredicate.java)
-- [ThrowingRunnable](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingRunnable.java)
-- [ThrowingSupplier](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingSupplier.java)
-- [ThrowingUnaryOperator](https://github.com/pivovarit/throwing-function/blob/master/src/main/java/com/pivovarit/function/ThrowingUnaryOperator.java)
+- [ThrowingFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingFunction.java)
+- [ThrowingIntFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingIntFunction.java)
+- [ThrowingToLongFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingToLongFunction.java)
+- [ThrowingBiConsumer](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiConsumer.java)
+- [ThrowingBiFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiFunction.java)
+- [ThrowingBiPredicate](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiPredicate.java)
+- [ThrowingBinaryOperator](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBinaryOperator.java)
+- [ThrowingConsumer](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingConsumer.java)
+- [ThrowingPredicate](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingPredicate.java)
+- [ThrowingRunnable](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingRunnable.java)
+- [ThrowingSupplier](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingSupplier.java)
+- [ThrowingUnaryOperator](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingUnaryOperator.java)
 
 
 #### Adapters
