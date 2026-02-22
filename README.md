@@ -1,100 +1,116 @@
-# Checked-Exceptions-enabled Java 8+ Functional Interfaces
+# throwing-function
 
 [![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 ![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)
 [![libs.tech recommends](https://libs.tech/project/46967967/badge.svg)](https://libs.tech/project/46967967/throwing-function)
 
-
 [![Stargazers over time](https://starchart.cc/pivovarit/throwing-function.svg?variant=adaptive)](https://starchart.cc/pivovarit/throwing-function)
 
-## Overview
+Checked-exception-enabled Java functional interfaces — a zero-dependency drop-in for `java.util.function`.
 
-Java’s standard `java.util.function` interfaces are not compatible with checked exceptions. This leads to verbose and cluttered code, requiring manual try-catch blocks for exception handling, which makes one-liners like this:
+## The Problem
 
-```
-path -> new URI(path)
-```
-become as verbose as:
+Java's `java.util.function` interfaces don't support checked exceptions, turning clean one-liners into verbose try-catch blocks:
 
-```
-path -> {
+```java
+// what you want
+.map(path -> new URI(path))
+
+// what Java forces you to write
+.map(path -> {
     try {
         return new URI(path);
     } catch (URISyntaxException e) {
         throw new RuntimeException(e);
     }
-}
-```    
+})
+```
 
-This library introduces checked-exception-enabled functional interfaces, like `ThrowingFunction`, allowing cleaner, more concise code. You can now handle exceptions in functional pipelines without sacrificing readability:
+## The Solution
 
-    ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
+`throwing-function` provides checked-exception-aware variants of all standard functional interfaces:
 
-Using the `ThrowingFunction#unchecked` adapter, this can be seamlessly integrated into standard streams:
+```java
+ThrowingFunction<String, URI, URISyntaxException> toUri = URI::new;
+```
 
-    ...stream()
-      .map(unchecked(URI::new)) // static import of ThrowingFunction#unchecked
+And adapters to integrate them into standard Java APIs:
+
+```java
+stream.map(ThrowingFunction.unchecked(URI::new))
       .forEach(System.out::println);
+```
 
-This eliminates the need for bulky try-catch blocks within stream operations:
+## Functional Interfaces
 
-     ...stream().map(path -> {
-         try {
-             return new URI(path);
-         } catch (URISyntaxException e) {
-             throw new RuntimeException(e);
-         }}).forEach(System.out::println);
+| Interface | Functional method |
+|---|---|
+| `ThrowingFunction<T, R, E>` | `R apply(T t) throws E` |
+| `ThrowingBiFunction<T1, T2, R, E>` | `R apply(T1 t1, T2 t2) throws E` |
+| `ThrowingUnaryOperator<T, E>` | `T apply(T t) throws E` |
+| `ThrowingBinaryOperator<T, E>` | `T apply(T t1, T t2) throws E` |
+| `ThrowingConsumer<T, E>` | `void accept(T t) throws E` |
+| `ThrowingBiConsumer<T, U, E>` | `void accept(T t, U u) throws E` |
+| `ThrowingSupplier<T, E>` | `T get() throws E` |
+| `ThrowingPredicate<T, E>` | `boolean test(T t) throws E` |
+| `ThrowingBiPredicate<T, U, E>` | `boolean test(T t, U u) throws E` |
+| `ThrowingRunnable<E>` | `void run() throws E` |
+| `ThrowingToLongFunction<T, E>` | `long applyAsLong(T t) throws E` |
 
-### Key Features
+## Adapters
 
-- Functional Interfaces: Supports various functional types with checked exceptions.
-- Adapters: Provides utility methods to convert `Throwing*` types into standard Java functional interfaces.
-- Lightweight: No external dependencies, implemented using core Java libraries.
+Each interface provides static adapter methods to bridge `Throwing*` instances into standard `java.util.function` types.
 
-### Core API
+### `unchecked` — wrap in `CheckedException`
 
-#### Functional Interfaces
+Wraps the checked exception in a `CheckedException` (a `RuntimeException` subclass) and rethrows it. Available on all interfaces.
 
-- [ThrowingFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingFunction.java)
-- [ThrowingIntFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingIntFunction.java)
-- [ThrowingToLongFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingToLongFunction.java)
-- [ThrowingBiConsumer](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiConsumer.java)
-- [ThrowingBiFunction](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiFunction.java)
-- [ThrowingBiPredicate](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBiPredicate.java)
-- [ThrowingBinaryOperator](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingBinaryOperator.java)
-- [ThrowingConsumer](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingConsumer.java)
-- [ThrowingPredicate](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingPredicate.java)
-- [ThrowingRunnable](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingRunnable.java)
-- [ThrowingSupplier](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingSupplier.java)
-- [ThrowingUnaryOperator](https://github.com/pivovarit/throwing-function/blob/main/src/main/java/com/pivovarit/function/ThrowingUnaryOperator.java)
+```java
+stream.map(ThrowingFunction.unchecked(URI::new))
+      .forEach(System.out::println);
+```
 
+### `sneaky` — rethrow without wrapping
 
-#### Adapters
-+ `static Function<T, R> unchecked(ThrowingFunction<> f) {...}`
+Rethrows the checked exception as-is, bypassing the compiler's checked-exception enforcement via type erasure. Available on all interfaces.
 
-Transforms a `ThrowingFunction` instance into a standard `java.util.function.Function` by wrapping checked exceptions in a `RuntimeException` and rethrowing them. 
+```java
+stream.map(ThrowingFunction.sneaky(URI::new))
+      .forEach(System.out::println);
+```
 
-+ `static Function<T, Optional<R>> lifted() {...}`
+### `lifted` / `optional` — return `Optional`
 
-Transforms a `ThrowingFunction` instance into a regular `Function` returning result wrapped in an `Optional` instance. 
+Returns the result wrapped in an `Optional`, or `Optional.empty()` on exception. No exception is propagated.
 
-+ `default ThrowingFunction<T, Void, E> asFunction() {...}`
+- `ThrowingFunction.lifted(f)` → `Function<T, Optional<R>>`
+- `ThrowingBiFunction.optional(f)` → `BiFunction<T1, T2, Optional<R>>`
+- `ThrowingSupplier.optional(s)` → `Supplier<Optional<T>>`
 
-Returns `Throwing(Predicate|Supplier|Consumer`) instance as a new `ThrowingFunction` instance.
+```java
+stream.map(ThrowingFunction.lifted(URI::new))  // Stream<Optional<URI>>
+      .forEach(System.out::println);
+```
 
-### Maven Central
+## Installation
 
-    <dependency>
-        <groupId>com.pivovarit</groupId>
-        <artifactId>throwing-function</artifactId>
-        <version>1.6.1</version>
-    </dependency>
-    
-##### Gradle
+### Maven
 
-    compile 'com.pivovarit:throwing-function:1.6.1'
+```xml
+<dependency>
+    <groupId>com.pivovarit</groupId>
+    <artifactId>throwing-function</artifactId>
+    <version>1.6.1</version>
+</dependency>
+```
 
-### Dependencies
+### Gradle
 
-None - the library is implemented using core Java libraries.
+```groovy
+implementation 'com.pivovarit:throwing-function:1.6.1'
+```
+
+## Dependencies
+
+None. Implemented using core Java libraries only.
