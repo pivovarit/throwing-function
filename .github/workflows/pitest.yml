@@ -1,0 +1,54 @@
+name: pitest
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
+      - '**.yaml'
+
+concurrency:
+  group: 'pitest'
+  cancel-in-progress: true
+
+permissions:
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    strategy:
+      matrix:
+        java: [ '24' ]
+        architecture: [ 'x64' ]
+    name: Mutation Testing with JDK ${{ matrix.java }} on ${{ matrix.architecture }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: ${{ matrix.java }}
+          architecture: ${{ matrix.architecture }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Run Mutation Testing
+        run: mvn -B package -Ppitest org.pitest:pitest-maven:mutationCoverage
+
+      - name: Prepare deployment
+        run: mkdir -p docs/pitest && cp -r ./target/pit-reports/* docs/pitest/
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: './docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

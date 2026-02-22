@@ -1,11 +1,11 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2014-2016 Grzegorz Piwowarek, https://4comprehension.com/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -35,6 +35,13 @@ import static java.util.Objects.requireNonNull;
 @FunctionalInterface
 public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingFunction<T, T, E> {
 
+    /**
+     * Returns a new UnaryOperator instance which wraps the thrown checked exception instance into a {@link CheckedException}
+     *
+     * @param <T>      the type of the operand and result of the operator
+     * @param operator the ThrowingUnaryOperator to wrap
+     * @return UnaryOperator instance that wraps the checked exception into a {@link CheckedException}
+     */
     static <T> UnaryOperator<T> unchecked(ThrowingUnaryOperator<T, ?> operator) {
         requireNonNull(operator);
         return t -> {
@@ -48,6 +55,9 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
 
     /**
      * Returns a new UnaryOperator instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
+     * @param <T>      the type of the operand and result of the operator
+     * @param operator the ThrowingUnaryOperator to wrap
      * @return UnaryOperator instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static <T> UnaryOperator<T> sneaky(ThrowingUnaryOperator<T, ?> operator) {

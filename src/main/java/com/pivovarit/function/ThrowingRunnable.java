@@ -1,11 +1,11 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2014-2016 Grzegorz Piwowarek, https://4comprehension.com/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,8 +29,19 @@ import static java.util.Objects.requireNonNull;
  */
 @FunctionalInterface
 public interface ThrowingRunnable<E extends Exception> {
+    /**
+     * Performs this operation.
+     *
+     * @throws E the checked exception type
+     */
     void run() throws E;
 
+    /**
+     * Returns a new Runnable instance which wraps the thrown checked exception instance into a {@link CheckedException}
+     *
+     * @param runnable the ThrowingRunnable to wrap
+     * @return Runnable instance that wraps the checked exception into a {@link CheckedException}
+     */
     static Runnable unchecked(ThrowingRunnable<?> runnable) {
         requireNonNull(runnable);
         return () -> {
@@ -45,6 +56,7 @@ public interface ThrowingRunnable<E extends Exception> {
     /**
      * Returns a new Runnable instance which rethrows the checked exception using the Sneaky Throws pattern
      *
+     * @param runnable the ThrowingRunnable to wrap
      * @return Runnable instance that rethrows the checked exception using the Sneaky Throws pattern
      */
     static Runnable sneaky(ThrowingRunnable<?> runnable) {
