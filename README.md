@@ -1,9 +1,8 @@
 # throwing-function
 
 [![ci](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml)
-[![pitest](https://github.com/pivovarit/parallel-collectors/actions/workflows/pitest.yml/badge.svg?branch=main)](http://pivovarit.github.io/parallel-collectors/pitest)
-
-![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)
+[![pitest](https://github.com/pivovarit/throwing-function/actions/workflows/pitest.yml/badge.svg?branch=main)](http://pivovarit.github.io/throwing-function/pitest)
+[![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)](https://central.sonatype.com/artifact/com.pivovarit/throwing-function/versions)
 [![javadoc](https://javadoc.io/badge2/com.pivovarit/throwing-function/1.6.1/javadoc.svg)](https://javadoc.io/doc/com.pivovarit/throwing-function/1.6.1)
 
 [![libs.tech recommends](https://libs.tech/project/46967967/badge.svg)](https://libs.tech/project/46967967/throwing-function)
