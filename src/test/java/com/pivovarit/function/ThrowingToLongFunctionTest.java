@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import com.tngtech.archunit.thirdparty.com.google.common.collect.Lists;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -42,5 +43,17 @@ public class ThrowingToLongFunctionTest {
                 .hasCauseInstanceOf(NumberFormatException.class);
     }
 
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
 
+        // given
+        ThrowingToLongFunction<String, IOException> function = s -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingToLongFunction.sneaky(function).applyAsLong("test"))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
+    }
 }

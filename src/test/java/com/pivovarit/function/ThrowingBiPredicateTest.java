@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,5 +49,19 @@ class ThrowingBiPredicateTest {
           .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
+    }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingBiPredicate<Integer, Integer, IOException> predicate = (i, j) -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingBiPredicate.sneaky(predicate).test(42, 0))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
     }
 }

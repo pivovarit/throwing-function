@@ -63,4 +63,18 @@ class ThrowingUnaryOperatorTest {
         assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(null).apply(42))
           .isInstanceOf(NullPointerException.class);
     }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingUnaryOperator<Integer, IOException> op = i -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingUnaryOperator.sneaky(op).apply(42))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
+    }
 }

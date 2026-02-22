@@ -47,4 +47,18 @@ class ThrowingRunnableTest {
           .hasMessage(cause.getMessage())
           .hasCause(cause);
     }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingRunnable<IOException> runnable = () -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingRunnable.sneaky(runnable).run())
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
+    }
 }
