@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.io.IOException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
@@ -49,5 +50,19 @@ class ThrowingPredicateTest {
           .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
+    }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingPredicate<Integer, IOException> predicate = i -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingPredicate.sneaky(predicate).test(42))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
     }
 }

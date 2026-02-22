@@ -61,4 +61,18 @@ class ThrowingConsumerTest {
 
         // then no exception thrown
     }
+
+    @Test
+    void shouldConsumeAndSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingConsumer<Integer, IOException> consumer = i -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingConsumer.sneaky(consumer).accept(3))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
+    }
 }

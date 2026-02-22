@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
@@ -82,5 +83,19 @@ class ThrowingFunctionTest {
 
         //then
         assertThat(result).isZero();
+    }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingFunction<Integer, Integer, IOException> f = i -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingFunction.sneaky(f).apply(42))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
     }
 }

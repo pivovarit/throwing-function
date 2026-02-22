@@ -60,4 +60,18 @@ class ThrowingSupplierTest {
         // then
         assertThat(result).isPresent();
     }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingSupplier.sneaky(supplier).get())
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
+    }
 }
