@@ -1,8 +1,11 @@
 # throwing-function
 
-[![Build against JDKs](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![ci](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml/badge.svg)](https://github.com/pivovarit/throwing-function/actions/workflows/ci.yml)
+[![pitest](https://github.com/pivovarit/parallel-collectors/actions/workflows/pitest.yml/badge.svg?branch=main)](http://pivovarit.github.io/parallel-collectors/pitest)
+
 ![Maven Central Version](https://img.shields.io/maven-central/v/com.pivovarit/throwing-function)
+[![javadoc](https://javadoc.io/badge2/com.pivovarit/throwing-function/1.6.1/javadoc.svg)](https://javadoc.io/doc/com.pivovarit/throwing-function/1.6.1)
+
 [![libs.tech recommends](https://libs.tech/project/46967967/badge.svg)](https://libs.tech/project/46967967/throwing-function)
 
 [![Stargazers over time](https://starchart.cc/pivovarit/throwing-function.svg?variant=adaptive)](https://starchart.cc/pivovarit/throwing-function)
