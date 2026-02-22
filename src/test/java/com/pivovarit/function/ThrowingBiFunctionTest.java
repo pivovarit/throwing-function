@@ -80,6 +80,18 @@ class ThrowingBiFunctionTest {
     }
 
     @Test
+    void shouldReturnEmptyOptionalWhenUsingOptionalAndExceptionThrown() {
+        // given
+        ThrowingBiFunction<Integer, Integer, Integer, Exception> f1 = (i, j) -> { throw new Exception("boom"); };
+
+        // when
+        Optional<Integer> result = optional(f1).apply(42, 42);
+
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 

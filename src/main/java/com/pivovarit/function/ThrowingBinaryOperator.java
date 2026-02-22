@@ -54,4 +54,22 @@ public interface ThrowingBinaryOperator<T, E extends Exception> extends Throwing
             }
         };
     }
+
+    /**
+     * Returns a new BinaryOperator instance which rethrows the checked exception using the Sneaky Throws pattern
+     *
+     * @param <T>      the type of the operands and result of the operator
+     * @param function the ThrowingBinaryOperator to wrap
+     * @return BinaryOperator instance that rethrows the checked exception using the Sneaky Throws pattern
+     */
+    static <T> BinaryOperator<T> sneaky(ThrowingBinaryOperator<T, ?> function) {
+        requireNonNull(function);
+        return (t1, t2) -> {
+            try {
+                return function.apply(t1, t2);
+            } catch (final Exception e) {
+                return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
 }
