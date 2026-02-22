@@ -62,6 +62,18 @@ class ThrowingSupplierTest {
     }
 
     @Test
+    void shouldReturnEmptyOptionalWhenUsingOptionalAndExceptionThrown() {
+        // given
+        ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException("boom"); };
+
+        // when
+        Optional<Integer> result = ThrowingSupplier.optional(supplier).get();
+
+        // then
+        assertThat(result).isEmpty();
+    }
+
+    @Test
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 

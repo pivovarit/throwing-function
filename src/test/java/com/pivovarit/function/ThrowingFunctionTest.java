@@ -73,6 +73,18 @@ class ThrowingFunctionTest {
     }
 
     @Test
+    void shouldApplyWhenNoExceptionThrownWithUnchecked() {
+        // given
+        ThrowingFunction<Integer, Integer, Exception> f = i -> i * 2;
+
+        // when
+        Integer result = ThrowingFunction.unchecked(f).apply(21);
+
+        // then
+        assertThat(result).isEqualTo(42);
+    }
+
+    @Test
     void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
 
         // when

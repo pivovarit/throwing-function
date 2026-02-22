@@ -18,6 +18,7 @@ package com.pivovarit.function;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ThrowingRunnableTest {
@@ -46,6 +47,19 @@ class ThrowingRunnableTest {
           .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
           .hasCause(cause);
+    }
+
+    @Test
+    void shouldRunWhenNoExceptionThrownWithUnchecked() {
+        // given
+        int[] counter = {0};
+        ThrowingRunnable<Exception> runnable = () -> counter[0]++;
+
+        // when
+        ThrowingRunnable.unchecked(runnable).run();
+
+        // then
+        assertThat(counter[0]).isEqualTo(1);
     }
 
     @Test

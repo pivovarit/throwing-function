@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.io.IOException;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
@@ -73,5 +74,19 @@ class ThrowingBinaryOperatorTest {
 
         //then
         assertThat(result).isPresent();
+    }
+
+    @Test
+    void shouldSneakyThrow() {
+        IOException cause = new IOException("some message");
+
+        // given
+        ThrowingBinaryOperator<Integer, Exception> f1 = (i, j) -> { throw cause; };
+
+        // when
+        assertThatThrownBy(() -> ThrowingBinaryOperator.sneaky(f1).apply(42, 42))
+          .isInstanceOf(IOException.class)
+          .hasMessage(cause.getMessage())
+          .hasNoCause();
     }
 }

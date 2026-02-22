@@ -52,6 +52,18 @@ class ThrowingBiPredicateTest {
     }
 
     @Test
+    void shouldApplyWhenNoExceptionThrownWithUnchecked() {
+        // given
+        ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> i > j;
+
+        // when
+        boolean result = ThrowingBiPredicate.unchecked(predicate).test(42, 0);
+
+        // then
+        assertThat(result).isTrue();
+    }
+
+    @Test
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
