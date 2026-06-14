@@ -26,13 +26,10 @@ class ThrowingPredicateTest {
 
     @Test
     void shouldTest() throws Exception {
-        // given
         ThrowingPredicate<Integer, Exception> p = i -> true;
 
-        // when
         boolean result = p.test(42);
 
-        // then
         assertThat(result).isTrue();
     }
 
@@ -40,12 +37,10 @@ class ThrowingPredicateTest {
     void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
         Exception cause = new Exception("some message");
 
-        // given
         ThrowingPredicate<Integer, Exception> predicate = i -> {
             throw cause;
         };
 
-        // when
         assertThatThrownBy(() -> Stream.of(42).anyMatch(i -> ThrowingPredicate.unchecked(predicate).test(i)))
           .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
@@ -54,13 +49,10 @@ class ThrowingPredicateTest {
 
     @Test
     void shouldApplyWhenNoExceptionThrownWithUnchecked() {
-        // given
         ThrowingPredicate<Integer, Exception> predicate = i -> i > 0;
 
-        // when
         boolean result = ThrowingPredicate.unchecked(predicate).test(42);
 
-        // then
         assertThat(result).isTrue();
     }
 
@@ -68,10 +60,8 @@ class ThrowingPredicateTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingPredicate<Integer, IOException> predicate = i -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingPredicate.sneaky(predicate).test(42))
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())
