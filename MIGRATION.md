@@ -53,3 +53,6 @@ are both renamed to `optional()`, matching `ThrowingSupplier.optional(...)` and
   for two-argument interfaces it receives the exception.
 - **`ThrowingToIntFunction`** and **`ThrowingToDoubleFunction`**, completing the
   `To{Int,Long,Double}Function` primitive trio.
+- **`ThrowingIntSupplier`**, **`ThrowingLongSupplier`**, **`ThrowingDoubleSupplier`**,
+  and **`ThrowingBooleanSupplier`** — primitive supplier variants, handy for I/O
+  reads of primitives (e.g. `DataInputStream::readInt`).

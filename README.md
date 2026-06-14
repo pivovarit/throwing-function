@@ -60,6 +60,10 @@ stream.map(ThrowingFunction.unchecked(URI::new))
 | `ThrowingToIntFunction<T, E>` | `int applyAsInt(T t) throws E` |
 | `ThrowingToLongFunction<T, E>` | `long applyAsLong(T t) throws E` |
 | `ThrowingToDoubleFunction<T, E>` | `double applyAsDouble(T t) throws E` |
+| `ThrowingIntSupplier<E>` | `int getAsInt() throws E` |
+| `ThrowingLongSupplier<E>` | `long getAsLong() throws E` |
+| `ThrowingDoubleSupplier<E>` | `double getAsDouble() throws E` |
+| `ThrowingBooleanSupplier<E>` | `boolean getAsBoolean() throws E` |
 
 ## Adapters
 
@@ -161,6 +165,12 @@ Wrap a checked call for `CompletableFuture`:
 ```java
 CompletableFuture<byte[]> contents = CompletableFuture.supplyAsync(
     ThrowingSupplier.unchecked(() -> Files.readAllBytes(path)));
+```
+
+Generate a primitive stream from a throwing source:
+
+```java
+IntStream ints = IntStream.generate(ThrowingIntSupplier.unchecked(dataInput::readInt));
 ```
 
 ## Migrating from 1.x
