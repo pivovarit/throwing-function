@@ -35,7 +35,7 @@ class ThrowingFunctionTest {
         ThrowingFunction<Integer, Integer, Exception> f1 = i -> i;
 
         // when
-        Optional<Integer> result = f1.lift().apply(42);
+        Optional<Integer> result = f1.optional().apply(42);
 
         // then
         assertThat(result.isPresent()).isTrue();
@@ -47,7 +47,7 @@ class ThrowingFunctionTest {
         ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
         // when
-        Optional<Integer> result = f1.lift().apply(42);
+        Optional<Integer> result = f1.optional().apply(42);
 
         // then
         assertThat(result.isPresent()).isFalse();
@@ -89,7 +89,7 @@ class ThrowingFunctionTest {
 
         // when
         Long result = Stream.of(". .")
-          .map(ThrowingFunction.lifted(URI::new))
+          .map(ThrowingFunction.optional(URI::new))
           .filter(Optional::isPresent)
           .count();
 

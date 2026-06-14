@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.Objects;
+import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import static java.util.Objects.requireNonNull;
@@ -72,6 +73,27 @@ public interface ThrowingPredicate<T, E extends Exception> {
                 return predicate.test(t);
             } catch (Exception e) {
                 return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new Predicate instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the input and the thrown exception
+     *
+     * @param <T>       the type of the input to the predicate
+     * @param predicate the ThrowingPredicate to wrap
+     * @param handler   the recovery handler invoked with the input and the thrown exception
+     * @return Predicate instance that recovers from a thrown checked exception using the supplied handler
+     */
+    static <T> Predicate<T> recover(ThrowingPredicate<? super T, ?> predicate, BiPredicate<? super T, ? super Exception> handler) {
+        requireNonNull(predicate);
+        requireNonNull(handler);
+        return t -> {
+            try {
+                return predicate.test(t);
+            } catch (final Exception e) {
+                return handler.test(t, e);
             }
         };
     }

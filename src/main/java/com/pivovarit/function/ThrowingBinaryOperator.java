@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
@@ -69,6 +70,27 @@ public interface ThrowingBinaryOperator<T, E extends Exception> extends Throwing
                 return function.apply(t1, t2);
             } catch (final Exception e) {
                 return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new BinaryOperator instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the thrown exception
+     *
+     * @param <T>      the type of the operands and result of the operator
+     * @param operator the ThrowingBinaryOperator to wrap
+     * @param handler  the recovery handler invoked with the thrown exception
+     * @return BinaryOperator instance that recovers from a thrown checked exception using the supplied handler
+     */
+    static <T> BinaryOperator<T> recover(ThrowingBinaryOperator<T, ?> operator, Function<? super Exception, ? extends T> handler) {
+        requireNonNull(operator);
+        requireNonNull(handler);
+        return (t1, t2) -> {
+            try {
+                return operator.apply(t1, t2);
+            } catch (final Exception e) {
+                return handler.apply(e);
             }
         };
     }

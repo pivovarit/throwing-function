@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.util.function.ToLongBiFunction;
 import java.util.function.ToLongFunction;
 
 import static java.util.Objects.requireNonNull;
@@ -59,17 +60,38 @@ public interface ThrowingToLongFunction<T, E extends Exception> {
     /**
      * Returns a new ToLongFunction instance which rethrows the checked exception using the Sneaky Throws pattern
      *
-     * @param <T1>     the type of the input to the function
+     * @param <T>      the type of the input to the function
      * @param function the ThrowingToLongFunction to wrap
      * @return ToLongFunction instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T1> ToLongFunction<T1> sneaky(ThrowingToLongFunction<? super T1, ?> function) {
+    static <T> ToLongFunction<T> sneaky(ThrowingToLongFunction<? super T, ?> function) {
         requireNonNull(function);
         return t -> {
             try {
                 return function.applyAsLong(t);
             } catch (final Exception ex) {
                 return SneakyThrowUtil.sneakyThrow(ex);
+            }
+        };
+    }
+
+    /**
+     * Returns a new ToLongFunction instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the input and the thrown exception
+     *
+     * @param <T>      the type of the input to the function
+     * @param function the ThrowingToLongFunction to wrap
+     * @param handler  the recovery handler invoked with the input and the thrown exception
+     * @return ToLongFunction instance that recovers from a thrown checked exception using the supplied handler
+     */
+    static <T> ToLongFunction<T> recover(ThrowingToLongFunction<? super T, ?> function, ToLongBiFunction<? super T, ? super Exception> handler) {
+        requireNonNull(function);
+        requireNonNull(handler);
+        return t -> {
+            try {
+                return function.applyAsLong(t);
+            } catch (final Exception e) {
+                return handler.applyAsLong(t, e);
             }
         };
     }

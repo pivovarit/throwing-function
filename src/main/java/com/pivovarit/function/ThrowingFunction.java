@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
@@ -49,7 +50,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * @return a Function that returns the result of the given function as an Optional instance.
      * In case of a failure, empty Optional is returned
      */
-    static <T, R> Function<T, Optional<R>> lifted(final ThrowingFunction<? super T, ? extends R, ?> function) {
+    static <T, R> Function<T, Optional<R>> optional(final ThrowingFunction<? super T, ? extends R, ?> function) {
         requireNonNull(function);
 
         return t -> {
@@ -83,12 +84,12 @@ public interface ThrowingFunction<T, R, E extends Exception> {
     /**
      * Returns a new Function instance which rethrows the checked exception using the Sneaky Throws pattern
      *
-     * @param <T1>     the type of the input to the function
+     * @param <T>      the type of the input to the function
      * @param <R>      the type of the result of the function
      * @param function the ThrowingFunction to wrap
      * @return Function instance that rethrows the checked exception using the Sneaky Throws pattern
      */
-    static <T1, R> Function<T1, R> sneaky(ThrowingFunction<? super T1, ? extends R, ?> function) {
+    static <T, R> Function<T, R> sneaky(ThrowingFunction<? super T, ? extends R, ?> function) {
         requireNonNull(function);
         return t -> {
             try {
@@ -104,12 +105,34 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      *
      * @return a Function that returns the result as an Optional instance, or an empty Optional in case of a failure
      */
-    default Function<T, Optional<R>> lift() {
+    default Function<T, Optional<R>> optional() {
         return t -> {
             try {
                 return Optional.ofNullable(apply(t));
             } catch (final Exception e) {
                 return Optional.empty();
+            }
+        };
+    }
+
+    /**
+     * Returns a new Function instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the input and the thrown exception
+     *
+     * @param <T>      the type of the input to the function
+     * @param <R>      the type of the result of the function
+     * @param function the ThrowingFunction to wrap
+     * @param handler  the recovery handler invoked with the input and the thrown exception
+     * @return Function instance that recovers from a thrown checked exception using the supplied handler
+     */
+    static <T, R> Function<T, R> recover(ThrowingFunction<? super T, ? extends R, ?> function, BiFunction<? super T, ? super Exception, ? extends R> handler) {
+        requireNonNull(function);
+        requireNonNull(handler);
+        return t -> {
+            try {
+                return function.apply(t);
+            } catch (final Exception e) {
+                return handler.apply(t, e);
             }
         };
     }

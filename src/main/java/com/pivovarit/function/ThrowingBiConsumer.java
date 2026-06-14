@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
 
@@ -27,22 +28,22 @@ import static java.util.Objects.requireNonNull;
  *
  * @param <T1> the type of the first argument to the operation
  * @param <T2> the type of the second argument to the operation
- * @param <EX> the type of the thrown checked exception
+ * @param <E>  the type of the thrown checked exception
  *
  * @author Grzegorz Piwowarek
  * @see ThrowingConsumer
  */
 @FunctionalInterface
-public interface ThrowingBiConsumer<T1, T2, EX extends Exception> {
+public interface ThrowingBiConsumer<T1, T2, E extends Exception> {
 
     /**
      * Performs this operation on the given arguments.
      *
-     * @param t  the first input argument
+     * @param t1 the first input argument
      * @param t2 the second input argument
-     * @throws EX the checked exception type
+     * @throws E the checked exception type
      */
-    void accept(T1 t, T2 t2) throws EX;
+    void accept(T1 t1, T2 t2) throws E;
 
     /**
      * Returns a new BiConsumer instance which wraps the thrown checked exception instance into a {@link CheckedException}
@@ -78,6 +79,28 @@ public interface ThrowingBiConsumer<T1, T2, EX extends Exception> {
                 consumer.accept(arg1, arg2);
             } catch (final Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new BiConsumer instance which, in case of a thrown checked exception, passes the thrown
+     * exception to the supplied handler
+     *
+     * @param <T>      the type of the first argument to the operation
+     * @param <U>      the type of the second argument to the operation
+     * @param consumer the ThrowingBiConsumer to wrap
+     * @param handler  the recovery handler invoked with the thrown exception
+     * @return BiConsumer instance that recovers from a thrown checked exception using the supplied handler
+     */
+    static <T, U> BiConsumer<T, U> recover(ThrowingBiConsumer<? super T, ? super U, ?> consumer, Consumer<? super Exception> handler) {
+        requireNonNull(consumer);
+        requireNonNull(handler);
+        return (arg1, arg2) -> {
+            try {
+                consumer.accept(arg1, arg2);
+            } catch (final Exception e) {
+                handler.accept(e);
             }
         };
     }
