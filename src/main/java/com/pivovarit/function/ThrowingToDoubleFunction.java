@@ -27,6 +27,7 @@ import static java.util.Objects.requireNonNull;
  * @param <T> the type of the input to the function
  * @param <E> the type of the thrown checked exception
  * @author Grzegorz Piwowarek
+ * @since 2.0.0
  */
 @FunctionalInterface
 public interface ThrowingToDoubleFunction<T, E extends Exception> {
@@ -84,6 +85,7 @@ public interface ThrowingToDoubleFunction<T, E extends Exception> {
      * @param function the ThrowingToDoubleFunction to wrap
      * @param handler  the recovery handler invoked with the input and the thrown exception
      * @return ToDoubleFunction instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> ToDoubleFunction<T> recover(ThrowingToDoubleFunction<? super T, ?> function, ToDoubleBiFunction<? super T, ? super Exception> handler) {
         requireNonNull(function);

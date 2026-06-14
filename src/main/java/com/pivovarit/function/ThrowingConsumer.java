@@ -85,6 +85,7 @@ public interface ThrowingConsumer<T, E extends Exception> {
      * @param consumer the ThrowingConsumer to wrap
      * @param handler  the recovery handler invoked with the input and the thrown exception
      * @return Consumer instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> Consumer<T> recover(ThrowingConsumer<? super T, ?> consumer, BiConsumer<? super T, ? super Exception> handler) {
         requireNonNull(consumer);

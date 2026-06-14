@@ -101,6 +101,7 @@ public interface ThrowingSupplier<T, E extends Exception> {
      * @param supplier the ThrowingSupplier to wrap
      * @param handler  the recovery handler invoked with the thrown exception
      * @return Supplier instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> Supplier<T> recover(ThrowingSupplier<? extends T, ?> supplier, Function<? super Exception, ? extends T> handler) {
         requireNonNull(supplier);

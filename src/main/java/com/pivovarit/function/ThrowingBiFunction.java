@@ -118,6 +118,7 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
      * @param function the ThrowingBiFunction to wrap
      * @param handler  the recovery handler invoked with the thrown exception
      * @return BiFunction instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T1, T2, R> BiFunction<T1, T2, R> recover(ThrowingBiFunction<? super T1, ? super T2, ? extends R, ?> function, Function<? super Exception, ? extends R> handler) {
         requireNonNull(function);

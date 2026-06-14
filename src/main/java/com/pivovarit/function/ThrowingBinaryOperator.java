@@ -82,6 +82,7 @@ public interface ThrowingBinaryOperator<T, E extends Exception> extends Throwing
      * @param operator the ThrowingBinaryOperator to wrap
      * @param handler  the recovery handler invoked with the thrown exception
      * @return BinaryOperator instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> BinaryOperator<T> recover(ThrowingBinaryOperator<T, ?> operator, Function<? super Exception, ? extends T> handler) {
         requireNonNull(operator);

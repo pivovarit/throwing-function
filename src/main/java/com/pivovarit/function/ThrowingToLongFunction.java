@@ -83,6 +83,7 @@ public interface ThrowingToLongFunction<T, E extends Exception> {
      * @param function the ThrowingToLongFunction to wrap
      * @param handler  the recovery handler invoked with the input and the thrown exception
      * @return ToLongFunction instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> ToLongFunction<T> recover(ThrowingToLongFunction<? super T, ?> function, ToLongBiFunction<? super T, ? super Exception> handler) {
         requireNonNull(function);

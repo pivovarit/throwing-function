@@ -85,6 +85,7 @@ public interface ThrowingPredicate<T, E extends Exception> {
      * @param predicate the ThrowingPredicate to wrap
      * @param handler   the recovery handler invoked with the input and the thrown exception
      * @return Predicate instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> Predicate<T> recover(ThrowingPredicate<? super T, ?> predicate, BiPredicate<? super T, ? super Exception> handler) {
         requireNonNull(predicate);

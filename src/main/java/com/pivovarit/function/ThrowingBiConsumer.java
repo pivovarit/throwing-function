@@ -92,6 +92,7 @@ public interface ThrowingBiConsumer<T1, T2, E extends Exception> {
      * @param consumer the ThrowingBiConsumer to wrap
      * @param handler  the recovery handler invoked with the thrown exception
      * @return BiConsumer instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T, U> BiConsumer<T, U> recover(ThrowingBiConsumer<? super T, ? super U, ?> consumer, Consumer<? super Exception> handler) {
         requireNonNull(consumer);

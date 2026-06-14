@@ -78,6 +78,7 @@ public interface ThrowingRunnable<E extends Exception> {
      * @param runnable the ThrowingRunnable to wrap
      * @param handler  the recovery handler invoked with the thrown exception
      * @return Runnable instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static Runnable recover(ThrowingRunnable<?> runnable, Consumer<? super Exception> handler) {
         requireNonNull(runnable);

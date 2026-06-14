@@ -49,6 +49,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * @param function the ThrowingFunction to wrap
      * @return a Function that returns the result of the given function as an Optional instance.
      * In case of a failure, empty Optional is returned
+     * @since 2.0.0
      */
     static <T, R> Function<T, Optional<R>> optional(final ThrowingFunction<? super T, ? extends R, ?> function) {
         requireNonNull(function);
@@ -104,6 +105,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * Returns a new Function instance which returns the result as an Optional, or an empty Optional in case of a thrown exception
      *
      * @return a Function that returns the result as an Optional instance, or an empty Optional in case of a failure
+     * @since 2.0.0
      */
     default Function<T, Optional<R>> optional() {
         return t -> {
@@ -124,6 +126,7 @@ public interface ThrowingFunction<T, R, E extends Exception> {
      * @param function the ThrowingFunction to wrap
      * @param handler  the recovery handler invoked with the input and the thrown exception
      * @return Function instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T, R> Function<T, R> recover(ThrowingFunction<? super T, ? extends R, ?> function, BiFunction<? super T, ? super Exception, ? extends R> handler) {
         requireNonNull(function);

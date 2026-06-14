@@ -91,6 +91,7 @@ public interface ThrowingBiPredicate<T, U, E extends Exception> {
      * @param predicate the ThrowingBiPredicate to wrap
      * @param handler   the recovery handler invoked with the thrown exception
      * @return BiPredicate instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T, U> BiPredicate<T, U> recover(ThrowingBiPredicate<? super T, ? super U, ?> predicate, Predicate<? super Exception> handler) {
         requireNonNull(predicate);

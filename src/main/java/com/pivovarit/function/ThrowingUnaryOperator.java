@@ -80,6 +80,7 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
      * @param operator the ThrowingUnaryOperator to wrap
      * @param handler  the recovery handler invoked with the input and the thrown exception
      * @return UnaryOperator instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
      */
     static <T> UnaryOperator<T> recover(ThrowingUnaryOperator<T, ?> operator, BiFunction<? super T, ? super Exception, ? extends T> handler) {
         requireNonNull(operator);
