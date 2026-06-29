@@ -112,6 +112,10 @@ stream.map(ThrowingFunction.lifted(URI::new))  // Stream<Optional<URI>>
 implementation 'com.pivovarit:throwing-function:1.6.1'
 ```
 
+## Used by
+
+- [bbottema/simple-java-mail](https://github.com/bbottema/simple-java-mail) — Simple Java Mail, one of the most widely used Jakarta Mail / SMTP wrappers in the Java ecosystem.
+
 ## Dependencies
 
 None. Implemented using core Java libraries only.
