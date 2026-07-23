@@ -17,6 +17,7 @@ package com.pivovarit.function;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
@@ -103,6 +104,30 @@ public interface ThrowingBiFunction<T1, T2, R, E extends Exception> {
                 return Optional.ofNullable(function.apply(arg1, arg2));
             } catch (final Exception e) {
                 return Optional.empty();
+            }
+        };
+    }
+
+    /**
+     * Returns a new BiFunction instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the thrown exception
+     *
+     * @param <T1>     the type of the first argument to the function
+     * @param <T2>     the type of the second argument to the function
+     * @param <R>      the type of the result of the function
+     * @param function the ThrowingBiFunction to wrap
+     * @param handler  the recovery handler invoked with the thrown exception
+     * @return BiFunction instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
+     */
+    static <T1, T2, R> BiFunction<T1, T2, R> recover(ThrowingBiFunction<? super T1, ? super T2, ? extends R, ?> function, Function<? super Exception, ? extends R> handler) {
+        requireNonNull(function);
+        requireNonNull(handler);
+        return (arg1, arg2) -> {
+            try {
+                return function.apply(arg1, arg2);
+            } catch (final Exception e) {
+                return handler.apply(e);
             }
         };
     }
