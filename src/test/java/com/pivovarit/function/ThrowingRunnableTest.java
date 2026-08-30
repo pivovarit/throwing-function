@@ -25,11 +25,8 @@ class ThrowingRunnableTest {
 
     @Test
     void shouldRun() {
-
-        // given
         ThrowingRunnable<Exception> runnable = () -> { throw new IOException("some message"); };
 
-        // when
         assertThatThrownBy(runnable::run)
           .isInstanceOf(IOException.class)
           .hasMessage("some message");
@@ -39,10 +36,8 @@ class ThrowingRunnableTest {
     void shouldRunUncheckedAndThrowUsingUtilsMethod() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingRunnable<Exception> runnable = () -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingRunnable.unchecked(runnable).run())
           .isInstanceOf(CheckedException.class)
           .hasMessage(cause.getMessage())
@@ -51,14 +46,11 @@ class ThrowingRunnableTest {
 
     @Test
     void shouldRunWhenNoExceptionThrownWithUnchecked() {
-        // given
         int[] counter = {0};
         ThrowingRunnable<Exception> runnable = () -> counter[0]++;
 
-        // when
         ThrowingRunnable.unchecked(runnable).run();
 
-        // then
         assertThat(counter[0]).isEqualTo(1);
     }
 
@@ -66,10 +58,8 @@ class ThrowingRunnableTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingRunnable<IOException> runnable = () -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingRunnable.sneaky(runnable).run())
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())
