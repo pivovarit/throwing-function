@@ -47,10 +47,8 @@ public class ThrowingToLongFunctionTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingToLongFunction<String, IOException> function = s -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingToLongFunction.sneaky(function).applyAsLong("test"))
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())

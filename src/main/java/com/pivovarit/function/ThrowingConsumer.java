@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
@@ -72,6 +73,28 @@ public interface ThrowingConsumer<T, E extends Exception> {
                 consumer.accept(t);
             } catch (Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new Consumer instance which, in case of a thrown checked exception, passes the input and the
+     * thrown exception to the supplied handler
+     *
+     * @param <T>      the type of the input to the operation
+     * @param consumer the ThrowingConsumer to wrap
+     * @param handler  the recovery handler invoked with the input and the thrown exception
+     * @return Consumer instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
+     */
+    static <T> Consumer<T> recover(ThrowingConsumer<? super T, ?> consumer, BiConsumer<? super T, ? super Exception> handler) {
+        requireNonNull(consumer);
+        requireNonNull(handler);
+        return t -> {
+            try {
+                consumer.accept(t);
+            } catch (final Exception e) {
+                handler.accept(t, e);
             }
         };
     }

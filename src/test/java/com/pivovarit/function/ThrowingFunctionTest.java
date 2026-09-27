@@ -31,25 +31,19 @@ class ThrowingFunctionTest {
 
     @Test
     void shouldReturnOptional() {
-        // given
         ThrowingFunction<Integer, Integer, Exception> f1 = i -> i;
 
-        // when
-        Optional<Integer> result = f1.lift().apply(42);
+        Optional<Integer> result = f1.optional().apply(42);
 
-        // then
         assertThat(result.isPresent()).isTrue();
     }
 
     @Test
     void shouldReturnEmptyOptional() {
-        // given
         ThrowingFunction<Integer, Integer, Exception> f1 = givenThrowingFunction();
 
-        // when
-        Optional<Integer> result = f1.lift().apply(42);
+        Optional<Integer> result = f1.optional().apply(42);
 
-        // then
         assertThat(result.isPresent()).isFalse();
     }
 
@@ -74,26 +68,20 @@ class ThrowingFunctionTest {
 
     @Test
     void shouldApplyWhenNoExceptionThrownWithUnchecked() {
-        // given
         ThrowingFunction<Integer, Integer, Exception> f = i -> i * 2;
 
-        // when
         Integer result = ThrowingFunction.unchecked(f).apply(21);
 
-        // then
         assertThat(result).isEqualTo(42);
     }
 
     @Test
     void shouldWrapInOptionalWhenUsingStandardUtilsFunctions() {
-
-        // when
         Long result = Stream.of(". .")
-          .map(ThrowingFunction.lifted(URI::new))
+          .map(ThrowingFunction.optional(URI::new))
           .filter(Optional::isPresent)
           .count();
 
-        //then
         assertThat(result).isZero();
     }
 
@@ -101,10 +89,8 @@ class ThrowingFunctionTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingFunction<Integer, Integer, IOException> f = i -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingFunction.sneaky(f).apply(42))
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())

@@ -26,13 +26,10 @@ class ThrowingSupplierTest {
 
     @Test
     void shouldGet() throws Exception {
-        // given
         ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
-        // when
         Integer result = supplier.get();
 
-        // then
         assertThat(result).isEqualTo(42);
     }
 
@@ -40,7 +37,6 @@ class ThrowingSupplierTest {
     void shouldGetUncheckedWithUtilsFunction() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
 
         assertThatThrownBy(() -> ThrowingSupplier.unchecked(supplier).get())
@@ -51,25 +47,19 @@ class ThrowingSupplierTest {
 
     @Test
     void shouldLiftAndGetWithUtilsFunction() {
-        // given
         ThrowingSupplier<Integer, IOException> supplier = () -> 42;
 
-        // when
         Optional<Integer> result = ThrowingSupplier.optional(supplier).get();
 
-        // then
         assertThat(result).isPresent();
     }
 
     @Test
     void shouldReturnEmptyOptionalWhenUsingOptionalAndExceptionThrown() {
-        // given
         ThrowingSupplier<Integer, IOException> supplier = () -> { throw new IOException("boom"); };
 
-        // when
         Optional<Integer> result = ThrowingSupplier.optional(supplier).get();
 
-        // then
         assertThat(result).isEmpty();
     }
 
@@ -77,10 +67,8 @@ class ThrowingSupplierTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingSupplier<Integer, IOException> supplier = () -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingSupplier.sneaky(supplier).get())
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())

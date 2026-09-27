@@ -15,6 +15,7 @@
  */
 package com.pivovarit.function;
 
+import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 import static java.util.Objects.requireNonNull;
@@ -67,6 +68,28 @@ public interface ThrowingUnaryOperator<T, E extends Exception> extends ThrowingF
                 return operator.apply(t);
             } catch (Exception e) {
                 return SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new UnaryOperator instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the input and the thrown exception
+     *
+     * @param <T>      the type of the operand and result of the operator
+     * @param operator the ThrowingUnaryOperator to wrap
+     * @param handler  the recovery handler invoked with the input and the thrown exception
+     * @return UnaryOperator instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
+     */
+    static <T> UnaryOperator<T> recover(ThrowingUnaryOperator<T, ?> operator, BiFunction<? super T, ? super Exception, ? extends T> handler) {
+        requireNonNull(operator);
+        requireNonNull(handler);
+        return t -> {
+            try {
+                return operator.apply(t);
+            } catch (final Exception e) {
+                return handler.apply(t, e);
             }
         };
     }
