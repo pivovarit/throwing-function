@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
@@ -88,6 +89,28 @@ public interface ThrowingSupplier<T, E extends Exception> {
                 return supplier.get();
             } catch (final Exception ex) {
                 return SneakyThrowUtil.sneakyThrow(ex);
+            }
+        };
+    }
+
+    /**
+     * Returns a new Supplier instance which, in case of a thrown checked exception, returns the result
+     * produced by the supplied handler applied to the thrown exception
+     *
+     * @param <T>      the type of results supplied by this supplier
+     * @param supplier the ThrowingSupplier to wrap
+     * @param handler  the recovery handler invoked with the thrown exception
+     * @return Supplier instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
+     */
+    static <T> Supplier<T> recover(ThrowingSupplier<? extends T, ?> supplier, Function<? super Exception, ? extends T> handler) {
+        requireNonNull(supplier);
+        requireNonNull(handler);
+        return () -> {
+            try {
+                return supplier.get();
+            } catch (final Exception e) {
+                return handler.apply(e);
             }
         };
     }

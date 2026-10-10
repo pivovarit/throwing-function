@@ -16,6 +16,7 @@
 package com.pivovarit.function;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
 
@@ -66,6 +67,27 @@ public interface ThrowingRunnable<E extends Exception> {
                 runnable.run();
             } catch (Exception e) {
                 SneakyThrowUtil.sneakyThrow(e);
+            }
+        };
+    }
+
+    /**
+     * Returns a new Runnable instance which, in case of a thrown checked exception, passes the thrown exception
+     * to the supplied handler
+     *
+     * @param runnable the ThrowingRunnable to wrap
+     * @param handler  the recovery handler invoked with the thrown exception
+     * @return Runnable instance that recovers from a thrown checked exception using the supplied handler
+     * @since 2.0.0
+     */
+    static Runnable recover(ThrowingRunnable<?> runnable, Consumer<? super Exception> handler) {
+        requireNonNull(runnable);
+        requireNonNull(handler);
+        return () -> {
+            try {
+                runnable.run();
+            } catch (final Exception e) {
+                handler.accept(e);
             }
         };
     }

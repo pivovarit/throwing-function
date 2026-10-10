@@ -24,31 +24,22 @@ class ThrowingUnaryOperatorTest {
 
     @Test
     void shouldApply() throws Exception {
-        // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
-        // when
         op.apply(42);
-
-        // then no exception thrown
     }
 
     @Test
     void shouldApplyUnchecked() {
-        // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> i;
 
-        // when
         ThrowingUnaryOperator.unchecked(op).apply(42);
-
-        // then no exception thrown
     }
 
     @Test
     void shouldApplyUncheckedAndThrow() {
         final IOException cause = new IOException("some message");
 
-        // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> { throw cause; };
 
         assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(op).apply(42))
@@ -59,7 +50,6 @@ class ThrowingUnaryOperatorTest {
 
     @Test
     void shouldApplyUncheckedAndThrowNPE() {
-        // when
         assertThatThrownBy(() -> ThrowingUnaryOperator.unchecked(null).apply(42))
           .isInstanceOf(NullPointerException.class);
     }
@@ -68,10 +58,8 @@ class ThrowingUnaryOperatorTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingUnaryOperator<Integer, IOException> op = i -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingUnaryOperator.sneaky(op).apply(42))
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())

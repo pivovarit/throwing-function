@@ -25,13 +25,10 @@ class ThrowingBiPredicateTest {
 
     @Test
     void shouldTest() throws Exception {
-        // given
         ThrowingBiPredicate<Integer, Integer, Exception> p = (i, j) -> true;
 
-        // when
         boolean result = p.test(42, 0);
 
-        // then
         assertThat(result).isTrue();
     }
 
@@ -39,12 +36,10 @@ class ThrowingBiPredicateTest {
     void shouldWrapInRuntimeExWhenUsingStandardUtilsFunctions() {
         Exception cause = new Exception("some message");
 
-        // given
         ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> {
             throw cause;
         };
 
-        // when
         assertThatThrownBy(() -> ThrowingBiPredicate.unchecked(predicate).test(42, 0))
           .isInstanceOf(RuntimeException.class)
           .hasMessage(cause.getMessage())
@@ -53,13 +48,10 @@ class ThrowingBiPredicateTest {
 
     @Test
     void shouldApplyWhenNoExceptionThrownWithUnchecked() {
-        // given
         ThrowingBiPredicate<Integer, Integer, Exception> predicate = (i, j) -> i > j;
 
-        // when
         boolean result = ThrowingBiPredicate.unchecked(predicate).test(42, 0);
 
-        // then
         assertThat(result).isTrue();
     }
 
@@ -67,10 +59,8 @@ class ThrowingBiPredicateTest {
     void shouldSneakyThrow() {
         IOException cause = new IOException("some message");
 
-        // given
         ThrowingBiPredicate<Integer, Integer, IOException> predicate = (i, j) -> { throw cause; };
 
-        // when
         assertThatThrownBy(() -> ThrowingBiPredicate.sneaky(predicate).test(42, 0))
           .isInstanceOf(IOException.class)
           .hasMessage(cause.getMessage())
